@@ -6,7 +6,6 @@ The platform aggregates funding opportunities, financial products, training prog
 
 This project was created as part of the **Tabî Project by TEE Foundation** for **International Women's Day 2026**.
 
----
 
 # Product Vision
 
@@ -19,7 +18,6 @@ Ekehi aims to reduce the barriers women entrepreneurs face in accessing capital 
 
 All resources are **searchable and filterable by sector, business stage, region, and funding size**.
 
----
 
 # Problem Statement
 
@@ -33,9 +31,8 @@ Even when opportunities exist (grants, venture funding, government programs), ma
 
 Ekehi addresses this by creating a **structured, accessible database of opportunities and support resources**.
 
----
 
-# Target Users
+## Target Users
 
 | User Type | Description |
 |---|---|
@@ -45,11 +42,10 @@ Ekehi addresses this by creating a **structured, accessible database of opportun
 | NGOs & Government Agencies | Organizations supporting women-led enterprises |
 | Investors & Funders | Institutions looking to list opportunities |
 
----
 
-# Core Features
+## Core Features
 
-## 1. Funding Opportunity Database
+### 1. Funding Opportunity Database
 
 A searchable directory of funding opportunities for women-led businesses.
 
@@ -64,9 +60,8 @@ A searchable directory of funding opportunities for women-led businesses.
 - Accelerator Funding
 - Prize Money
 
----
 
-## 2. Credit & Financial Products Directory
+### 2. Credit & Financial Products Directory
 
 A directory of loan and financing options tailored to women-owned businesses.
 
@@ -81,9 +76,7 @@ Each listing includes:
 - Eligibility
 - Application instructions
 
----
-
-## 3. Training & Capacity Building Directory
+### 3. Training & Capacity Building Directory
 
 A searchable list of programs supporting women entrepreneurs.
 
@@ -93,9 +86,8 @@ Examples include:
 - Accelerators
 - Workshops
 - Training programs
----
 
-## 4. Sector Classification
+### 4. Sector Classification
 
 All listings are categorized into sectors to enable accurate filtering.
 
@@ -114,9 +106,8 @@ Sectors include:
 - Beauty & Personal Care
 - Tourism & Hospitality
 
----
 
-## 5. Opportunity Submission System
+### 5. Opportunity Submission System
 
 Funders and program providers can submit opportunities to the platform.
 
@@ -132,9 +123,7 @@ Funders and program providers can submit opportunities to the platform.
 
 Future versions will allow funders to **manage their own listings**.
 
----
-
-## 6. Business Resource Library
+### 6. Business Resource Library
 
 A curated library of practical tools for women entrepreneurs.
 
@@ -149,9 +138,8 @@ Initial resources include:
 - Business credit score guide
 - Export readiness checklist
 
----
 
-# Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
