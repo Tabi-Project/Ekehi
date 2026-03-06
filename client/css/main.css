@@ -3,3 +3,6 @@
 @import "./base/reset.css";
 @import "./base/typography.css";
 @import "./base/utilities.css";
+
+/* Components */
+@import "./components/button.css";
