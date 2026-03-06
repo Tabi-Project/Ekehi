@@ -6,3 +6,6 @@
 
 /* Components */
 @import "./components/button.css";
+
+/* Pages */
+@import "./pages/landing.css";
