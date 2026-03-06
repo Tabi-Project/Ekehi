@@ -13,36 +13,42 @@
     <title>Ekehi - Search. Fund. Grow.</title>
   </head>
   <body>
-    <header>
+    <header class="site-header">
       <!-- Navigation -->
-      <nav aria-label="Main navigation">
-        <div>
-          <a href="/">
+      <nav class="nav" aria-label="Main navigation">
+        <div class="nav__inner">
+          <a href="/" class="nav__logo" aria-label="Ekehi homepage">
             <img
               src="../assets/icons/ekehi-logo.png"
               alt="Ekehi"
               width="43"
               height="48"
             />
-            <span>ekehi</span>
+            <span class="nav__logo-wordmark">ekehi</span>
           </a>
 
-          <ul id="nav-menu">
-            <li>
-              <a href="/about">About</a>
+          <ul class="nav__links" id="nav-menu">
+            <li class="nav__item" aria-current="true">
+              <a href="/about" class="nav__link">About</a>
             </li>
-            <li>
-              <a href="/resources" aria-current="page">Resources</a>
+            <li class="nav__item">
+              <a href="/resources" class="nav__link" aria-current="page">Resources</a>
             </li>
-            <li>
-              <a href="/mentorship">Mentorship</a>
+            <li class="nav__item">
+              <a href="/mentorship" class="nav__link">Mentorship</a>
             </li>
           </ul>
 
-          <div aria-label="Account actions">
-            <a href="/signup">Sign up</a>
-            <a href="/login">Log in</a>
+          <div class="nav__cta" aria-label="Account actions">
+            <a href="/signup" class="nav__cta-signup">Sign up</a>
+            <a href="/login" class="nav__cta-login">Log in</a>
           </div>
+
+           <button class="nav__toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-menu" type="button">
+            <span class="nav__toggle-bar"></span>
+            <span class="nav__toggle-bar"></span>
+            <span class="nav__toggle-bar"></span>
+          </button>
         </div>
       </nav>
 
