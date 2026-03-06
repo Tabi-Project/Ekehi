@@ -7,12 +7,35 @@
   </head>
   <body>
     <header>
-      <nav>
+      <nav aria-label="Main navigation">
         <!-- Navigation -->
+
+        <div>
+          <a href="/">
+            <img src="../assets/icons/ekehi-logo.png" alt="Ekehi" width="43" height="48"/>
+            <span>ekehi</span>
+          </a>
+
+          <ul id="nav-menu">
+            <li>
+              <a href="/about">About</a>
+            </li>
+            <li>
+              <a href="/resources" aria-current="page">Resources</a>
+            </li>
+            <li>
+              <a href="/mentorship">Mentorship</a>
+            </li>
+          </ul>
+
+          <div aria-label="Account actions">
+            <a href="/signup">Sign up</a>
+            <a href="/login">Log in</a>
+          </div>
+        </div>
+
       </nav>
-      <div>
-        <!-- Hero Section -->
-      </div>
+      <!-- Hero Section -->
     </header>
 
     <section>
@@ -46,7 +69,7 @@
     </section>
 
     <footer>
-      <!-- Footer  -->
+      <!-- Footer -->
     </footer>
   </body>
 </html>
