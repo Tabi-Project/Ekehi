@@ -1,74 +1,109 @@
-/* What We Offer Section - Block: .what-we-offer */
 .offerings {
-      max-width: 1200px;
-      margin-inline: auto;
-      padding-inline: var(--space-8);
-      padding-block: var(--space-16);
-    }
-    .offerings__header { margin-bottom: var(--space-10); }
-    .offerings__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-4xl);
-      font-weight: var(--font-regular);
-      color: var(--color-text-primary);
-      line-height: var(--leading-tight);
-      margin-bottom: var(--space-3);
-    }
-    .offerings__subtitle {
-      font-size: var(--text-base);
-      color: var(--color-text-muted);
-      line-height: var(--leading-relaxed);
-      max-width: 480px;
-    }
-    .offerings__body {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-10);
-      align-items: start;
-    }
-    .offerings__visual {
-      background-color: var(--color-purple-50);
-      border-radius: var(--radius-3xl);
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-      width: 100%;
-      margin: 0;
-    }
-    .offerings__visual-image { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .offerings__list { display: flex; flex-direction: column; list-style: none; }
-    .offerings__item { border-bottom: 1px solid var(--color-border); }
-    .offerings__item:last-child { border-bottom: none; }
-    .offerings__card {
-      padding: var(--space-5) var(--space-6);
-      border-radius: var(--radius-2xl);
-      transition: background-color 150ms ease;
-    }
-    .offerings__card:hover { background-color: var(--color-primary-subtle); cursor: pointer; }
-    .offerings__card--active { background-color: var(--color-purple-50); }
-    .offerings__card-title {
-      font-family: var(--font-sans);
-      font-size: var(--text-xl);
-      font-weight: var(--font-bold);
-      color: var(--color-text-primary);
-      line-height: var(--leading-snug);
-      margin-bottom: var(--space-2);
-    }
-    .offerings__card-description {
-      font-size: var(--text-base);
-      color: var(--color-text-secondary);
-      line-height: var(--leading-relaxed);
-    }
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--space-8);
+  padding-block: var(--space-16);
+}
+.offerings__header {
+  margin-bottom: var(--space-10);
+}
+.offerings__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-regular);
+  color: var(--color-text-primary);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-3);
+}
+.offerings__subtitle {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 480px;
+}
+.offerings__body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+.offerings__visual {
+  background-color: var(--color-purple-50);
+  border-radius: var(--radius-3xl);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+}
+.offerings__visual-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.offerings__list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+.offerings__item {
+  border-bottom: 1px solid var(--color-border);
+}
+.offerings__item:last-child {
+  border-bottom: none;
+}
+.offerings__card {
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-2xl);
+  transition: background-color 150ms ease;
+}
+.offerings__card:hover {
+  background-color: var(--color-primary-subtle);
+  cursor: pointer;
+}
+.offerings__card--active {
+  background-color: var(--color-purple-50);
+}
+.offerings__card-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-2);
+}
+.offerings__card-description {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
 
-     /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .offerings__body { grid-template-columns: 1fr; }
-      .offerings__visual { aspect-ratio: 16 / 9; }
-    }
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .offerings__body {
+    grid-template-columns: 1fr;
+  }
+  .offerings__visual {
+    aspect-ratio: 16 / 9;
+  }
+}
 
-    @media (max-width: 600px) {
-      .offerings { padding-inline: var(--space-6); padding-block: var(--space-12); }
-      .offerings__title { font-size: var(--text-3xl); }
-      .offerings__visual { aspect-ratio: 4 / 3; border-radius: var(--radius-2xl); }
-      .offerings__card { padding: var(--space-4); }
-      .offerings__card-title { font-size: var(--text-lg); }
-    }
+@media (max-width: 600px) {
+  .offerings {
+    padding-inline: var(--space-6);
+    padding-block: var(--space-12);
+  }
+  .offerings__title {
+    font-size: var(--text-3xl);
+  }
+  .offerings__visual {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-2xl);
+  }
+  .offerings__card {
+    padding: var(--space-4);
+  }
+  .offerings__card-title {
+    font-size: var(--text-lg);
+  }
+}
