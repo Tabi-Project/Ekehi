@@ -13,50 +13,56 @@
     <title>Ekehi - Search. Fund. Grow.</title>
   </head>
   <body>
-    <header>
+    <header class="site-header">
       <!-- Navigation -->
-      <nav aria-label="Main navigation">
-        <div>
-          <a href="/">
+      <nav class="nav" aria-label="Main navigation">
+        <div class="nav__inner">
+          <a href="/" class="nav__logo" aria-label="Ekehi homepage">
             <img
               src="../assets/icons/ekehi-logo.png"
               alt="Ekehi"
               width="43"
               height="48"
             />
-            <span>ekehi</span>
+            <span class="nav__logo-wordmark">ekehi</span>
           </a>
 
-          <ul id="nav-menu">
-            <li>
-              <a href="/about">About</a>
+          <ul class="nav__links" id="nav-menu">
+            <li class="nav__item" aria-current="true">
+              <a href="/about" class="nav__link">About</a>
             </li>
-            <li>
-              <a href="/resources" aria-current="page">Resources</a>
+            <li class="nav__item">
+              <a href="/resources" class="nav__link" aria-current="page">Resources</a>
             </li>
-            <li>
-              <a href="/mentorship">Mentorship</a>
+            <li class="nav__item">
+              <a href="/mentorship" class="nav__link">Mentorship</a>
             </li>
           </ul>
 
-          <div aria-label="Account actions">
-            <a href="/signup">Sign up</a>
-            <a href="/login">Log in</a>
+          <div class="nav__cta" aria-label="Account actions">
+            <a href="/signup" class="nav__cta-signup">Sign up</a>
+            <a href="/login" class="nav__cta-login">Log in</a>
           </div>
+
+           <button class="nav__toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-menu" type="button">
+            <span class="nav__toggle-bar"></span>
+            <span class="nav__toggle-bar"></span>
+            <span class="nav__toggle-bar"></span>
+          </button>
         </div>
       </nav>
 
       <!-- Hero Section -->
-      <section>
-        <div>
+      <section id="hero">
+        <div class="hero-text">
           <h1>Find funding and resources built for you</h1>
           <p>
             Grants, loans, training programmes, and growth resources for
             women-led businesses - searchable and always up to date.
           </p>
-          <div>
-            <button>Join the network</button>
-            <button>learn more</button>
+          <div class="hero-btn">
+          <button class="btn--sm btn--primary btn">Join the network</button>
+          <button class="btn--sm btn--secondary btn">learn more</button>
           </div>
         </div>
         <figure>
@@ -121,68 +127,50 @@
       </p>
     </section>
 
-    <section aria-labelledby="offerings-heading">
+    <section class="offerings" aria-labelledby="offerings-heading">
       <!-- What We Offer Section -->
-      <header>
-        <h2 id="offerings-heading">What we offer</h2>
-        <p>
-          Grants, loans, training programmes, and growth resources for women-led
-          businesses
-        </p>
+      <header class="offerings__header">
+        <h2 class="offerings__title" id="offerings-heading">What we offer</h2>
+        <p class="offerings__subtitle">Grants, loans, training programmes, and growth resources for women-led businesses</p>
       </header>
 
-      <div>
-        <!-- Left: product preview image placeholder -->
-        <figure>
-          <img
-            src=""
-            alt="Ekehi platform preview showing funding opportunities"
-          />
-        </figure>
+    <div class="offerings__body">
+      <!-- Left: product preview image placeholder -->
+      <figure class="offerings__visual">
+        <img src="" alt="Ekehi platform preview showing funding opportunities" class="offerings__visual-image"/>
+      </figure>
 
-        <!-- Right: feature list -->
-        <ul>
-          <li aria-current="true">
-            <article>
-              <h3>Funding Database</h3>
-              <p>
-                Find active grants, loans, and VC funds filtered to your sector
-                and stage.
-              </p>
-            </article>
-          </li>
+      <!-- Right: feature list -->
+      <ul class="offerings__list" aria-label="Key features of Ekehi platform">
+        <li class="offerings__item" aria-current="true">
+          <article class="offerings__card">
+            <h3 class="offerings__card-title">Funding Database</h3>
+            <p class="offerings__card-description">Find active grants, loans, and VC funds filtered to your sector and stage.</p>
+          </article>
+        </li>
 
-          <li>
-            <article>
-              <h3>Training Programmes</h3>
-              <p>
-                Browse accelerators, workshops, and courses designed for women
-                entrepreneurs.
-              </p>
-            </article>
-          </li>
+        <li class="offerings__item">
+          <article class="offerings__card">
+            <h3 class="offerings__card-title">Training Programmes</h3>
+            <p class="offerings__card-description">Browse accelerators, workshops, and courses designed for women entrepreneurs.</p>
+          </article>
+        </li>
 
-          <li>
-            <article>
-              <h3>Business Tools</h3>
-              <p>
-                Templates, guides, and frameworks to help you plan, pitch, and
-                scale.
-              </p>
-            </article>
-          </li>
+        <li class="offerings__item">
+          <article class="offerings__card">
+            <h3 class="offerings__card-title">Business Tools</h3>
+            <p class="offerings__card-description">Templates, guides, and frameworks to help you plan, pitch, and scale.</p>
+          </article>
+        </li>
 
-          <li>
-            <article>
-              <h3>Mentorship Network</h3>
-              <p>
-                Connect with experienced founders and advisors who've built what
-                you're building.
-              </p>
-            </article>
-          </li>
-        </ul>
-      </div>
+        <li class="offerings__item">
+          <article class="offerings__card">
+            <h3 class="offerings__card-title">Mentorship Network</h3>
+            <p class="offerings__card-description">Connect with experienced founders and advisors who've built what you're building.</p>
+          </article>
+        </li>
+      </ul>
+    </div>
     </section>
 
     <section>
