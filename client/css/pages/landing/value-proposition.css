@@ -10,8 +10,15 @@
 .value-proposition__visual {
   max-width: 72rem;
   margin-bottom: var(--space-6);
-  background-color: var(--color-purple-50);
-  min-height: 28rem;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.value-proposition__visual-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
 }
 
 .value-proposition__captions {
