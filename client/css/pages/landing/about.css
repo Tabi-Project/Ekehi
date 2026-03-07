@@ -1,0 +1,36 @@
+/* About Section - Block: .about */
+
+.about-section {
+  background-color: var(--color-purple-900);/* Deep purple background */
+}
+
+.about-section__title--ekehi{font-style: italic;}
+
+
+
+
+/* Responsive across mobile and desktop screens */
+@media (max-width: 768px) {
+
+  .about-section{
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .about-section__title{
+    flex: none;
+  }
+
+  .about-section__description{
+    padding-inline: 0;
+  }
+
+}
+
+
+@media (max-width: 375px) {
+  .about-section__title{
+    font-size: 35px;
+  }
+}
+

@@ -1,0 +1,138 @@
+.btn {
+  /* Local tokens — overridden by modifiers */
+  --btn-bg: transparent;
+  --btn-color: var(--color-text-primary);
+  --btn-border-color: transparent;
+  --btn-bg-hover: transparent;
+  --btn-color-hover: var(--color-text-primary);
+  --btn-border-hover: transparent;
+  --btn-bg-active: transparent;
+  --btn-shadow: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  padding: var(--space-3) var(--space-6);
+
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  white-space: nowrap;
+  text-decoration: none;
+  text-transform: capitalize;
+
+  background-color: var(--btn-bg);
+  color: var(--btn-color);
+  border: 1.5px solid var(--btn-border-color);
+  border-radius: var(--radius-full);
+  box-shadow: var(--btn-shadow);
+
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    opacity 150ms ease;
+}
+
+.btn:hover {
+  background-color: var(--btn-bg-hover);
+  color: var(--btn-color-hover);
+  border-color: var(--btn-border-hover);
+}
+
+.btn:active {
+  background-color: var(--btn-bg-active);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.btn:disabled,
+.btn--loading {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Element — icon inside button */
+.btn__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+/* Modifier — Primary */
+.btn--primary {
+  --btn-bg: var(--color-primary);
+  --btn-color: var(--color-text-on-primary);
+  --btn-border-color: var(--color-primary);
+  --btn-bg-hover: var(--color-primary-hover);
+  --btn-color-hover: var(--color-text-on-primary);
+  --btn-border-hover: var(--color-primary-hover);
+  --btn-bg-active: var(--color-primary-active);
+  --btn-shadow: var(--shadow-sm);
+}
+
+/* Modifier — Secondary */
+.btn--secondary {
+  --btn-bg: var(--color-bg-muted);
+  --btn-color: var(--color-primary);
+  --btn-border-color: var(--color-border);
+  --btn-bg-hover: var(--color-neutral-200);
+  --btn-color-hover: var(--color-text-primary);
+  --btn-border-hover: var(--color-border-strong);
+  --btn-bg-active: var(--color-neutral-300);
+}
+
+/* Modifier — Outline */
+.btn--outline {
+  --btn-bg: transparent;
+  --btn-color: var(--color-primary);
+  --btn-border-color: var(--color-primary);
+  --btn-bg-hover: var(--color-primary-subtle);
+  --btn-color-hover: var(--color-primary-hover);
+  --btn-border-hover: var(--color-primary-hover);
+  --btn-bg-active: var(--color-purple-100);
+}
+
+/* Modifier — Ghost */
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-color: var(--color-text-secondary);
+  --btn-border-color: transparent;
+  --btn-bg-hover: var(--color-bg-subtle);
+  --btn-color-hover: var(--color-text-primary);
+  --btn-border-hover: transparent;
+  --btn-bg-active: var(--color-bg-muted);
+}
+
+/* Modifier — Size: Small */
+.btn--sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  gap: var(--space-1);
+}
+
+/* Modifier — Size: Large */
+.btn--lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-lg);
+  gap: var(--space-3);
+}
+
+/* Modifier — Full width */
+.btn--full {
+  width: 100%;
+}
