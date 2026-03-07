@@ -15,7 +15,7 @@
 | Okwuosa Oluchi | [@luchiiii](https://github.com/luchiiii) | Frontend — Mission section HTML, image assets |
 | Victor Okoukoni | [@Okoukoni-Victor](https://github.com/Okoukoni-Victor) | Frontend — Value Proposition section (HTML + CSS) |
 | Esther Orieji | [@first-afk](https://github.com/first-afk) | Frontend — Hero section (HTML + CSS) |
-| Pheonixai | [@Pheonixai](https://github.com/Pheonixai) | Frontend — Footer HTML |
+| Akinwunmi Fatihat | [@Pheonixai](https://github.com/Pheonixai) | Frontend — Footer HTML |
 
 ---
 
