@@ -4,7 +4,7 @@
   background-color: var(--color-purple-900);/* Deep purple background */
 }
 
-.about-section-Ekehi-text{font-style: italic;}
+.about-section__title--ekehi{font-style: italic;}
 
 
 
@@ -17,11 +17,11 @@
     gap: var(--space-10);
   }
 
-  .about-section-title{
+  .about-section__title{
     flex: none;
   }
 
-  .about-section-description{
+  .about-section__description{
     padding-inline: 0;
   }
 
@@ -29,7 +29,7 @@
 
 
 @media (max-width: 375px) {
-  .about-section-title{
+  .about-section__title{
     font-size: 35px;
   }
 }
