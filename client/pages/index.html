@@ -17,7 +17,11 @@
       <!-- Navigation -->
       <nav class="nav" aria-label="Main navigation">
         <div class="nav__inner">
-          <a href="/" class="nav__logo" aria-label="Ekehi homepage">
+          <a
+            href="/client/pages/index.html"
+            class="nav__logo"
+            aria-label="Ekehi homepage"
+          >
             <img
               src="../assets/icons/ekehi-logo.png"
               alt="Ekehi"
@@ -28,16 +32,10 @@
           </a>
 
           <ul class="nav__links" id="nav-menu">
-            <li class="nav__item" aria-current="true">
-              <a href="/about" class="nav__link">About</a>
-            </li>
             <li class="nav__item">
-              <a href="/resources" class="nav__link" aria-current="page"
-                >Resources</a
-              >
-            </li>
-            <li class="nav__item">
-              <a href="/mentorship" class="nav__link">Mentorship</a>
+              <a href="/client/pages/contributors.html" class="nav__link">
+                Contributors
+              </a>
             </li>
           </ul>
 
@@ -69,12 +67,12 @@
             women-led businesses - searchable and always up to date.
           </p>
           <div class="hero-btn">
-          <button class="btn--sm btn--primary btn">Join the network</button>
-          <button class="btn--sm btn--secondary btn">learn more</button>
+            <button class="btn--sm btn--primary btn">Join the network</button>
+            <button class="btn--sm btn--secondary btn">learn more</button>
           </div>
         </div>
-        <figure>
-          <img src="" alt="placeholder img" />
+        <figure class="hero-display">
+          <img src="" alt="placeholder img" class="hero-display__image" />
         </figure>
       </section>
     </header>
@@ -159,120 +157,154 @@
       <!-- What We Offer Section -->
       <header class="offerings__header">
         <h2 class="offerings__title" id="offerings-heading">What we offer</h2>
-        <p class="offerings__subtitle">Grants, loans, training programmes, and growth resources for women-led businesses</p>
+        <p class="offerings__subtitle">
+          Grants, loans, training programmes, and growth resources for women-led
+          businesses
+        </p>
       </header>
 
-    <div class="offerings__body">
-      <!-- Left: product preview image placeholder -->
-      <figure class="offerings__visual">
-        <img src="" alt="Ekehi platform preview showing funding opportunities" class="offerings__visual-image"/>
-      </figure>
+      <div class="offerings__body">
+        <!-- Left: product preview image placeholder -->
+        <figure class="offerings__visual">
+          <img
+            src=""
+            alt="Ekehi platform preview showing funding opportunities"
+            class="offerings__visual-image"
+          />
+        </figure>
 
-      <!-- Right: feature list -->
-      <ul class="offerings__list" aria-label="Key features of Ekehi platform">
-        <li class="offerings__item" aria-current="true">
-          <article class="offerings__card">
-            <h3 class="offerings__card-title">Funding Database</h3>
-            <p class="offerings__card-description">Find active grants, loans, and VC funds filtered to your sector and stage.</p>
-          </article>
-        </li>
+        <!-- Right: feature list -->
+        <ul class="offerings__list" aria-label="Key features of Ekehi platform">
+          <li class="offerings__item" aria-current="true">
+            <article class="offerings__card">
+              <h3 class="offerings__card-title">Funding Database</h3>
+              <p class="offerings__card-description">
+                Find active grants, loans, and VC funds filtered to your sector
+                and stage.
+              </p>
+            </article>
+          </li>
 
-        <li class="offerings__item">
-          <article class="offerings__card">
-            <h3 class="offerings__card-title">Training Programmes</h3>
-            <p class="offerings__card-description">Browse accelerators, workshops, and courses designed for women entrepreneurs.</p>
-          </article>
-        </li>
+          <li class="offerings__item">
+            <article class="offerings__card">
+              <h3 class="offerings__card-title">Training Programmes</h3>
+              <p class="offerings__card-description">
+                Browse accelerators, workshops, and courses designed for women
+                entrepreneurs.
+              </p>
+            </article>
+          </li>
 
-        <li class="offerings__item">
-          <article class="offerings__card">
-            <h3 class="offerings__card-title">Business Tools</h3>
-            <p class="offerings__card-description">Templates, guides, and frameworks to help you plan, pitch, and scale.</p>
-          </article>
-        </li>
+          <li class="offerings__item">
+            <article class="offerings__card">
+              <h3 class="offerings__card-title">Business Tools</h3>
+              <p class="offerings__card-description">
+                Templates, guides, and frameworks to help you plan, pitch, and
+                scale.
+              </p>
+            </article>
+          </li>
 
-        <li class="offerings__item">
-          <article class="offerings__card">
-            <h3 class="offerings__card-title">Mentorship Network</h3>
-            <p class="offerings__card-description">Connect with experienced founders and advisors who've built what you're building.</p>
-          </article>
-        </li>
-      </ul>
-    </div>
-    </section>
-
-    <section>
-      <!-- CTA Section -->
-      <div>
-        <h3>Stop searching. Start finding</h3>
-
-        <p>
-          Discover grants, loans, and resources for women&#45;led businesses
-          &#x2014; always current and easy to find.
-        </p>
-
-        <button>Join the network</button>
+          <li class="offerings__item">
+            <article class="offerings__card">
+              <h3 class="offerings__card-title">Mentorship Network</h3>
+              <p class="offerings__card-description">
+                Connect with experienced founders and advisors who've built what
+                you're building.
+              </p>
+            </article>
+          </li>
+        </ul>
       </div>
-
-      <figure>
-        <img src=" " alt="Women entrepreneurs" />
-      </figure>
     </section>
 
-    <footer>
-      <!-- Footer -->
-      <section>
-        <div>
-          <img src="../assets/icons/ekehi-logo.png" alt="Ekehi Logo" />
-          <h1>ekehi</h1>
-          <p>
+    <section class="cta">
+      <div class="cta__inner">
+        <div class="cta__content">
+          <h2 class="cta__heading">Stop searching.<br />Start finding</h2>
+
+          <p class="cta__body">
+            Discover grants, loans, and resources for women-led
+            businesses&mdash;always current and easy to find.
+          </p>
+
+          <a href="/signup" class="btn btn--primary">Join the network</a>
+        </div>
+
+        <figure class="cta__visual">
+          <img src="" alt="Women entrepreneurs" class="cta__image" />
+        </figure>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__main">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo">
+            <img
+              src="../assets/icons/ekehi-logo.png"
+              alt="Ekehi"
+              class="footer__logo-image"
+            />
+            <span class="footer__wordmark">ekehi</span>
+          </a>
+          <p class="footer__tagline">
             A searchable, continuously updated business resource centre built
             for women entrepreneurs across Africa
           </p>
         </div>
-        <div>
-          <h4>EXPLORE</h4>
-          <ul>
-            <li><a href="#">Browse funding</a></li>
-            <li><a href="#">Training programmes</a></li>
-            <li><a href="#">Mentorship</a></li>
-            <li><a href="#">Resources</a></li>
-          </ul>
+
+        <nav class="footer__nav" aria-label="Footer navigation">
+          <div class="footer__nav-group">
+            <h4 class="footer__nav-heading">EXPLORE</h4>
+            <ul class="footer__nav-list">
+              <li><a href="#" class="footer__nav-link">Browse funding</a></li>
+              <li>
+                <a href="#" class="footer__nav-link">Training programmes</a>
+              </li>
+              <li><a href="#" class="footer__nav-link">Mentorship</a></li>
+              <li><a href="#" class="footer__nav-link">Resources</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__nav-group">
+            <h4 class="footer__nav-heading">FOR PARTNERS</h4>
+            <ul class="footer__nav-list">
+              <li>
+                <a href="#" class="footer__nav-link">List an opportunity</a>
+              </li>
+              <li>
+                <a href="#" class="footer__nav-link">Sponsor a programme</a>
+              </li>
+              <li><a href="#" class="footer__nav-link">Become a mentor</a></li>
+              <li><a href="#" class="footer__nav-link">Success stories</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__nav-group">
+            <h4 class="footer__nav-heading">ABOUT</h4>
+            <ul class="footer__nav-list">
+              <li><a href="#" class="footer__nav-link">About Ekehi</a></li>
+              <li><a href="#" class="footer__nav-link">TEE Foundation</a></li>
+              <li>
+                <a href="#" class="footer__nav-link">Contribute on GitHub</a>
+              </li>
+              <li><a href="#" class="footer__nav-link">Contact Us</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright">© 2026 Tabi Project (TEE Foundation)</p>
+        <p class="footer__note">Open Source &amp; Open for Contributions</p>
+        <div class="footer__legal">
+          <a href="#" class="footer__legal-link">Privacy</a>
+          <a href="#" class="footer__legal-link">Terms</a>
+          <a href="#" class="footer__legal-link">Policy</a>
+          <a href="#" class="footer__legal-link">Accessibility</a>
         </div>
-
-        <div>
-          <h4>FOR PARTNERS</h4>
-          <ul>
-            <li><a href="#">List an opportunity</a></li>
-            <li><a href="#">Sponsor a programme</a></li>
-            <li><a href="#">Become a mentor</a></li>
-            <li><a href="#">Success stories</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4>ABOUT</h4>
-          <ul>
-            <li><a href="#">About Ekehi</a></li>
-            <li><a href="#">TEE Foundation</a></li>
-            <li><a href="#">Contribute on GitHub</a></li>
-            <li><a href="#">Contact Us</a></li>
-          </ul>
-        </div>
-      </section>
-
-      <section>
-        <p>© 2026 Tabi Project (TEE Foundation)</p>
-
-        <p>Open Source & Open for Contributions</p>
-
-        <div>
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-          <a href="#">Policy</a>
-          <a href="#">Accessibility</a>
-        </div>
-      </section>
+      </div>
     </footer>
     <script src="../js/pages/toggle.js"></script>
   </body>

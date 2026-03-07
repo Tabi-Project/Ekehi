@@ -23,6 +23,7 @@
   letter-spacing: var(--tracking-wide);
   white-space: nowrap;
   text-decoration: none;
+  text-transform: capitalize;
 
   background-color: var(--btn-bg);
   color: var(--btn-color);
@@ -87,7 +88,7 @@
 /* Modifier — Secondary */
 .btn--secondary {
   --btn-bg: var(--color-bg-muted);
-  --btn-color: var(--color-text-primary);
+  --btn-color: var(--color-primary);
   --btn-border-color: var(--color-border);
   --btn-bg-hover: var(--color-neutral-200);
   --btn-color-hover: var(--color-text-primary);
