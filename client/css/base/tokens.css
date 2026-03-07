@@ -29,7 +29,7 @@
   --color-white: #fff;
 
   /* Primary (brand) */
-  --color-primary: var(--color-purple-500);
+  --color-primary: var(--color-purple-800);
   --color-primary-hover: var(--color-purple-600);
   --color-primary-active: var(--color-purple-700);
   --color-primary-subtle: var(--color-purple-50);
@@ -37,7 +37,7 @@
   /* Backgrounds */
   --color-bg-base: var(--color-white);
   --color-bg-subtle: var(--color-neutral-50);
-  --color-bg-muted: var(--color-neutral-100);
+  --color-bg-muted: var(--color-purple-50);
 
   /* Text */
   --color-text-primary: var(--color-neutral-950);
@@ -77,6 +77,7 @@
   --font-extrabold: 800;
 
   /* Line Heights */
+  --leading-tighter: 1.125;
   --leading-tight: 1.25;
   --leading-snug: 1.375;
   --leading-normal: 1.5;
@@ -94,6 +95,7 @@
   --spacing: 0.25rem; /* 4px */
 
   --space-0: 0;
+  --space-0-5: calc(var(--spacing) * 0.5); /* 2px  */
   --space-1: var(--spacing); /* 4px  */
   --space-2: calc(var(--spacing) * 2); /* 8px  */
   --space-3: calc(var(--spacing) * 3); /* 12px */
