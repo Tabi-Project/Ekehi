@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   padding-bottom: var(--space-16);
-  margin: auto 20px;
+  margin: auto var(--space-5);
 }
 
 .hero-display__image {

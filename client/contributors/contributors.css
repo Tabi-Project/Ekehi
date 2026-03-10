@@ -1,5 +1,5 @@
 .contributors-intro {
-  max-width: 72rem;
+  max-width: var(--container-wide);
   margin-inline: auto;
   padding-bottom: var(--space-10);
   padding-inline: var(--space-8);
@@ -24,7 +24,7 @@
 }
 
 .contributors-grid {
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--space-8);
   padding-block: var(--space-6) var(--space-16);
@@ -42,23 +42,23 @@
 }
 
 .contributor-card[data-variant="blue"] .contributor-card__display {
-  background-image: url(../../assets/card-backgrounds/card-bg-blue.svg);
+  background-image: url(card-backgrounds/card-bg-blue.svg);
 }
 
 .contributor-card[data-variant="pink"] .contributor-card__display {
-  background-image: url(../../assets/card-backgrounds/card-bg-pink.svg);
+  background-image: url(card-backgrounds/card-bg-pink.svg);
 }
 
 .contributor-card[data-variant="purple"] .contributor-card__display {
-  background-image: url(../../assets/card-backgrounds/card-bg-purple.svg);
+  background-image: url(card-backgrounds/card-bg-purple.svg);
 }
 
 .contributor-card[data-variant="green"] .contributor-card__display {
-  background-image: url(../../assets/card-backgrounds/card-bg-green.svg);
+  background-image: url(card-backgrounds/card-bg-green.svg);
 }
 
 .contributor-card[data-variant="yellow"] .contributor-card__display {
-  background-image: url(../../assets/card-backgrounds/card-bg-yellow.svg);
+  background-image: url(card-backgrounds/card-bg-yellow.svg);
 }
 
 .contributor-card__display {
@@ -81,6 +81,13 @@
   object-position: top center;
   display: block;
   filter: grayscale(1);
+}
+
+/* Applied via data-fit attribute set in contributors.js */
+.contributor-card__image[data-fit="bottom-scaled"] {
+  object-position: bottom center;
+  transform: scale(1.1);
+  margin: -12px 0 0 -12px;
 }
 
 .contributor-card__name {
