@@ -28,9 +28,9 @@
 }
 
 
-@media (max-width: 375px) {
+@media (max-width: 400px) {
   .about-section__title{
-    font-size: 35px;
+    font-size: var(--text-4xl);
   }
 }
 

@@ -12,9 +12,9 @@
   z-index: 100;
 }
 .nav__inner {
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin-inline: auto;
-  height: 68px;
+  height: var(--nav-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -178,7 +178,7 @@
   .nav__links {
     display: none;
     position: absolute;
-    top: 68px;
+    top: var(--nav-height);
     left: 0;
     right: 0;
     flex-direction: column;

@@ -16,13 +16,18 @@ html {
 
 /* Body defaults */
 body {
-  min-height: 100dvh;
+  min-height: 100svh;
   font-family: var(--font-sans);
   font-weight: var(--font-regular);
   color: var(--color-text-primary);
   background-color: var(--color-bg-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Main defaults */
+main {
+  min-height: 100svh;
 }
 
 /* Media defaults */

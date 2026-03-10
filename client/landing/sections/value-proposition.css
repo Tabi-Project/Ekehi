@@ -1,5 +1,5 @@
 .value-proposition__header {
-  max-width: 72rem;
+  max-width: var(--container-wide);
   margin-bottom: var(--space-12);
 }
 
@@ -8,7 +8,7 @@
 }
 
 .value-proposition__visual {
-  max-width: 72rem;
+  max-width: var(--container-wide);
   margin-bottom: var(--space-6);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -22,7 +22,7 @@
 }
 
 .value-proposition__captions {
-  max-width: 72rem;
+  max-width: var(--container-wide);
 }
 
 @media (max-width: 768px) {
