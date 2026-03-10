@@ -8,7 +8,7 @@ const contributors = [
     image: "../assets/images/contributors/osezele-iboi.png",
   },
   { name: "Esther Orieji", role: "Frontend Engineer", image: "" },
-  { name: "Iyobosa", role: "Frontend Engineer", image: "" },
+  { name: "Iyobosa Omoruyi", role: "Frontend Engineer", image: "" },
   { name: "Oluchi Okwuosa", role: "Frontend Engineer", image: "" },
   { name: "Florence Onwuegbuzie", role: "Frontend Engineer", image: "" },
   { name: "Akinwunmi Fatihat", role: "Frontend Engineer", image: "" },

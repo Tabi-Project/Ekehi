@@ -1,9 +1,9 @@
 .contributors-intro {
-  max-width: 640px;
+  max-width: 72rem;
   margin-inline: auto;
   padding-bottom: var(--space-10);
   padding-inline: var(--space-8);
-  text-align: center;
+  text-align: left;
 }
 
 .contributors-intro h1 {
