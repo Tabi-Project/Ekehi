@@ -13,23 +13,23 @@
   --color-purple-950: #130019;
 
   /* Neutral Scale */
-  --color-neutral-50: #f8f4fa;
-  --color-neutral-100: #ede8f0;
-  --color-neutral-200: #e3d8e7;
-  --color-neutral-300: #d0c5d5;
-  --color-neutral-400: #a99baf;
-  --color-neutral-500: #8a7e8f;
-  --color-neutral-600: #565258;
-  --color-neutral-700: #474349;
-  --color-neutral-800: #343235;
-  --color-neutral-900: #1f1d1f;
-  --color-neutral-950: #131213;
+  --color-neutral-50: #fbfbfb;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a09ea9;
+  --color-neutral-500: #72717b;
+  --color-neutral-600: #53525c;
+  --color-neutral-700: #403f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
 
   /* White Scale */
   --color-white: #fff;
 
   /* Primary (brand) */
-  --color-primary: var(--color-purple-800);
+  --color-primary: var(--color-purple-700);
   --color-primary-hover: var(--color-purple-600);
   --color-primary-active: var(--color-purple-700);
   --color-primary-subtle: var(--color-purple-50);
@@ -48,7 +48,7 @@
   --color-text-on-primary: var(--color-white);
 
   /* Borders */
-  --color-border: var(--color-neutral-200);
+  --color-border: var(--color-neutral-300);
   --color-border-strong: var(--color-neutral-400);
 
   /* Typography */
@@ -68,7 +68,9 @@
   --text-4xl: calc(var(--font-size-base) * 2.25); /* 36px */
   --text-5xl: calc(var(--font-size-base) * 3); /* 48px */
   --text-6xl: calc(var(--font-size-base) * 3.75); /* 60px */
-  --text-display: calc(var(--font-size-base) * 3.375); /* 54px — between 5xl and 6xl, for large section headings */
+  --text-display: calc(
+    var(--font-size-base) * 3.375
+  ); /* 54px — between 5xl and 6xl, for large section headings */
 
   /* Font Weights */
   --font-light: 300;

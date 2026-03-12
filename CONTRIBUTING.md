@@ -34,7 +34,9 @@ Ekehi/
 │   ├── assets/                 # Global images, icons, fonts
 │   ├── shared/                 # Reusable across all pages
 │   │   ├── base/               # Tokens, reset, typography, utilities (main.css imports all)
-│   │   └── components/         # Nav, footer, button (CSS + JS)
+│   │   ├── components/         # Nav, footer, button (CSS + JS)
+│   │   ├── constants/          # Shared JS constants (e.g. EKEHI_ENUMS display label maps)
+│   │   └── services/           # API client and auth service (api.js, auth.service.js)
 │   ├── landing/                # Landing page CSS
 │   │   ├── landing.css         # Imports sections in document order
 │   │   └── sections/           # One CSS file per landing section
@@ -48,9 +50,9 @@ Ekehi/
 │   │   ├── config/             # Environment & Supabase client setup
 │   │   ├── controllers/        # Route handler logic
 │   │   ├── middleware/         # Auth, error handling, rate limiting
-│   │   ├── models/             # Supabase query helpers per entity
+│   │   ├── models/             # JS constants and enum definitions (e.g. enums.js)
 │   │   ├── routes/             # Express route definitions
-│   │   ├── services/           # Business logic (email, etc.)
+│   │   ├── services/           # Business logic — Supabase queries, filtering, pagination
 │   │   └── utils/              # Shared server utilities
 │   ├── .env.example            # Environment variable template
 │   └── package.json
@@ -169,6 +171,8 @@ Open `index.html` in your browser, or use the **Live Server** VS Code extension 
 | `index.html` | Landing page HTML |
 | `landing/sections/` | Landing page section styles |
 | `shared/components/` | Nav, footer, and button (CSS + JS) |
+| `shared/constants/` | Display label maps (`EKEHI_ENUMS`) — load via `<script>` tag |
+| `shared/services/` | API client (`api.js`) and auth helpers (`auth.service.js`) |
 | `<page-name>/` | Page-specific HTML, CSS, and JS |
 
 ---
@@ -196,10 +200,10 @@ The server runs on `http://localhost:3000` by default.
 | Folder | Your responsibility |
 |---|---|
 | `routes/` | Define Express routes |
-| `controllers/` | Handle request/response logic |
-| `models/` | Supabase queries per entity |
-| `services/` | Business logic (e.g. email sending) |
-| `middleware/` | Auth, error handling |
+| `controllers/` | Handle request/response logic (HTTP only) |
+| `services/` | Business logic — Supabase queries, filtering, pagination |
+| `models/` | Shared JS constants (enum slug arrays used by `meta` endpoint) |
+| `middleware/` | Auth (`requireAuth`), error handling, rate limiting |
 
 > Never commit `.env`. It is in `.gitignore`. Use `.env.example` for sharing variable names.
 
@@ -257,9 +261,9 @@ Then open a Pull Request on GitHub targeting `development`. Use the PR template 
 
 ### Backend Conventions
 
-- Follow **MVC separation**: routes → controllers → models.
-- Controllers handle HTTP concerns only (req, res). Business logic belongs in services or models.
-- All Supabase queries go in `models/`, not in controllers.
+- Follow the layered pattern: **routes → controllers → services**.
+- Controllers handle HTTP concerns only (req, res, next). All business logic and Supabase queries go in `services/`.
+- `models/` contains only shared JS constants (enum arrays). It does not hold DB query logic.
 - Use `async/await` — no raw `.then()` chains.
 - All errors must be passed to the Express error handler via `next(error)`.
 - Validate all incoming request data before processing.
@@ -320,7 +324,7 @@ Before requesting review, confirm:
 - [ ] Code follows the conventions in this guide
 - [ ] No `.env` files or secrets are committed
 - [ ] UI changes are tested on mobile and desktop
-- [ ] Backend changes have been tested locally with Postman or curl
+- [ ] Backend changes have been tested locally with Postman or curl (see `docs/api/endpoints.md`)
 - [ ] PR is linked to a GitHub issue or ClickUp task
 
 ---

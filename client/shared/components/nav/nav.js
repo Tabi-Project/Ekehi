@@ -1,14 +1,18 @@
 const NAV_CONFIG = {
   logo: {
-    href: "/client/index.html",
-    src: "/client/assets/icons/ekehi-logo.png",
+    href: "/",
+    src: "/assets/icons/ekehi-logo.png",
     alt: "Ekehi",
     wordmark: "ekehi",
   },
-  links: [{ href: "/client/contributors/index.html", label: "Contributors" }],
+  links: [
+    { href: "/contributors/", label: "Contributors" },
+    { href: "/opportunities/", label: "Opportunities" },
+    { href: "/resources/", label: "Resources" },
+  ],
   cta: {
-    signup: { href: "/client/signup/index.html", label: "Sign up" },
-    login: { href: "/client/login/index.html", label: "Log in" },
+    signup: { href: "/signup/", label: "Sign up" },
+    login: { href: "/login/", label: "Log in" },
   },
 };
 
@@ -20,62 +24,108 @@ class NavComponent {
   }
 
   #buildLogo({ href, src, alt, wordmark }) {
-    return `<a href="${href}" class="nav__logo" aria-label="Ekehi homepage">
-        <img src="${src}" alt="${alt}" width="43" height="48" />
-        <span class="nav__logo-wordmark">${wordmark}</span>
-      </a>`;
+    const anchor = document.createElement("a");
+    anchor.href = href;
+    anchor.className = "nav__logo";
+    anchor.setAttribute("aria-label", "Ekehi homepage");
+
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = alt;
+    img.width = 43;
+    img.height = 48;
+
+    const wordmarkEl = document.createElement("span");
+    wordmarkEl.className = "nav__logo-wordmark";
+    wordmarkEl.textContent = wordmark;
+
+    anchor.append(img, wordmarkEl);
+    return anchor;
   }
 
   #buildNavLinks(links, cta) {
-    const linkItems = links
-      .map(({ href, label }) => {
-        const active = this.#isActive(href);
-        return `<li class="nav__item">
-            <a href="${href}" class="nav__link"${active ? ' aria-current="page"' : ""}>${label}</a>
-          </li>`;
-      })
-      .join("\n");
+    const ul = document.createElement("ul");
+    ul.className = "nav__links";
+    ul.id = "nav-menu";
 
-    return `<ul class="nav__links" id="nav-menu">
-        ${linkItems}
-        <li class="nav__item nav__item--cta">
-          <div class="nav__cta-mobile" aria-label="Account actions">
-            <a href="${cta.signup.href}" class="nav__cta-signup">${cta.signup.label}</a>
-            <a href="${cta.login.href}" class="nav__cta-login">${cta.login.label}</a>
-          </div>
-        </li>
-      </ul>`;
+    links.forEach(({ href, label }) => {
+      const li = document.createElement("li");
+      li.className = "nav__item";
+
+      const a = document.createElement("a");
+      a.href = href;
+      a.className = "nav__link";
+      if (this.#isActive(href)) a.setAttribute("aria-current", "page");
+      a.textContent = label;
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    // Mobile CTA
+    const ctaLi = document.createElement("li");
+    ctaLi.className = "nav__item nav__item--cta";
+
+    const ctaMobile = document.createElement("div");
+    ctaMobile.className = "nav__cta-mobile";
+    ctaMobile.setAttribute("aria-label", "Account actions");
+
+    ctaMobile.appendChild(
+      Button.create({ label: cta.signup.label, variant: "primary", size: "sm", as: "a", href: cta.signup.href }),
+    );
+    ctaMobile.appendChild(
+      Button.create({ label: cta.login.label, variant: "outline", size: "sm", as: "a", href: cta.login.href }),
+    );
+
+    ctaLi.appendChild(ctaMobile);
+    ul.appendChild(ctaLi);
+
+    return ul;
   }
 
   #buildDesktopCTA({ signup, login }) {
-    return `<div class="nav__cta" aria-label="Account actions">
-        <a href="${signup.href}" class="nav__cta-signup">${signup.label}</a>
-        <a href="${login.href}" class="nav__cta-login">${login.label}</a>
-      </div>`;
+    const wrapper = document.createElement("div");
+    wrapper.className = "nav__cta";
+    wrapper.setAttribute("aria-label", "Account actions");
+
+    wrapper.appendChild(
+      Button.create({ label: signup.label, variant: "primary", size: "sm", as: "a", href: signup.href }),
+    );
+    wrapper.appendChild(
+      Button.create({ label: login.label, variant: "outline", size: "sm", as: "a", href: login.href }),
+    );
+
+    return wrapper;
   }
 
   #buildToggle() {
-    return `<button
-        class="nav__toggle"
-        aria-label="Open navigation menu"
-        aria-expanded="false"
-        aria-controls="nav-menu"
-        type="button"
-      >
-        <span class="nav__toggle-bar"></span>
-        <span class="nav__toggle-bar"></span>
-        <span class="nav__toggle-bar"></span>
-      </button>`;
+    const btn = document.createElement("button");
+    btn.className = "nav__toggle";
+    btn.setAttribute("aria-label", "Open navigation menu");
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-controls", "nav-menu");
+    btn.type = "button";
+
+    for (let i = 0; i < 3; i++) {
+      const bar = document.createElement("span");
+      bar.className = "nav__toggle-bar";
+      btn.appendChild(bar);
+    }
+
+    return btn;
   }
 
   #buildHTML() {
+    const inner = document.createElement("div");
+    inner.className = "nav__inner";
+
     const { logo, links, cta } = NAV_CONFIG;
-    return `<div class="nav__inner">
-        ${this.#buildLogo(logo)}
-        ${this.#buildNavLinks(links, cta)}
-        ${this.#buildDesktopCTA(cta)}
-        ${this.#buildToggle()}
-      </div>`;
+    inner.appendChild(this.#buildLogo(logo));
+    inner.appendChild(this.#buildNavLinks(links, cta));
+    inner.appendChild(this.#buildDesktopCTA(cta));
+    inner.appendChild(this.#buildToggle());
+
+    return inner;
   }
 
   #attachEventListeners(mount) {
@@ -105,19 +155,13 @@ class NavComponent {
     });
 
     document.addEventListener("click", function (e) {
-      if (
-        menu.classList.contains("nav__links--open") &&
-        !inner.contains(e.target)
-      ) {
+      if (menu.classList.contains("nav__links--open") && !inner.contains(e.target)) {
         closeMenu();
       }
     });
 
     window.addEventListener("resize", function () {
-      if (
-        window.innerWidth > MOBILE_BREAKPOINT &&
-        menu.classList.contains("nav__links--open")
-      ) {
+      if (window.innerWidth > MOBILE_BREAKPOINT && menu.classList.contains("nav__links--open")) {
         closeMenu();
       }
     });
@@ -139,7 +183,7 @@ class NavComponent {
   mount(selector) {
     const mountEl = document.querySelector(selector);
     if (!mountEl) return;
-    mountEl.innerHTML = this.#buildHTML();
+    mountEl.appendChild(this.#buildHTML());
     this.#attachEventListeners(mountEl);
   }
 }
