@@ -60,7 +60,7 @@ const AuthService = {
     } finally {
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(REFRESH_KEY);
-      window.location.href = "/client/login/index.html";
+      window.location.href = "/login/index.html";
     }
   },
 

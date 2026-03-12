@@ -6,14 +6,14 @@
  *   const data = await api.post('/auth/login', { email, password });
  *
  * Script loading order (in HTML):
- *   <script src="/client/shared/services/api.js"></script>
- *   <script src="/client/shared/services/auth.service.js"></script>  <!-- if auth needed -->
+ *   <script src="/shared/services/api.js"></script>
+ *   <script src="/shared/services/auth.service.js"></script>  <!-- if auth needed -->
  *   <script src="page.js"></script>
  */
 
 const BASE_URL =
   (typeof window !== "undefined" && window.EKEHI_API_URL) ||
-  "http://localhost:3000/api/v1";
+  "https://api-ekehi-dev.onrender.com/api/v1";
 
 /**
  * Core request function.
@@ -39,7 +39,7 @@ async function request(path, options = {}) {
     // Clear stale tokens and redirect to login
     localStorage.removeItem("ekehi_access_token");
     localStorage.removeItem("ekehi_refresh_token");
-    window.location.href = "/client/login/index.html";
+    window.location.href = "/login/index.html";
     return;
   }
 
