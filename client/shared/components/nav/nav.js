@@ -1,14 +1,14 @@
 const NAV_CONFIG = {
   logo: {
-    href: "/client/index.html",
-    src: "/client/assets/icons/ekehi-logo.png",
+    href: "/",
+    src: "/assets/icons/ekehi-logo.png",
     alt: "Ekehi",
     wordmark: "ekehi",
   },
-  links: [{ href: "/client/contributors/index.html", label: "Contributors" }],
+  links: [{ href: "/contributors/", label: "Contributors" }],
   cta: {
-    signup: { href: "/client/signup/index.html", label: "Sign up" },
-    login: { href: "/client/login/index.html", label: "Log in" },
+    signup: { href: "/signup/", label: "Sign up" },
+    login: { href: "/login/", label: "Log in" },
   },
 };
 
