@@ -22,3 +22,7 @@ npm-debug.log*
 # Build output (if added later)
 dist/
 build/
+
+# Others
+.mcp.json
+.claude
