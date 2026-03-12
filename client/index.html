@@ -19,16 +19,18 @@
       <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
 
       <!-- Hero Section -->
-      <section id="hero">
-        <div class="hero-text">
-          <h1>Find funding and resources built for you</h1>
-          <p>
+      <section class="hero | flex flex-col justify-center items-center">
+        <div class="hero__content">
+          <h1 class="leading-tight">
+            Find funding and resources built for you
+          </h1>
+          <p class="leading-relaxed">
             Grants, loans, training programmes, and growth resources for
             women-led businesses - searchable and always up to date.
           </p>
-          <div class="hero-btn"></div>
+          <div class="hero__btns"></div>
         </div>
-        <figure class="hero-display">
+        <figure class="hero__display">
           <img
             src="assets/images/hero-display.jpg"
             alt="Woman entrepreneur reviewing business documents at her desk"
@@ -46,9 +48,9 @@
           class="about-section__container--title text-5xl leading-tight text-inverse flex-1 self-start"
         >
           <span class="font-sans">About</span>
-          <span class="about-section__container--title--ekehi font-serif"
-            >Ekehi</span
-          >
+          <span class="about-section__container--title--ekehi font-serif">
+            Ekehi
+          </span>
         </h2>
 
         <!-- Right column: Content -->
@@ -63,7 +65,7 @@
             stage, location and funding size.
           </p>
 
-          <a href="#" class="btn btn--secondary self-start"> Learn more </a>
+          <a href="#" class="btn btn--secondary self-start">Learn more </a>
         </div>
       </div>
     </section>
@@ -103,40 +105,40 @@
       </div>
     </section>
 
-    <section class="mission-section text-center w-full px-12 py-16">
-      <!-- Mission Section -->
+    <!-- Mission Section -->
+    <section
+      class="mission-section flex flex-col gap-4 text-center w-full px-4"
+    >
       <div class="mission-eyebrow flex justify-center items-center gap-2">
         <img
           src="assets/icons/top-left-deco.svg"
           alt=""
-          class="mission-eyebrow__petal mission-eyebrow__petal--left"
+          class="mission-eyebrow__petal mission-eyebrow__petal--top-left"
         />
         <img
           src="assets/icons/bottom-left-deco.svg"
           alt=""
-          class="mission-eyebrow__petal mission-eyebrow__petal--left"
+          class="mission-eyebrow__petal mission-eyebrow__petal--bottom-left"
         />
-        <h2>Our Mission</h2>
+        <h2 class="mission__title">Our Mission</h2>
         <img
           src="assets/icons/top-right-deco.svg"
           alt=""
-          class="mission-eyebrow__petal mission-eyebrow__petal--right"
+          class="mission-eyebrow__petal mission-eyebrow__petal--top-right"
         />
         <img
           src="assets/icons/bottom-right-deco.svg"
           alt=""
-          class="mission-eyebrow__petal mission-eyebrow__petal--right"
+          class="mission-eyebrow__petal mission-eyebrow__petal--bottom-right"
         />
       </div>
-      <p
-        class="mission-eyebrow__label text-md text-primary leading-tight text-center"
-      >
+      <p class="mission__text text-md text-primary leading-tight text-center">
         Helping you discover funding and resources tailored to your needs.
       </p>
     </section>
 
+    <!-- What We Offer Section -->
     <section class="offerings" aria-labelledby="offerings-heading">
-      <!-- What We Offer Section -->
       <header class="offerings__header">
         <h2 class="offerings__title" id="offerings-heading">What we offer</h2>
         <p class="offerings__subtitle">
@@ -146,16 +148,6 @@
       </header>
 
       <div class="offerings__body">
-        <!-- Left: product preview image placeholder -->
-        <figure class="offerings__visual">
-          <img
-            src="assets/images/offerings-display.jpg"
-            alt="Woman entrepreneur smiling while using her laptop"
-            class="offerings__visual-image"
-          />
-        </figure>
-
-        <!-- Right: feature list -->
         <ul class="offerings__list" aria-label="Key features of Ekehi platform">
           <li class="offerings__item" aria-current="true">
             <article class="offerings__card">
@@ -197,10 +189,34 @@
             </article>
           </li>
         </ul>
+
+        <figure class="offerings__visual">
+          <img
+            src="assets/images/offerings-display.jpg"
+            alt="Woman entrepreneur smiling while using her laptop"
+            class="offerings__visual-image"
+          />
+        </figure>
       </div>
     </section>
 
     <section class="cta">
+      <img
+        src="landing/vectors/cta-vector-left.svg"
+        aria-hidden="true"
+        class="cta__vector cta__vector--left"
+      />
+      <img
+        src="landing/vectors/cta-vector-top-right.svg"
+        aria-hidden="true"
+        class="cta__vector cta__vector--top-right"
+      />
+      <img
+        src="landing/vectors/cta-vector-bottom-right.svg"
+        aria-hidden="true"
+        class="cta__vector cta__vector--bottom-right"
+      />
+
       <div class="cta__inner">
         <div class="cta__content">
           <h2 class="cta__heading">Stop searching.<br />Start finding</h2>
@@ -213,7 +229,7 @@
           <div class="cta-btn-mount"></div>
         </div>
 
-        <figure class="cta__visual">
+        <figure class="cta__visual flex justify-center items-center">
           <img
             src="assets/images/cta-section-display.png"
             alt="Women entrepreneurs"

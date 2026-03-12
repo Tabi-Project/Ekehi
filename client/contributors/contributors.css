@@ -1,8 +1,8 @@
 .contributors-intro {
   max-width: var(--container-wide);
-  margin-inline: auto;
-  padding-bottom: var(--space-10);
   padding-inline: var(--space-8);
+  padding-bottom: var(--space-10);
+  margin-inline: auto;
   text-align: left;
 }
 
