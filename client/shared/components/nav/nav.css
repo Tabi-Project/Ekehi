@@ -47,7 +47,6 @@
   align-items: center;
   gap: var(--space-1);
   list-style: none;
-  margin-left: auto;
 }
 .nav__link {
   display: inline-block;
@@ -64,11 +63,9 @@
 }
 .nav__link:hover {
   color: var(--color-primary);
-  background-color: var(--color-primary-subtle);
 }
 .nav__link[aria-current="page"] {
   color: var(--color-primary);
-  font-weight: var(--font-semibold);
 }
 .nav__cta {
   display: flex;
