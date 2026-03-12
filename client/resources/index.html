@@ -9,8 +9,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Urbanist:wght@300;400;500;600;700;800&display=swap"
     />
-    <link rel="stylesheet" href="/shared/base/main.css" />
-    <link rel="stylesheet" href="resources.css" />
+    <link rel="stylesheet" href="../shared/base/main.css" />
+    <link rel="stylesheet" href="./resources.css" />
     <title>Ekehi — Resources</title>
   </head>
   <body>
@@ -19,16 +19,36 @@
     </header>
 
     <main class="container">
-      <div id="preview-searchbar"></div>
-      <div id="preview-dropdown"></div>
-    </main>
+      <section>
+        <h1>Training & Resources Library</h1>
+        <p>
+          Explore high-quality training programmes, accelerators, and business
+          workshops designed for women entrepreneurs
+        </p>
+      </section>
 
-    <footer id="footer-root" class="footer"></footer>
-    <script src="/shared/components/button/button.js"></script>
-    <script src="/shared/components/dropdown/dropdown.js"></script>
-    <script src="/shared/components/search-bar/search-bar.js"></script>
-    <script src="/shared/components/nav/nav.js"></script>
-    <script src="/shared/components/footer/footer.js"></script>
-    <script src="resources.js"></script>
+  <!-- Search + filters -->
+  <section>
+    <div>
+      <div id="search-bar"></div>
+    </div>
+    <div id="filter-dropdowns"></div>
+  </section>
+
+</main>
+
+
+<footer id="footer-root" class="footer"></footer>
+
+
+
+    
+    <script src="../shared/components/button/button.js"></script>
+    <script src="../shared/components/dropdown/dropdown.js"></script>
+    <script src="../shared/components/search-bar/search-bar.js"></script>
+    <script src="../shared/components/nav/nav.js"></script>
+    <script src="../shared/components/footer/footer.js"></script>
+    <script src="../shared/services/api.js"></script>
+    <script src="./resources.js"></script>
   </body>
 </html>
