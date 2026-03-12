@@ -39,30 +39,33 @@
     </header>
 
     <!-- About Section -->
-    <section class="about-section px-16 flex py-16">
+    <section class="about-section flex flex-row justify-center">
       <!-- Left column: Title -->
-      <h2
-        class="about-section__title text-5xl leading-tight text-inverse flex-1"
-      >
-        <span class="font-sans">About</span>
-        <span class="about-section__title--ekehi font-serif">Ekehi</span>
-      </h2>
+      <div class="about-section__container px-8 flex py-16 mx-auto gap-12">
+          <h2
+            class="about-section__container--title text-5xl leading-tight text-inverse flex-1 self-start"
+          >
+            <span class="font-sans">About</span>
+            <span class="about-section__container--title--ekehi font-serif">Ekehi</span>
+          </h2>
+      
+          <!-- Right column: Content -->
+          <div
+            class="about-section__container--description flex flex-col gap-5 flex-1 px-16"
+          >
+            <p class="text-inverse text-sm font-light">
+              Ekehi is a business intelligence platform for women entrepreneurs and
+              SME owners &#8212; providing a searchable database of active funding
+              opportunities (VCs, grants, loans, credit schemes), business training
+              programmes, and growth resources, all filterable by sector, stage,
+              location and funding size.
+            </p>
 
-      <!-- Right column: Content -->
-      <div
-        class="about-section__description flex flex-col gap-5 self-end flex-1 px-16"
-      >
-        <p class="text-inverse text-sm font-light">
-          Ekehi is a business intelligence platform for women entrepreneurs and
-          SME owners &#8212; providing a searchable database of active funding
-          opportunities (VCs, grants, loans, credit schemes), business training
-          programmes, and growth resources, all filterable by sector, stage,
-          location and funding size.
-        </p>
-
-        <div class="about-btn-mount"></div>
-      </div>
+            <a href="#" class="btn btn--secondary self-start"> Learn more </a>
+          </div>
+     </div> 
     </section>
+
 
     <!-- Value Proposition Section -->
     <section class="value-proposition px-8 py-16">
