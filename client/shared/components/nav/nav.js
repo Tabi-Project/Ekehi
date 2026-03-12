@@ -71,10 +71,22 @@ class NavComponent {
     ctaMobile.setAttribute("aria-label", "Account actions");
 
     ctaMobile.appendChild(
-      Button.create({ label: cta.signup.label, variant: "primary", size: "sm", as: "a", href: cta.signup.href }),
+      Button.create({
+        label: cta.signup.label,
+        variant: "primary",
+        size: "sm",
+        as: "a",
+        href: cta.signup.href,
+      }),
     );
     ctaMobile.appendChild(
-      Button.create({ label: cta.login.label, variant: "outline", size: "sm", as: "a", href: cta.login.href }),
+      Button.create({
+        label: cta.login.label,
+        variant: "outline",
+        size: "sm",
+        as: "a",
+        href: cta.login.href,
+      }),
     );
 
     ctaLi.appendChild(ctaMobile);
@@ -89,10 +101,22 @@ class NavComponent {
     wrapper.setAttribute("aria-label", "Account actions");
 
     wrapper.appendChild(
-      Button.create({ label: signup.label, variant: "primary", size: "sm", as: "a", href: signup.href }),
+      Button.create({
+        label: signup.label,
+        variant: "primary",
+        size: "sm",
+        as: "a",
+        href: signup.href,
+      }),
     );
     wrapper.appendChild(
-      Button.create({ label: login.label, variant: "outline", size: "sm", as: "a", href: login.href }),
+      Button.create({
+        label: login.label,
+        variant: "outline",
+        size: "sm",
+        as: "a",
+        href: login.href,
+      }),
     );
 
     return wrapper;
@@ -155,13 +179,19 @@ class NavComponent {
     });
 
     document.addEventListener("click", function (e) {
-      if (menu.classList.contains("nav__links--open") && !inner.contains(e.target)) {
+      if (
+        menu.classList.contains("nav__links--open") &&
+        !inner.contains(e.target)
+      ) {
         closeMenu();
       }
     });
 
     window.addEventListener("resize", function () {
-      if (window.innerWidth > MOBILE_BREAKPOINT && menu.classList.contains("nav__links--open")) {
+      if (
+        window.innerWidth > MOBILE_BREAKPOINT &&
+        menu.classList.contains("nav__links--open")
+      ) {
         closeMenu();
       }
     });

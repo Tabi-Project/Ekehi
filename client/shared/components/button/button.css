@@ -87,12 +87,10 @@
 
 /* Modifier — Secondary */
 .btn--secondary {
-  --btn-bg: var(--color-bg-muted);
+  --btn-bg: var(--color-purple-50);
   --btn-color: var(--color-primary);
-  --btn-border-color: var(--color-border);
-  --btn-bg-hover: var(--color-neutral-200);
-  --btn-color-hover: var(--color-text-primary);
-  --btn-border-hover: var(--color-border-strong);
+  --btn-bg-hover: var(--color-purple-500);
+  --btn-color-hover: var(--color-white);
   --btn-bg-active: var(--color-neutral-300);
 }
 
