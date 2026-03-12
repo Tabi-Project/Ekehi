@@ -381,3 +381,9 @@
 .shadow-xl {
   box-shadow: var(--shadow-xl);
 }
+
+/* Contain */
+.container {
+  max-width: var(--container-wide);
+  margin-inline: auto;
+}

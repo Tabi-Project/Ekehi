@@ -76,51 +76,6 @@
   gap: var(--space-2);
   flex-shrink: 0;
 }
-.nav__cta-signup {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-2) var(--space-5);
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--color-white);
-  background-color: var(--color-primary);
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  white-space: nowrap;
-  transition:
-    background-color 150ms ease,
-    color 150ms ease;
-}
-.nav__cta-signup:hover {
-  color: var(--color-white);
-  background-color: var(--color-purple-700);
-  border-color: var(--color-purple-700);
-}
-.nav__cta-login {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-2) var(--space-5);
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--color-purple-800);
-  background-color: transparent;
-  border: 1.5px solid var(--color-purple-300);
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  white-space: nowrap;
-  transition:
-    background-color 150ms ease,
-    color 150ms ease;
-}
-.nav__cta-login:hover {
-  color: var(--color-purple-800);
-  background-color: var(--color-purple-50);
-  border-color: var(--color-purple-400);
-}
 .nav__toggle {
   display: none;
   flex-direction: column;
@@ -170,8 +125,7 @@
     display: flex;
     gap: var(--space-3);
   }
-  .nav__cta-mobile .nav__cta-signup,
-  .nav__cta-mobile .nav__cta-login {
+  .nav__cta-mobile .btn {
     flex: 1;
     justify-content: center;
   }
