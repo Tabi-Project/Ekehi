@@ -1,7 +1,7 @@
 const FOOTER_CONFIG = {
   brand: {
     href: "",
-    logo: { src: "assets/icons/ekehi-logo.png", alt: "Ekehi" },
+    logo: { src: "/assets/icons/ekehi-logo.png", alt: "Ekehi" },
     wordmark: "ekehi",
     tagline:
       "A searchable, continuously updated business resource centre built for women entrepreneurs across Africa",
