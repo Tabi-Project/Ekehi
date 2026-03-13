@@ -1,9 +1,8 @@
-
+.container__hero--description{max-width: 480px;}
 
 @media (max-width: 760px) {
   .container__hero--title{font-size: var(--text-4xl)
 }
- .container__hero--description{max-width: 480px;}
 }
 
 
