@@ -39,7 +39,7 @@ async function request(path, options = {}) {
     // Clear stale tokens and redirect to login
     localStorage.removeItem("ekehi_access_token");
     localStorage.removeItem("ekehi_refresh_token");
-    window.location.href = "/login/index.html";
+    window.location.href = "/login/";
     return;
   }
 
