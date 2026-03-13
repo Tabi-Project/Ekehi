@@ -1,6 +1,6 @@
 // ── Redirect if already logged in ─────────────────────
 if (AuthService.isLoggedIn()) {
-  window.location.href = "/opportunities/index.html";
+  window.location.href = "/opportunities/";
 }
 
 // ── Mount components ───────────────────────────────────
@@ -45,7 +45,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
 
   try {
     await AuthService.login(email, password);
-    window.location.href = "/opportunities/index.html";
+    window.location.href = "/opportunities/";
   } catch (err) {
     errorEl.textContent = err.message || "Login failed. Please try again.";
     errorEl.hidden = false;
