@@ -58,6 +58,8 @@ class Dropdown {
     trigger.setAttribute("aria-haspopup", "listbox");
     trigger.setAttribute("aria-expanded", "false");
 
+    let currentValue = selected ?? null;
+
     const labelEl = document.createElement("span");
     labelEl.className = "dropdown__label";
     labelEl.textContent = selected
@@ -86,19 +88,30 @@ class Dropdown {
       btn.textContent = optLabel;
 
       btn.addEventListener("click", () => {
-        // Update label
-        labelEl.textContent = optLabel;
+        const isAlreadySelected = currentValue === value;
 
-        // Update selected state
-        panel.querySelectorAll(".dropdown__option").forEach((o) => {
-          o.setAttribute(
-            "aria-selected",
-            o.dataset.value === value ? "true" : "false",
-          );
-        });
-
-        Dropdown.#closeAll();
-        if (onChange) onChange(value, optLabel);
+        if (isAlreadySelected) {
+          // Deselect
+          currentValue = null;
+          labelEl.textContent = label;
+          panel.querySelectorAll(".dropdown__option").forEach((o) => {
+            o.setAttribute("aria-selected", "false");
+          });
+          Dropdown.#closeAll();
+          if (onChange) onChange(null, null);
+        } else {
+          // Select
+          currentValue = value;
+          labelEl.textContent = optLabel;
+          panel.querySelectorAll(".dropdown__option").forEach((o) => {
+            o.setAttribute(
+              "aria-selected",
+              o.dataset.value === value ? "true" : "false",
+            );
+          });
+          Dropdown.#closeAll();
+          if (onChange) onChange(value, optLabel);
+        }
       });
 
       panel.appendChild(btn);
