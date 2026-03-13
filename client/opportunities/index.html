@@ -21,6 +21,18 @@
     <main class="container">
       <div id="preview-searchbar"></div>
       <div id="preview-dropdown"></div>
+
+      <!-- Opportunities List -->
+      <section id="opportunity-list-display" aria-label="opportunities">
+        <p class="total-opportunities">
+          All Opportunities (<span class="total"></span>)
+        </p>
+
+        <div class="opportunity-list">
+          <div class="list-head"></div>
+          <div class="opportunityCard"></div>
+        </div>
+      </section>
     </main>
 
     <footer id="footer-root" class="footer"></footer>
@@ -29,6 +41,7 @@
     <script src="/shared/components/search-bar/search-bar.js"></script>
     <script src="/shared/components/nav/nav.js"></script>
     <script src="/shared/components/footer/footer.js"></script>
+    <script src="/shared/services/api.js"></script>
     <script src="opportunities.js"></script>
   </body>
 </html>
