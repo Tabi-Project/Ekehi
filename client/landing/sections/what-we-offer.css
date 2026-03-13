@@ -13,7 +13,7 @@
   font-weight: var(--font-regular);
   color: var(--color-text-primary);
   line-height: var(--leading-tight);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 .offerings__subtitle {
   font-size: var(--text-base);
@@ -53,13 +53,13 @@
   border-bottom: none;
 }
 .offerings__card {
-  padding: var(--space-5) var(--space-6);
-  border-radius: var(--radius-2xl);
+  padding: var(--space-5) 0;
   transition: background-color 150ms ease;
 }
 .offerings__card:hover {
   background-color: var(--color-primary-subtle);
   cursor: pointer;
+  padding-inline: var(--space-4);
 }
 .offerings__card--active {
   background-color: var(--color-purple-50);
@@ -67,15 +67,16 @@
 .offerings__card-title {
   font-family: var(--font-sans);
   font-size: var(--text-xl);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-medium);
   color: var(--color-text-primary);
   line-height: var(--leading-snug);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
 }
 .offerings__card-description {
   font-size: var(--text-base);
-  color: var(--color-text-secondary);
+  color: var(--color-neutral-600);
   line-height: var(--leading-relaxed);
+  text-wrap: pretty;
 }
 
 /* ── Responsive ── */
@@ -101,7 +102,7 @@
     border-radius: var(--radius-2xl);
   }
   .offerings__card {
-    padding: var(--space-4);
+    padding-block: var(--space-4);
   }
   .offerings__card-title {
     font-size: var(--text-lg);

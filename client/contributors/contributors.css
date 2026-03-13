@@ -1,8 +1,8 @@
 .contributors-intro {
   max-width: var(--container-wide);
-  margin-inline: auto;
-  padding-bottom: var(--space-10);
   padding-inline: var(--space-8);
+  padding-bottom: var(--space-10);
+  margin-inline: auto;
   text-align: left;
 }
 
@@ -78,16 +78,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center;
   display: block;
   filter: grayscale(1);
-}
-
-/* Applied via data-fit attribute set in contributors.js */
-.contributor-card__image[data-fit="bottom-scaled"] {
-  object-position: bottom center;
-  transform: scale(1.1);
-  margin: -12px 0 0 -12px;
 }
 
 .contributor-card__name {

@@ -1,39 +1,33 @@
-/* About Section - Block: .about */
-
 .about-section {
-  background-color: var(--color-purple-900);/* Deep purple background */
-  
-
+  background-color: var(--color-purple-900);
 }
 
-.about-section__container{max-width: var(--container-max)}
+.about-section__container {
+  max-width: var(--container-max);
+}
 
-.about-section__container--title--ekehi{font-style: italic;}
-
-
+.about-section__container--title--ekehi {
+  font-style: italic;
+}
 
 /* Responsive across mobile and desktop screens */
 @media (max-width: 760px) {
-
-  .about-section__container{
+  .about-section__container {
     flex-direction: column;
     gap: var(--space-10);
   }
 
-  .about-section__container--title{
+  .about-section__container--title {
     flex: none;
   }
 
-  .about-section__container--description{
+  .about-section__container--description {
     padding-inline: 0;
   }
-
 }
 
-
 @media (max-width: 780px) {
-  .about-section__container--title{
+  .about-section__container--title {
     font-size: var(--text-4xl);
   }
 }
-

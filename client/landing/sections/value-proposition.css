@@ -1,6 +1,6 @@
 .value-proposition__header {
   max-width: var(--container-wide);
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-8);
 }
 
 .value-proposition__description {
@@ -10,15 +10,13 @@
 .value-proposition__visual {
   max-width: var(--container-wide);
   margin-bottom: var(--space-6);
-  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
 .value-proposition__visual-image {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
-  object-fit: cover;
 }
 
 .value-proposition__captions {

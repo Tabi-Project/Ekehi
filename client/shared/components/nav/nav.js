@@ -1,3 +1,10 @@
+import AuthService from "/shared/services/auth.service.js";
+import Button from "/shared/components/button/button.js";
+
+const USER_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.33 0-10 1.672-10 5v1h20v-1c0-3.328-6.67-5-10-5z"/>
+</svg>`;
+
 const NAV_CONFIG = {
   logo: {
     href: "/",
@@ -17,6 +24,14 @@ const NAV_CONFIG = {
 };
 
 class NavComponent {
+  #isLoggedIn() {
+    return AuthService.isLoggedIn();
+  }
+
+  #logout() {
+    AuthService.logout();
+  }
+
   #isActive(href) {
     const pathname = window.location.pathname;
     if (href === "/") return pathname === "/";
@@ -41,6 +56,55 @@ class NavComponent {
 
     anchor.append(img, wordmarkEl);
     return anchor;
+  }
+
+  #buildAvatar() {
+    const wrapper = document.createElement("div");
+    wrapper.className = "nav__avatar-wrapper";
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "nav__avatar";
+    btn.setAttribute("aria-label", "Account menu");
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-haspopup", "menu");
+    btn.innerHTML = USER_ICON_SVG;
+
+    const menu = document.createElement("div");
+    menu.className = "nav__avatar-menu";
+    menu.setAttribute("role", "menu");
+
+    const logoutBtn = document.createElement("button");
+    logoutBtn.type = "button";
+    logoutBtn.className = "nav__avatar-menu-item";
+    logoutBtn.setAttribute("role", "menuitem");
+    logoutBtn.textContent = "Log out";
+    logoutBtn.addEventListener("click", () => this.#logout());
+
+    menu.appendChild(logoutBtn);
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = menu.classList.contains("nav__avatar-menu--open");
+      menu.classList.toggle("nav__avatar-menu--open", !isOpen);
+      btn.setAttribute("aria-expanded", String(!isOpen));
+    });
+
+    document.addEventListener("click", () => {
+      menu.classList.remove("nav__avatar-menu--open");
+      btn.setAttribute("aria-expanded", "false");
+    });
+
+    wrapper.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        menu.classList.remove("nav__avatar-menu--open");
+        btn.setAttribute("aria-expanded", "false");
+        btn.focus();
+      }
+    });
+
+    wrapper.append(btn, menu);
+    return wrapper;
   }
 
   #buildNavLinks(links, cta) {
@@ -70,12 +134,35 @@ class NavComponent {
     ctaMobile.className = "nav__cta-mobile";
     ctaMobile.setAttribute("aria-label", "Account actions");
 
-    ctaMobile.appendChild(
-      Button.create({ label: cta.signup.label, variant: "primary", size: "sm", as: "a", href: cta.signup.href }),
-    );
-    ctaMobile.appendChild(
-      Button.create({ label: cta.login.label, variant: "outline", size: "sm", as: "a", href: cta.login.href }),
-    );
+    if (this.#isLoggedIn()) {
+      ctaMobile.appendChild(
+        Button.create({
+          label: "Log out",
+          variant: "outline",
+          size: "sm",
+          onClick: () => this.#logout(),
+        }),
+      );
+    } else {
+      ctaMobile.appendChild(
+        Button.create({
+          label: cta.signup.label,
+          variant: "primary",
+          size: "sm",
+          as: "a",
+          href: cta.signup.href,
+        }),
+      );
+      ctaMobile.appendChild(
+        Button.create({
+          label: cta.login.label,
+          variant: "outline",
+          size: "sm",
+          as: "a",
+          href: cta.login.href,
+        }),
+      );
+    }
 
     ctaLi.appendChild(ctaMobile);
     ul.appendChild(ctaLi);
@@ -88,11 +175,28 @@ class NavComponent {
     wrapper.className = "nav__cta";
     wrapper.setAttribute("aria-label", "Account actions");
 
+    if (this.#isLoggedIn()) {
+      wrapper.appendChild(this.#buildAvatar());
+      return wrapper;
+    }
+
     wrapper.appendChild(
-      Button.create({ label: signup.label, variant: "primary", size: "sm", as: "a", href: signup.href }),
+      Button.create({
+        label: signup.label,
+        variant: "primary",
+        size: "sm",
+        as: "a",
+        href: signup.href,
+      }),
     );
     wrapper.appendChild(
-      Button.create({ label: login.label, variant: "outline", size: "sm", as: "a", href: login.href }),
+      Button.create({
+        label: login.label,
+        variant: "outline",
+        size: "sm",
+        as: "a",
+        href: login.href,
+      }),
     );
 
     return wrapper;
@@ -155,13 +259,19 @@ class NavComponent {
     });
 
     document.addEventListener("click", function (e) {
-      if (menu.classList.contains("nav__links--open") && !inner.contains(e.target)) {
+      if (
+        menu.classList.contains("nav__links--open") &&
+        !inner.contains(e.target)
+      ) {
         closeMenu();
       }
     });
 
     window.addEventListener("resize", function () {
-      if (window.innerWidth > MOBILE_BREAKPOINT && menu.classList.contains("nav__links--open")) {
+      if (
+        window.innerWidth > MOBILE_BREAKPOINT &&
+        menu.classList.contains("nav__links--open")
+      ) {
         closeMenu();
       }
     });

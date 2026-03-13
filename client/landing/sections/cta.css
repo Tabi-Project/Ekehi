@@ -1,17 +1,18 @@
 .cta {
-  background-color: var(--color-bg-cta);
   overflow: hidden;
+  position: relative;
+  background-color: var(--color-bg-cta);
 }
 
 .cta__inner {
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--space-8);
-  padding-block: var(--space-20);
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: var(--space-16);
+  position: relative;
 }
 
 /* ── Content ── */
@@ -20,6 +21,11 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-5);
+
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
+  }
 }
 
 .cta__heading {
@@ -35,20 +41,14 @@
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
   color: var(--color-text-secondary);
-  max-width: 36ch;
-  margin: 0;
+  max-width: 48ch;
 }
 
 /* ── Visual ── */
 .cta__visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-2xl);
   overflow: hidden;
-  aspect-ratio: 1 / 1;
-  background-color: var(--color-purple-100);
-  margin: 0;
+  max-height: 412px;
+  max-width: 500px;
 }
 
 .cta__image {
@@ -64,7 +64,7 @@
   .cta__inner {
     grid-template-columns: 1fr;
     gap: var(--space-10);
-    padding-block: var(--space-16);
+    padding-top: var(--space-16);
   }
 
   .cta__heading {
@@ -92,4 +92,26 @@
   .cta__heading {
     font-size: var(--text-3xl);
   }
+}
+
+/* Vectors styling */
+.cta__vector {
+  position: absolute;
+}
+.cta__vector--left {
+  left: 0;
+  inset-block: 0;
+
+  @media (max-width: 768px) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+.cta__vector--top-right {
+  right: 0;
+  top: 0;
+}
+.cta__vector--bottom-right {
+  right: 0;
+  bottom: 0;
 }

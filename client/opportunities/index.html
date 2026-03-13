@@ -19,16 +19,38 @@
     </header>
 
     <main class="container">
-      <div id="preview-searchbar"></div>
-      <div id="preview-dropdown"></div>
+      <!-- Page header -->
+      <section class="page-header text-center">
+        <h1 class="">Funding Opportunities</h1>
+        <p>
+          Explore various funding options available to support your projects and
+          initiatives.
+        </p>
+      </section>
+
+      <!-- Search + filters -->
+      <section class="opportunities__filters">
+        <div class="opportunities__search">
+          <div id="search-bar"></div>
+        </div>
+
+        <div class="opportunities__dropdowns flex" id="filter-dropdowns"></div>
+      </section>
+
+      <!-- Opportunities List -->
+      <section id="opportunity-list-display" aria-label="opportunities">
+        <p class="total-opportunities">
+          All Opportunities (<span class="total"></span>)
+        </p>
+
+        <div class="opportunity-list">
+          <div class="list-head"></div>
+          <div class="opportunityCard"></div>
+        </div>
+      </section>
     </main>
 
     <footer id="footer-root" class="footer"></footer>
-    <script src="/shared/components/button/button.js"></script>
-    <script src="/shared/components/dropdown/dropdown.js"></script>
-    <script src="/shared/components/search-bar/search-bar.js"></script>
-    <script src="/shared/components/nav/nav.js"></script>
-    <script src="/shared/components/footer/footer.js"></script>
-    <script src="opportunities.js"></script>
+    <script type="module" src="opportunities.js"></script>
   </body>
 </html>

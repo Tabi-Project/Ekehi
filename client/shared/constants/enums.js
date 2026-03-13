@@ -2,7 +2,7 @@
  * enums.js — Display label maps for all API enum slugs.
  *
  * Usage:
- *   <script src="/client/shared/constants/enums.js"></script>
+ *   <script src="/shared/constants/enums.js"></script>
  *
  *   EKEHI_ENUMS.opportunityType['grant_ngo']   // → "Grant (NGO / Foundation)"
  *   EKEHI_ENUMS.durationRange['1_4_weeks']     // → "1-4 weeks"
@@ -71,6 +71,4 @@ const EKEHI_ENUMS = {
   },
 };
 
-if (typeof window !== "undefined") {
-  window.EKEHI_ENUMS = EKEHI_ENUMS;
-}
+export default EKEHI_ENUMS;
