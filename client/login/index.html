@@ -18,13 +18,29 @@
       <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
     </header>
 
-    <main class="container">
-      <div id="preview-input"></div>
-      <div id="preview-password"></div>
-      <div id="preview-button"></div>
+    <main class="auth-container">
+      <figure class="auth-container__logo">
+        <img
+          src="/assets/icons/logo2.png"
+          alt="Ekehi"
+          width="64"
+          height="64"
+        />
+      </figure>
+
+      <h1 class="auth-container__title">Login to your account</h1>
+
+      <form id="login-form" class="auth-container__form" novalidate>
+        <div id="email-field"></div>
+        <div id="password-field"></div>
+        <div id="submit-btn"></div>
+        <p id="login-error" class="auth-error" hidden></p>
+      </form>
     </main>
 
     <footer id="footer-root" class="footer"></footer>
+    <script src="/shared/services/api.js"></script>
+    <script src="/shared/services/auth.service.js"></script>
     <script src="/shared/components/button/button.js"></script>
     <script src="/shared/components/input/input.js"></script>
     <script src="/shared/components/nav/nav.js"></script>

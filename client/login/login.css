@@ -1,2 +1,71 @@
-/* Login Page - Block: .login */
-/* TODO: Add login page styles */
+/* ==========================================================================
+   Login Page — login.css
+   Block: .auth-container
+   References: tokens.css
+   ========================================================================== */
+
+/* ── Page layout — full height centred ─────────────── */
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-base);
+}
+
+/* ── auth-container ─────────────────────────────────── */
+.auth-container {
+  width: 100%;
+  max-width: 480px;
+  padding-inline: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* ── auth-container__logo ───────────────────────────── */
+.auth-container__logo {
+  margin-bottom: var(--space-2);
+}
+
+.auth-container__logo img {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-xl);
+}
+
+/* ── auth-container__title ──────────────────────────── */
+.auth-container__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-regular);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: var(--space-2);
+}
+
+/* ── auth-container__form ───────────────────────────── */
+.auth-container__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── auth-error ─────────────────────────────────────── */
+.auth-error {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: #c0392b;
+  text-align: center;
+  margin-top: var(--space-1);
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 480px) {
+  .auth-container {
+    padding-inline: var(--space-5);
+  }
+}
