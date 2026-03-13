@@ -1,3 +1,33 @@
+/* filter section styling */
+.page-header {
+  margin-bottom: var(--space-10);
+}
+
+.opportunities__filters {
+  width: 100%;
+}
+
+.opportunities__search {
+  margin-bottom: var(--space-4);
+}
+
+.opportunities__dropdowns {
+  width: 88%;
+  gap: var(--space-2);
+}
+
+.opportunities__dropdowns .dropdown-wrapper {
+  flex: 1;
+  display: flex;
+}
+
+.opportunities__dropdowns .dropdown__trigger {
+  width: 100%;
+  font-weight: var(--font-regular);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+}
+
 #opportunity-list-display {
   padding-top: var(--space-16);
   text-transform: capitalize;
