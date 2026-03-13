@@ -1,3 +1,9 @@
+import api from "/shared/services/api.js";
+import Dropdown from "/shared/components/dropdown/dropdown.js";
+import SearchBar from "/shared/components/search-bar/search-bar.js";
+import "/shared/components/nav/nav.js";
+import "/shared/components/footer/footer.js";
+
 const searchBar = document.getElementById("search-bar");
 const filterContainer = document.getElementById("filter-dropdowns");
 const totalOpportunities = document.querySelector(".total");
