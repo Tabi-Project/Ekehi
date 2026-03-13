@@ -382,6 +382,58 @@
   box-shadow: var(--shadow-xl);
 }
 
+/* Badges */
+.badge {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-align: center;
+  border-radius: var(--radius-xl);
+  padding: var(--space-0-5) calc(var(--spacing) * 2.5);
+  white-space: nowrap;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.badge--rolling_applications {
+  background-color: #ffede6;
+  color: #d75825;
+  width: 8rem;
+}
+
+.badge--open {
+  background-color: #f9e6ff;
+  color: #9900cc;
+  width: 4rem;
+}
+
+.badge--closed {
+  background-color: #ffe6e6;
+  color: #d72525;
+  width: 5rem;
+}
+
+.badge--type {
+  color: var(--color-neutral-600);
+  background-color: var(--color-neutral-100);
+}
+
+.badge--flag {
+  color: var(--color-purple-700);
+  background-color: var(--color-purple-50);
+}
+
+.badge--tag {
+  font-weight: var(--font-medium);
+  color: var(--color-neutral-700);
+  background-color: var(--color-neutral-100);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: 6px;
+  padding: 3px 10px;
+  text-transform: capitalize;
+}
+
 /* Others */
 .container {
   max-width: var(--container-wide);
