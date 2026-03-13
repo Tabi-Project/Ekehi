@@ -24,7 +24,7 @@ document.getElementById("password-field").appendChild(
 
 document.getElementById("submit-btn").appendChild(
   Button.create({
-    label: "Login account",
+    label: "Login",
     variant: "primary",
     full: true,
     type: "submit",
