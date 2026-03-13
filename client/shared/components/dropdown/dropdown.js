@@ -148,3 +148,5 @@ class Dropdown {
     return wrapper;
   }
 }
+
+export default Dropdown;

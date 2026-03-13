@@ -127,3 +127,5 @@ class Input {
     return wrapper;
   }
 }
+
+export default Input;

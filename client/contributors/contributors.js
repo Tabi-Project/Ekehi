@@ -1,6 +1,7 @@
-// Must match [data-variant] values in contributors.css
-const CARD_VARIANTS = ["blue", "pink", "purple", "green", "yellow"];
+import "/shared/components/nav/nav.js";
+import "/shared/components/footer/footer.js";
 
+const CARD_VARIANTS = ["blue", "pink", "purple", "green", "yellow"];
 const CONTRIBUTORS_CONTAINER_ID = "contributors-grid";
 
 const contributors = [
@@ -72,7 +73,7 @@ const contributors = [
   },
 ];
 
-function createCardImage({ name, image, imageFit, style }) {
+function createCardImage({ name, image, style }) {
   const figure = document.createElement("figure");
   figure.className = "contributor-card__display";
 
@@ -81,7 +82,6 @@ function createCardImage({ name, image, imageFit, style }) {
     img.className = "contributor-card__image";
     img.src = image;
     img.alt = name;
-
     if (style) Object.assign(img.style, style);
     figure.append(img);
   }
@@ -105,7 +105,6 @@ function createContributorCard(contributor, variant) {
   const card = document.createElement("article");
   card.className = "contributor-card flex flex-col gap-0-5";
   card.dataset.variant = variant;
-
   card.append(createCardImage(contributor), ...createCardMeta(contributor));
   return card;
 }
@@ -115,7 +114,6 @@ function renderContributors(data, containerId) {
   if (!container) return;
 
   const fragment = document.createDocumentFragment();
-
   data.forEach((contributor, index) => {
     const variant = CARD_VARIANTS[index % CARD_VARIANTS.length];
     fragment.appendChild(createContributorCard(contributor, variant));
@@ -124,6 +122,4 @@ function renderContributors(data, containerId) {
   container.appendChild(fragment);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderContributors(contributors, CONTRIBUTORS_CONTAINER_ID);
-});
+renderContributors(contributors, CONTRIBUTORS_CONTAINER_ID);

@@ -1,9 +1,13 @@
-// ── Redirect if already logged in ─────────────────────
+import AuthService from "/shared/services/auth.service.js";
+import Button from "/shared/components/button/button.js";
+import Input from "/shared/components/input/input.js";
+import "/shared/components/nav/nav.js";
+import "/shared/components/footer/footer.js";
+
 if (AuthService.isLoggedIn()) {
   window.location.href = "/opportunities/";
 }
 
-// ── Mount components ───────────────────────────────────
 document.getElementById("email-field").appendChild(
   Input.create({
     type: "email",
@@ -31,7 +35,6 @@ document.getElementById("submit-btn").appendChild(
   }),
 );
 
-// ── Handle submit ──────────────────────────────────────
 document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -39,7 +42,6 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   const password = e.target.querySelector('[name="password"]').value;
   const errorEl = document.getElementById("login-error");
 
-  // Reset error state before each attempt
   errorEl.hidden = true;
   errorEl.textContent = "";
 
