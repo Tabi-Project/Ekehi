@@ -114,3 +114,5 @@ class FooterComponent {
 }
 
 new FooterComponent().mount("#footer-root");
+
+export default FooterComponent;

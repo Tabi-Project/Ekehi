@@ -128,9 +128,7 @@ function closingSoon(dateStr, status) {
   status = (status ?? "").replace(/_/g, " ");
   if (!dateStr) return status;
   const diff = Math.ceil((new Date(dateStr) - Date.now()) / 86_400_000);
-  if (diff <= 10) {
-    status = "closing soon";
-  }
+  if (diff <= 10) status = "closing soon";
   return status;
 }
 
@@ -138,19 +136,17 @@ function populateOpportunities(opps) {
   listHead.innerHTML = `<p>amount</p> <p>deadline</p>`;
   opportunityCard.innerHTML = opps
     .map(
-      (opp) =>
-        `
+      (opp) => `
      <div class="opportunity-card">
       <div class="opportunity-amount">
         <p class="foundation-amount">${formatAmount(opp.amount_min, opp.amount_max, opp.currency)}</p>
         <p class="foundation-type">${(opp.opportunity_type ?? "").replace(/_/g, " ")}</p>
       </div>
-
       <div class="opportunity-title">
-      <div class="opportunity-title-tag">
-        <p>${opp.opportunity_title}</p>
-        <span class='badge badge--${opp.status}'>${closingSoon(opp.application_deadline, opp.status)}</span>
-      </div>
+        <div class="opportunity-title-tag">
+          <p>${opp.opportunity_title}</p>
+          <span class='badge badge--${opp.status}'>${closingSoon(opp.application_deadline, opp.status)}</span>
+        </div>
         <p class="foundaton-owner">${opp.funder_name}</p>
       </div>
       <div class="opportunity-deadline">

@@ -1,7 +1,18 @@
+const { createClient } = require("@supabase/supabase-js");
 const supabase = require("../config/supabaseClient");
+const { supabaseUrl, supabaseAnonKey } = require("../config/env");
+
+// Separate client for user-facing auth operations (anon key).
+// Must NOT be the service role singleton — signInWithPassword sets an in-memory
+// session on the client, which would contaminate the singleton and cause all
+// subsequent DB queries to use the user JWT instead of the service role key,
+// making RLS apply and returning empty results on public endpoints.
+const authClient = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: { autoRefreshToken: false, persistSession: false },
+});
 
 const signUp = async ({ email, password, firstName, lastName }) => {
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await authClient.auth.signUp({
     email,
     password,
     options: {
@@ -11,7 +22,7 @@ const signUp = async ({ email, password, firstName, lastName }) => {
 
   if (error) throw error;
 
-  // Best-effort profile creation — auth user is already created above
+  // Best-effort profile creation via service role client (bypasses RLS)
   if (data.user) {
     const { error: profileError } = await supabase.from("profiles").insert({
       id: data.user.id,
@@ -32,7 +43,7 @@ const signUp = async ({ email, password, firstName, lastName }) => {
 };
 
 const signIn = async ({ email, password }) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await authClient.auth.signInWithPassword({
     email,
     password,
   });
@@ -41,7 +52,7 @@ const signIn = async ({ email, password }) => {
 };
 
 const signOut = async (accessToken) => {
-  // Use user's own client context to invalidate their session
+  // Use admin API on the service role client to invalidate the session
   const { error } = await supabase.auth.admin.signOut(accessToken);
   if (error) throw error;
 };

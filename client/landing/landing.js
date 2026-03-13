@@ -1,3 +1,7 @@
+import Button from "/shared/components/button/button.js";
+import "/shared/components/nav/nav.js";
+import "/shared/components/footer/footer.js";
+
 const heroBtns = document.querySelector(".hero__btns");
 const aboutBtnMount = document.querySelector(".about-btn-mount");
 const ctaBtnMount = document.querySelector(".cta-btn-mount");

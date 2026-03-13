@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const requiredVars = [
   "SUPABASE_URL",
+  "SUPABASE_ANON_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
   "JWT_SECRET",
 ];

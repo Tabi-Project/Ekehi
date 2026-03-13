@@ -71,6 +71,4 @@ const EKEHI_ENUMS = {
   },
 };
 
-if (typeof window !== "undefined") {
-  window.EKEHI_ENUMS = EKEHI_ENUMS;
-}
+export default EKEHI_ENUMS;

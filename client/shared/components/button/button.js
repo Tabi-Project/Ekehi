@@ -86,3 +86,5 @@ class Button {
     return el;
   }
 }
+
+export default Button;
