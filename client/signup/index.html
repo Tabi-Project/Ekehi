@@ -18,10 +18,27 @@
       <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
     </header>
 
-    <main class="container">
-      <div id="preview-input"></div>
-      <div id="preview-password"></div>
-      <div id="preview-button"></div>
+    <main class="auth-container">
+      <img src="/assets/logo.svg" alt="Ekehi" class="auth-logo" />
+      <h1 class="auth-title">Create your account</h1>
+      <p class="auth-subtitle">
+        Join us today and create your account to begin your journey!
+      </p>
+
+      <form id="signup-form" novalidate>
+        <div id="firstname-field"></div>
+        <div id="lastname-field"></div>
+        <div id="email-field"></div>
+        <div id="password-field"></div>
+        <div id="submit-btn"></div>
+        <p id="signup-error" class="auth-error" hidden></p>
+      </form>
+
+      <p class="auth-terms">
+        By clicking Continue, you acknowledge that you have read and agree with
+        Ekehi's <a href="/terms">Terms</a> and
+        <a href="/privacy">Privacy Policy</a>.
+      </p>
     </main>
 
     <footer id="footer-root" class="footer"></footer>
