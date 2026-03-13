@@ -3,6 +3,11 @@ import Dropdown from "/shared/components/dropdown/dropdown.js";
 import SearchBar from "/shared/components/search-bar/search-bar.js";
 import "/shared/components/nav/nav.js";
 import "/shared/components/footer/footer.js";
+import {
+  formatAmount,
+  daysUntil,
+  humanize,
+} from "/shared/utils/opportunity.utils.js";
 
 const previewDropdown = document.getElementById("preview-dropdown");
 const previewSearchbar = document.getElementById("preview-searchbar");
@@ -25,26 +30,10 @@ previewSearchbar.appendChild(
   SearchBar.create({ placeholder: "Search 30+ funding opportunities" }),
 );
 
-function formatAmount(min, max, currency) {
-  const fmt = (n) =>
-    n != null ? `${currency ?? ""}${(n / 1_000_000).toFixed(0)}m` : "—";
-  return `${fmt(min)} - ${fmt(max)}`;
-}
-
-function daysUntil(dateStr) {
-  if (!dateStr) return "—";
-  const diff = Math.ceil((new Date(dateStr) - Date.now()) / 86_400_000);
-  if (diff < 0) return "Closed";
-  if (diff === 0) return "Closes today";
-  return `${diff} days left`;
-}
-
 function closingSoon(dateStr, status) {
-  status = (status ?? "").replace(/_/g, " ");
-  if (!dateStr) return status;
+  if (!dateStr) return humanize(status);
   const diff = Math.ceil((new Date(dateStr) - Date.now()) / 86_400_000);
-  if (diff <= 10) status = "closing soon";
-  return status;
+  return diff <= 10 ? "closing soon" : humanize(status);
 }
 
 function populateOpportunities(opps) {
@@ -52,10 +41,10 @@ function populateOpportunities(opps) {
   opportunityCard.innerHTML = opps
     .map(
       (opp) => `
-     <div class="opportunity-card">
+     <a class="opportunity-card" href="/opportunities/detail/?id=${opp.id}">
       <div class="opportunity-amount">
         <p class="foundation-amount">${formatAmount(opp.amount_min, opp.amount_max, opp.currency)}</p>
-        <p class="foundation-type">${(opp.opportunity_type ?? "").replace(/_/g, " ")}</p>
+        <p class="foundation-type">${humanize(opp.opportunity_type)}</p>
       </div>
       <div class="opportunity-title">
         <div class="opportunity-title-tag">
@@ -66,9 +55,9 @@ function populateOpportunities(opps) {
       </div>
       <div class="opportunity-deadline">
         <img src="/assets/images/time-vector.png" alt="clock"/>
-        <p>${daysUntil(opp.application_deadline)}</p>
+        <p>${daysUntil(opp.application_deadline) ?? "—"}</p>
       </div>
-     </div>
+     </a>
      `,
     )
     .join("");
