@@ -9,8 +9,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Urbanist:wght@300;400;500;600;700;800&display=swap"
     />
-    <link rel="stylesheet" href="../shared/base/main.css" />
-    <link rel="stylesheet" href="./resources.css" />
+    <link rel="stylesheet" href="/shared/base/main.css" />
+    <link rel="stylesheet" href="resources.css" />
     <title>Ekehi — Resources</title>
   </head>
   <body>
@@ -18,21 +18,21 @@
       <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
     </header>
 
-    <main class="container">
-      <section>
-        <h1>Training & Resources Library</h1>
-        <p>
+    <main class="container flex flex-col gap-8">
+      <section class="container__hero flex flex-col self-center">
+        <h1 class="container__hero--title font-sans font-bold text-center"> Training & Resources Library</h1>
+        <p class="container__hero--description self-center text-center">
           Explore high-quality training programmes, accelerators, and business
           workshops designed for women entrepreneurs
         </p>
       </section>
 
   <!-- Search + filters -->
-  <section>
+  <section class="filter__section flex flex-col gap-4">
     <div>
       <div id="search-bar"></div>
     </div>
-    <div id="filter-dropdowns"></div>
+    <div id="filter-dropdowns" class="filter__section--dropdowns flex gap-2" ></div>
   </section>
 
 </main>
@@ -43,12 +43,12 @@
 
 
     
-    <script src="../shared/components/button/button.js"></script>
-    <script src="../shared/components/dropdown/dropdown.js"></script>
-    <script src="../shared/components/search-bar/search-bar.js"></script>
-    <script src="../shared/components/nav/nav.js"></script>
-    <script src="../shared/components/footer/footer.js"></script>
-    <script src="../shared/services/api.js"></script>
-    <script src="./resources.js"></script>
+    <script src="/shared/components/button/button.js"></script>
+    <script src="/shared/components/dropdown/dropdown.js"></script>
+    <script src="/shared/components/search-bar/search-bar.js"></script>
+    <script src="/shared/components/nav/nav.js"></script>
+    <script src="/shared/components/footer/footer.js"></script>
+    <script src="/shared/services/api.js"></script>
+    <script src="resources.js"></script>
   </body>
 </html>
