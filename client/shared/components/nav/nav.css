@@ -111,9 +111,9 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius-full);
-  background-color: var(--color-purple-100, #ede9fe);
+  background-color: var(--color-purple-50);
   color: var(--color-purple-800);
-  border: 2px solid var(--color-purple-200, #ddd6fe);
+  border: 2px solid var(--color-purple-200);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -125,7 +125,7 @@
 }
 
 .nav__avatar:hover {
-  background-color: var(--color-purple-200, #ddd6fe);
+  background-color: var(--color-purple-100);
   border-color: var(--color-primary);
 }
 
@@ -134,13 +134,14 @@
   position: absolute;
   top: calc(100% + var(--space-2));
   right: 0;
+  z-index: 200;
+  overflow: hidden;
+
   min-width: 140px;
   background-color: var(--color-bg-base);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
-  z-index: 200;
-  overflow: hidden;
 }
 
 .nav__avatar-menu--open {
@@ -163,7 +164,7 @@
 }
 
 .nav__avatar-menu-item:hover {
-  background-color: var(--color-surface-hover, #f5f3ff);
+  background-color: var(--color-neutral-50);
 }
 
 /* ── Responsive ── */

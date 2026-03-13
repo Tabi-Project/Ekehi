@@ -21,6 +21,20 @@ const NAV_CONFIG = {
 };
 
 class NavComponent {
+  #isLoggedIn() {
+    return Boolean(AuthService.isLoggedIn());
+  }
+
+  #logout() {
+    if (AuthService) {
+      AuthService.logout();
+    } else {
+      localStorage.removeItem("ekehi_access_token");
+      localStorage.removeItem("ekehi_refresh_token");
+      window.location.href = "/login/";
+    }
+  }
+
   #isActive(href) {
     const pathname = window.location.pathname;
     if (href === "/") return pathname === "/";
@@ -68,7 +82,7 @@ class NavComponent {
     logoutBtn.className = "nav__avatar-menu-item";
     logoutBtn.setAttribute("role", "menuitem");
     logoutBtn.textContent = "Log out";
-    logoutBtn.addEventListener("click", () => window.AuthService?.logout());
+    logoutBtn.addEventListener("click", () => this.#logout());
 
     menu.appendChild(logoutBtn);
 
@@ -123,13 +137,13 @@ class NavComponent {
     ctaMobile.className = "nav__cta-mobile";
     ctaMobile.setAttribute("aria-label", "Account actions");
 
-    if (window.AuthService?.isLoggedIn()) {
+    if (this.#isLoggedIn()) {
       ctaMobile.appendChild(
         Button.create({
           label: "Log out",
           variant: "outline",
           size: "sm",
-          onClick: () => window.AuthService?.logout(),
+          onClick: () => this.#logout(),
         }),
       );
     } else {
@@ -164,7 +178,7 @@ class NavComponent {
     wrapper.className = "nav__cta";
     wrapper.setAttribute("aria-label", "Account actions");
 
-    if (window.AuthService?.isLoggedIn()) {
+    if (this.#isLoggedIn()) {
       wrapper.appendChild(this.#buildAvatar());
       return wrapper;
     }
