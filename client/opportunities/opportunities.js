@@ -1,7 +1,8 @@
 const previewDropdown = document.getElementById("preview-dropdown");
 const previewSearchbar = document.getElementById("preview-searchbar");
-const totalOpportunities = document.querySelector(".total")
-const opportunityList = document.querySelector(".opportunity-list")
+const totalOpportunities = document.querySelector(".total");
+const listHead = document.querySelector(".list-head");
+const opportunityCard = document.querySelector(".opportunityCard");
 
 previewDropdown.appendChild(
   Dropdown.create({
@@ -18,74 +19,75 @@ previewSearchbar.appendChild(
   SearchBar.create({ placeholder: "Search 30+ funding opportunities" }),
 );
 
-
-
 function formatAmount(min, max, currency) {
-  const fmt = (n) => n != null ? `${currency ?? ''}${(n / 1_000_000).toFixed(0)}m` : '—';
+  const fmt = (n) =>
+    n != null ? `${currency ?? ""}${(n / 1_000_000).toFixed(0)}m` : "—";
   return `${fmt(min)} - ${fmt(max)}`;
 }
 
 function daysUntil(dateStr) {
-  if (!dateStr) return '—';
+  if (!dateStr) return "—";
   const diff = Math.ceil((new Date(dateStr) - Date.now()) / 86_400_000);
-  if (diff < 0) return 'Closed';
-  if (diff === 0) return 'Closes today';
+  if (diff < 0) return "Closed";
+  if (diff === 0) return "Closes today";
   return `${diff} days left`;
 }
 
-function closingSoon(dateStr, status){
-  status = (status ?? '').replace(/_/g, ' ')
+function closingSoon(dateStr, status) {
+  status = (status ?? "").replace(/_/g, " ");
   if (!dateStr) return status;
   const diff = Math.ceil((new Date(dateStr) - Date.now()) / 86_400_000);
-  if ( diff <= 10){
-    status = 'closing soon'
-  };
+  if (diff <= 10) {
+    status = "closing soon";
+  }
   return status;
 }
 
-function populateOpportunities(opps){
-  opportunityList.innerHTML = opps.map((opp)=>
-    `<div class="list-head">
-      <p>amount</p>
-      <p>deadline</p>
-     </div>
+function populateOpportunities(opps) {
+  listHead.innerHTML = `<p>amount</p> <p>deadline</p>`;
+  opportunityCard.innerHTML = opps
+    .map(
+      (opp) =>
+        `
      <div class="opportunity-card">
       <div class="opportunity-amount">
-      <p class="foundation-amount">${formatAmount(opp.amount_min, opp.amount_max, opp.currency)}</p>
-      <p class="foundation-type">${(opp.opportunity_type ?? '').replace(/_/g, ' ')}</p>
+        <p class="foundation-amount">${formatAmount(opp.amount_min, opp.amount_max, opp.currency)}</p>
+        <p class="foundation-type">${(opp.opportunity_type ?? "").replace(/_/g, " ")}</p>
       </div>
 
       <div class="opportunity-title">
-        <p class="opportunity-title-tag">${opp.opportunity_title} <span class='badge badge--${opp.status}'>${closingSoon(opp.application_deadline, opp.status)}</span></p>
+      <div class="opportunity-title-tag">
+        <p>${opp.opportunity_title}</p>
+        <span class='badge badge--${opp.status}'>${closingSoon(opp.application_deadline, opp.status)}</span>
+      </div>
         <p class="foundaton-owner">${opp.funder_name}</p>
       </div>
       <div class="opportunity-deadline">
-      <img src="/assets/images/time-vector.png" alt="clock"/>
-      <p>${daysUntil(opp.application_deadline)}</p>
+        <img src="/assets/images/time-vector.png" alt="clock"/>
+        <p>${daysUntil(opp.application_deadline)}</p>
       </div>
      </div>
-     `
-    
-  )
+     `,
+    )
+    .join("");
 }
 
 async function loadOpportunities() {
-  // const list = document.getElementById("opportunity-list-display")
-  opportunityList.innerHTML = `<p class='loading'>Loading Opportunities</p>`
-   try {
-    const res = await api.get('/opportunities');
+  opportunityCard.innerHTML = `<p class='loading'>Loading Opportunities</p>`;
+  try {
+    const res = await api.get("/opportunities");
     const opportunities = res.data ?? [];
     const total = res.meta?.total ?? opportunities.length;
-    console.log(opportunities)
 
     totalOpportunities.innerHTML = total;
 
-    total === 0 ? opportunityList.innerHTML = 'No Opportunities found': populateOpportunities(opportunities);
-    
-   } catch (e) {
-      console.log("error:", e);
-      opportunityList.innerHTML = `<p class='error-message'>There was an error fetching opportunities. ${e.message}</p>`
-   }
+    total === 0
+      ? (opportunityCard.innerHTML = "No Opportunities found")
+      : populateOpportunities(opportunities);
+  } catch (e) {
+    console.log("error:", e);
+    opportunityCard.innerHTML = `<p class='error-message'>There was an error fetching opportunities. ${e.message}</p>`;
+  }
 }
 
-loadOpportunities()
+loadOpportunities();
