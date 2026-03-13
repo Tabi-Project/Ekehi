@@ -13,7 +13,7 @@
 
 const BASE_URL =
   (typeof window !== "undefined" && window.EKEHI_API_URL) ||
-  "http://localhost:3000/api/v1";
+  "https://api-ekehi-dev.onrender.com/api/v1";
 
 /**
  * Core request function.
