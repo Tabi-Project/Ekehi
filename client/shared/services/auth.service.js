@@ -1,26 +1,9 @@
-/**
- * auth.service.js — Authentication helpers for the Ekehi frontend.
- *
- * Depends on: api.js (must be loaded first)
- *
- * Usage:
- *   await AuthService.login('user@example.com', 'password');
- *   AuthService.isLoggedIn();   // → true | false
- *   AuthService.logout();
- */
+import api from "/shared/services/api.js";
 
 const TOKEN_KEY = "ekehi_access_token";
 const REFRESH_KEY = "ekehi_refresh_token";
 
 const AuthService = {
-  /**
-   * Sign up a new user.
-   * @param {string} email
-   * @param {string} password
-   * @param {string} firstName
-   * @param {string} lastName
-   * @returns {Promise<object>} server response body
-   */
   async signup(email, password, firstName, lastName) {
     const body = await api.post("/auth/signup", {
       email,
@@ -34,12 +17,6 @@ const AuthService = {
     return body;
   },
 
-  /**
-   * Log in with email + password. Stores tokens in localStorage.
-   * @param {string} email
-   * @param {string} password
-   * @returns {Promise<object>} server response body
-   */
   async login(email, password) {
     const body = await api.post("/auth/login", { email, password });
     if (body.data) {
@@ -49,9 +26,6 @@ const AuthService = {
     return body;
   },
 
-  /**
-   * Log out the current user. Clears local storage.
-   */
   async logout() {
     try {
       await api.post("/auth/logout", {});
@@ -64,33 +38,19 @@ const AuthService = {
     }
   },
 
-  /**
-   * Check if a user is currently logged in (token present in localStorage).
-   * @returns {boolean}
-   */
   isLoggedIn() {
     return Boolean(localStorage.getItem(TOKEN_KEY));
   },
 
-  /**
-   * Get the stored access token.
-   * @returns {string|null}
-   */
   getToken() {
     return localStorage.getItem(TOKEN_KEY);
   },
 
   /** @private */
   _storeSession(session) {
-    if (session?.access_token)
-      localStorage.setItem(TOKEN_KEY, session.access_token);
-    if (session?.refresh_token)
-      localStorage.setItem(REFRESH_KEY, session.refresh_token);
+    if (session?.access_token) localStorage.setItem(TOKEN_KEY, session.access_token);
+    if (session?.refresh_token) localStorage.setItem(REFRESH_KEY, session.refresh_token);
   },
 };
 
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = AuthService;
-} else {
-  window.AuthService = AuthService;
-}
+export default AuthService;

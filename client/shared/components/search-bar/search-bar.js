@@ -70,3 +70,5 @@ class SearchBar {
     return wrapper;
   }
 }
+
+export default SearchBar;

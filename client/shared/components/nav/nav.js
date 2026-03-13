@@ -1,3 +1,6 @@
+import AuthService from "/shared/services/auth.service.js";
+import Button from "/shared/components/button/button.js";
+
 const USER_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
   <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.33 0-10 1.672-10 5v1h20v-1c0-3.328-6.67-5-10-5z"/>
 </svg>`;
@@ -22,17 +25,11 @@ const NAV_CONFIG = {
 
 class NavComponent {
   #isLoggedIn() {
-    return Boolean(AuthService.isLoggedIn());
+    return AuthService.isLoggedIn();
   }
 
   #logout() {
-    if (AuthService) {
-      AuthService.logout();
-    } else {
-      localStorage.removeItem("ekehi_access_token");
-      localStorage.removeItem("ekehi_refresh_token");
-      window.location.href = "/login/";
-    }
+    AuthService.logout();
   }
 
   #isActive(href) {
