@@ -35,3 +35,21 @@ export function daysUntil(dateInput) {
 export function humanize(str) {
   return (str ?? "").replace(/_/g, " ");
 }
+
+export function formatDate(dateInput) {
+  if (!dateInput) return "—";
+  const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export function buildQueryString(params) {
+  const query = new URLSearchParams(
+    Object.entries(params).filter(([, v]) => v != null),
+  );
+  const str = query.toString();
+  return str ? `?${str}` : "";
+}

@@ -3,20 +3,12 @@ import "/shared/components/nav/nav.js";
 import "/shared/components/footer/footer.js";
 import {
   formatAmount,
+  formatDate,
   daysUntil,
   humanize,
 } from "/shared/utils/opportunity.utils.js";
 
 const root = document.getElementById("detail-root");
-
-function formatDate(date) {
-  if (!date) return "—";
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
 
 function tagList(arr) {
   if (!arr?.length) return "<span>—</span>";

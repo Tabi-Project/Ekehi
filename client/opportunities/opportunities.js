@@ -7,6 +7,7 @@ import {
   formatAmount,
   daysUntil,
   humanize,
+  buildQueryString,
 } from "/shared/utils/opportunity.utils.js";
 
 const searchBar = document.getElementById("search-bar");
@@ -15,7 +16,6 @@ const totalOpportunities = document.querySelector(".total");
 const listHead = document.querySelector(".list-head");
 const opportunityCard = document.querySelector(".opportunityCard");
 
-// 1. Filter state object — single source of truth
 const filters = {
   sector: null,
   status: null,
@@ -27,18 +27,15 @@ const filters = {
 
 function onFilterChange(key, value) {
   filters[key] = value || null;
-  console.log("[Opportunities] active filters:", filters);
+  loadOpportunities();
 }
 
-// 2. Search bar
 searchBar.appendChild(
   SearchBar.create({
     placeholder: "Search 30+ funding opportunities",
     onSearch: (query) => onFilterChange("search", query),
   }),
 );
-
-// 3. Filter dropdowns
 
 filterContainer.appendChild(
   Dropdown.create({
@@ -50,10 +47,7 @@ filterContainer.appendChild(
       { value: "creative_industries", label: "Creative Industries" },
       { value: "education_edtech", label: "Education & EdTech" },
       { value: "fashion_textiles", label: "Fashion & Textiles" },
-      {
-        value: "financial_services_fintech",
-        label: "Financial Services & Fintech",
-      },
+      { value: "financial_services_fintech", label: "Financial Services & Fintech" },
       { value: "health_wellness", label: "Health & Wellness" },
       { value: "logistics_distribution", label: "Logistics & Distribution" },
       { value: "retail_ecommerce", label: "Retail & E-Commerce" },
@@ -157,17 +151,18 @@ function populateOpportunities(opps) {
 async function loadOpportunities() {
   opportunityCard.innerHTML = `<p class='loading'>Loading Opportunities</p>`;
   try {
-    const res = await api.get("/opportunities");
+    const res = await api.get(`/opportunities${buildQueryString(filters)}`);
     const opportunities = res.data ?? [];
     const total = res.meta?.total ?? opportunities.length;
 
     totalOpportunities.innerHTML = total;
 
-    total === 0
-      ? (opportunityCard.innerHTML = "No Opportunities found")
-      : populateOpportunities(opportunities);
+    if (total === 0) {
+      opportunityCard.innerHTML = "<p>No Opportunities found</p>";
+    } else {
+      populateOpportunities(opportunities);
+    }
   } catch (e) {
-    console.log("error:", e);
     opportunityCard.innerHTML = `<p class='error-message'>There was an error fetching opportunities. ${e.message}</p>`;
   }
 }
