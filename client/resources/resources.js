@@ -77,3 +77,80 @@ filterContainer.appendChild(Dropdown.create({
   ],
   onChange: (value) => onFilterChange('location_scope', value),
 }));
+
+// ── Helpers ────────────────────────────────────────────
+function formatDeadline(dateStr) {
+  if (!dateStr) return null;
+  return new Date(dateStr).toLocaleDateString('en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  });
+}
+ 
+function formatDuration(range) {
+  const map = {
+    lt_1_week:       '< 1 week',
+    '1_4_weeks':     '1–4 weeks',
+    '1_3_months':    '1–3 months',
+    '3_plus_months': '3+ months',
+    self_paced:      'Self-paced',
+  };
+  return map[range] ?? range ?? '—';
+}
+ 
+// ── Card renderer ──────────────────────────────────────
+function renderTrainingCard(programme) {
+  const card = document.createElement('div');
+  card.className = 'training-card';
+ 
+  card.innerHTML = `
+    <div class="training-card__image"></div>
+    <div class="training-card__body">
+      <div class="training-card__meta">
+        ${programme.application_deadline
+          ? `<span class="training-card__date">${formatDeadline(programme.application_deadline)}</span>`
+          : ''}
+        <span class="training-card__location">${programme.location_scope ?? '—'}</span>
+      </div>
+      <h3 class="training-card__title">${programme.programme_name}</h3>
+      <p class="training-card__provider">${programme.provider}</p>
+    </div>
+  `;
+ 
+  return card;
+}
+ 
+// ── Section header renderer ────────────────────────────
+function renderTrainingsHeader(total) {
+  const existing = document.getElementById('results-count');
+  if (existing) { existing.textContent = 'Training & Events'; return; }
+ 
+  const header = document.createElement('div');
+  header.className = 'results-header';
+  header.innerHTML = `
+    <h2 id="results-count">Training &amp; Events</h2>
+    <a href="#" class="view-all-link">View all events</a>
+  `;
+  document.querySelector('.results-section').prepend(header);
+}
+ 
+// ── Fetch and render trainings ─────────────────────────
+async function loadTrainings() {
+  const list = document.getElementById('trainings-list');
+ 
+  list.innerHTML = '<p class="loading-text">Loading...</p>';
+ 
+  try {
+    const res = await api.get('/trainings?limit=20');
+    const programmes = res.data ?? [];
+    const total = res.meta?.total ?? programmes.length;
+ 
+    renderTrainingsHeader(total);
+    list.className = 'trainings-grid';
+    list.innerHTML = '';
+    programmes.forEach((p) => list.appendChild(renderTrainingCard(p)));
+  } catch (err) {
+    list.innerHTML = `<p class="error-message">${err.message}</p>`;
+  }
+}
+ 
+loadTrainings();
