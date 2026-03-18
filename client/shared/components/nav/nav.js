@@ -16,10 +16,13 @@ const NAV_CONFIG = {
     { href: "/contributors/", label: "Contributors" },
     { href: "/opportunities/", label: "Opportunities" },
     { href: "/resources/", label: "Resources" },
+    { href: "#", label: "Submissions" },
   ],
   cta: {
     signup: { href: "/signup/", label: "Sign up" },
     login: { href: "/login/", label: "Log in" },
+    postjobs: { href: "#", label: "Post a job" },
+
   },
 };
 
@@ -80,8 +83,11 @@ class NavComponent {
     logoutBtn.setAttribute("role", "menuitem");
     logoutBtn.textContent = "Log out";
     logoutBtn.addEventListener("click", () => this.#logout());
+    
 
     menu.appendChild(logoutBtn);
+    
+
 
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -170,12 +176,21 @@ class NavComponent {
     return ul;
   }
 
-  #buildDesktopCTA({ signup, login }) {
+  #buildDesktopCTA({ signup, login, postjobs }) {
     const wrapper = document.createElement("div");
     wrapper.className = "nav__cta";
     wrapper.setAttribute("aria-label", "Account actions");
 
     if (this.#isLoggedIn()) {
+      wrapper.appendChild(
+      Button.create({
+        label: postjobs.label,
+        variant: "outline",
+        size: "sm",
+        as: "a",
+        href: postjobs.href,
+      })
+    ),
       wrapper.appendChild(this.#buildAvatar());
       return wrapper;
     }
@@ -198,7 +213,16 @@ class NavComponent {
         href: login.href,
       }),
     );
-
+     wrapper.appendChild(
+      Button.create({
+        label: postjobs.label,
+        variant: "outline",
+        size: "sm",
+        as: "a",
+        href: postjobs.href,
+      }),
+    );
+    
     return wrapper;
   }
 
