@@ -10,6 +10,16 @@ import {
 
 const root = document.getElementById("detail-root");
 
+function escapeHtml(str) {
+  if (!str) return "—";
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function tagList(arr) {
   if (!arr?.length) return "<span>—</span>";
   return arr
@@ -64,11 +74,11 @@ function renderBody(opp) {
     <section class="detail-body">
       <article class="detail-section">
         <h2>About this opportunity</h2>
-        <p>${opp.description ?? "—"}</p>
+        <p>${escapeHtml(opp.description)}</p>
       </article>
       <article class="detail-section">
         <h2>Eligibility criteria</h2>
-        <p>${opp.eligibility_criteria ?? "—"}</p>
+        <p>${escapeHtml(opp.eligibility_criteria)}</p>
       </article>
       <div class="detail-tags-row">
         <div class="detail-section">

@@ -89,4 +89,34 @@ const signOut = async (req, res, next) => {
   }
 };
 
-module.exports = { signUp, signIn, signOut };
+const refresh = async (req, res, next) => {
+  try {
+    const { refresh_token } = req.body;
+
+    if (!refresh_token) {
+      return sendError(res, {
+        status: 400,
+        message: "refresh_token is required",
+      });
+    }
+
+    const data = await authService.refreshSession(refresh_token);
+
+    return sendSuccess(res, {
+      status: 200,
+      message: "Token refreshed successfully",
+      data: {
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token,
+        expires_at: data.session.expires_at,
+      },
+    });
+  } catch (err) {
+    return sendError(res, {
+      status: 401,
+      message: "Invalid or expired refresh token",
+    });
+  }
+};
+
+module.exports = { signUp, signIn, signOut, refresh };

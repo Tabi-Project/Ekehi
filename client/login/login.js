@@ -41,9 +41,11 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   const email = e.target.querySelector('[name="email"]').value.trim();
   const password = e.target.querySelector('[name="password"]').value;
   const errorEl = document.getElementById("login-error");
+  const submitBtn = document.querySelector("#submit-btn button");
 
   errorEl.hidden = true;
   errorEl.textContent = "";
+  submitBtn.disabled = true;
 
   try {
     await AuthService.login(email, password);
@@ -51,5 +53,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   } catch (err) {
     errorEl.textContent = err.message || "Login failed. Please try again.";
     errorEl.hidden = false;
+  } finally {
+    submitBtn.disabled = false;
   }
 });

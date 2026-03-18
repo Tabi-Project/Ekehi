@@ -1,5 +1,5 @@
 const supabase = require("../config/supabaseClient");
-const { buildPaginationMeta } = require("../utils/response.utils");
+const { buildPaginationMeta, parseBool } = require("../utils/response.utils");
 
 const FIELDS = [
   "id",
@@ -51,12 +51,8 @@ const getTrainingProgrammes = async ({
   if (cost_type) query = query.eq("cost_type", cost_type);
   if (duration_range) query = query.eq("duration_range", duration_range);
   if (location_scope) query = query.eq("location_scope", location_scope);
-  if (is_featured !== undefined) {
-    query = query.eq(
-      "is_featured",
-      is_featured === "true" || is_featured === true,
-    );
-  }
+  const featured = parseBool(is_featured);
+  if (featured !== undefined) query = query.eq("is_featured", featured);
 
   query = query
     .range(offset, offset + limit - 1)
