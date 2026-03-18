@@ -14,9 +14,7 @@
     <title>Log in - Ekehi</title>
   </head>
   <body>
-    <header class="site-header">
-      <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
-    </header>
+    
 
     <main class="auth-container">
       <figure class="auth-container__logo">
@@ -27,18 +25,23 @@
           height="64"
         />
       </figure>
-
-      <h1 class="auth-container__title">Login to your account</h1>
-
+      
+      
+      <section class="auth-container__header">
+            <h1 class="auth-container__header--title">Log in</h1>
+            <p class="auth-container__header--description">Log in to access your account and continue your journey!</p>
+      </section>
+      
       <form id="login-form" class="auth-container__form" novalidate>
         <div id="email-field"></div>
         <div id="password-field"></div>
         <div id="submit-btn"></div>
+        <div id="return-btn" class="return-btnn"></div>
         <p id="login-error" class="auth-error" hidden></p>
       </form>
     </main>
 
-    <footer id="footer-root" class="footer"></footer>
+    
     <script type="module" src="login.js"></script>
   </body>
 </html>
