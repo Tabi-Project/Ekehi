@@ -40,7 +40,7 @@ document.getElementById("return-btn").appendChild(
     full: true,
     type: "button",
     as: "a",
-    href: "/index.html"
+    href: "/"
   }),
 );
 
