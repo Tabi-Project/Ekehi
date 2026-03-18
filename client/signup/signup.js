@@ -1,8 +1,7 @@
 import AuthService from "/shared/services/auth.service.js";
 import Button from "/shared/components/button/button.js";
 import Input from "/shared/components/input/input.js";
-import "/shared/components/nav/nav.js";
-import "/shared/components/footer/footer.js";
+
 
 // ── Redirect if already logged in ─────────────────────
 if (AuthService.isLoggedIn()) {
