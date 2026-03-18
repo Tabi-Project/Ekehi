@@ -128,7 +128,6 @@ document.getElementById('signup-form-step2').addEventListener('submit', async (e
   } catch (err) {
     errorEl.textContent = err.message || 'Sign up failed. Please try again.';
     errorEl.hidden = false;
-  } finally {
-    submitBtn.disabled = false;
+    return;
   }
 });
