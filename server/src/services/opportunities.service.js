@@ -1,5 +1,5 @@
 const supabase = require("../config/supabaseClient");
-const { buildPaginationMeta } = require("../utils/response.utils");
+const { buildPaginationMeta, parseBool } = require("../utils/response.utils");
 
 const FIELDS = [
   "id",
@@ -52,12 +52,8 @@ const getOpportunities = async ({
   if (stage) query = query.contains("stages", [stage]);
   if (country) query = query.eq("country", country);
   if (status) query = query.eq("status", status);
-  if (is_women_only !== undefined) {
-    query = query.eq(
-      "is_women_only",
-      is_women_only === "true" || is_women_only === true,
-    );
-  }
+  const womenOnly = parseBool(is_women_only);
+  if (womenOnly !== undefined) query = query.eq("is_women_only", womenOnly);
 
   query = query
     .range(offset, offset + limit - 1)

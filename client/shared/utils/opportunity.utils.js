@@ -22,11 +22,17 @@ export function formatAmount(min, max, currency) {
   return min === max ? fmt(min) : `${fmt(min)} – ${fmt(max)}`;
 }
 
-/** Accepts a Date object or date string. Callers can pre-parse to avoid repeated parsing. */
-export function daysUntil(dateInput) {
+/** Returns the number of whole days until dateInput (negative if past). */
+export function diffDays(dateInput) {
   if (!dateInput) return null;
   const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
-  const diff = Math.ceil((date - Date.now()) / 86_400_000);
+  return Math.ceil((date - Date.now()) / 86_400_000);
+}
+
+/** Accepts a Date object or date string. Callers can pre-parse to avoid repeated parsing. */
+export function daysUntil(dateInput) {
+  const diff = diffDays(dateInput);
+  if (diff === null) return null;
   if (diff < 0) return "Closed";
   if (diff === 0) return "Closes today";
   return `${diff} days left`;

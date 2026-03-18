@@ -57,4 +57,12 @@ const signOut = async (accessToken) => {
   if (error) throw error;
 };
 
-module.exports = { signUp, signIn, signOut };
+const refreshSession = async (refreshToken) => {
+  const { data, error } = await authClient.auth.refreshSession({
+    refresh_token: refreshToken,
+  });
+  if (error) throw error;
+  return data;
+};
+
+module.exports = { signUp, signIn, signOut, refreshSession };

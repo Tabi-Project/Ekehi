@@ -50,4 +50,15 @@ const buildPaginationMeta = ({ page, limit, total }) => {
   };
 };
 
-module.exports = { sendSuccess, sendError, buildPaginationMeta };
+/**
+ * Coerce a query-string boolean param to a real boolean.
+ * Accepts true boolean, "true"/"false" strings, or undefined.
+ * @param {string|boolean|undefined} val
+ * @returns {boolean|undefined}
+ */
+const parseBool = (val) => {
+  if (val === undefined || val === null) return undefined;
+  return val === true || val === "true";
+};
+
+module.exports = { sendSuccess, sendError, buildPaginationMeta, parseBool };

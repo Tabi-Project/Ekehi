@@ -29,6 +29,14 @@ const CHEVRON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="
 </svg>`;
 
 class Dropdown {
+  static #listenerRegistered = false;
+
+  static #initGlobalListener() {
+    if (Dropdown.#listenerRegistered) return;
+    document.addEventListener("click", () => Dropdown.#closeAll());
+    Dropdown.#listenerRegistered = true;
+  }
+
   static #closeAll() {
     document.querySelectorAll(".dropdown__panel--open").forEach((panel) => {
       panel.classList.remove("dropdown__panel--open");
@@ -138,12 +146,7 @@ class Dropdown {
 
     wrapper.append(trigger, panel);
 
-    // Close when clicking outside
-    document.addEventListener("click", () => {
-      if (panel.classList.contains("dropdown__panel--open")) {
-        Dropdown.#closeAll();
-      }
-    });
+    Dropdown.#initGlobalListener();
 
     return wrapper;
   }

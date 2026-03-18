@@ -70,7 +70,10 @@ document.getElementById("signup-form").addEventListener("submit", async (e) => {
   const email = e.target.querySelector('[name="email"]').value.trim();
   const password = e.target.querySelector('[name="password"]').value;
   const errorEl = document.getElementById("signup-error");
+  const submitBtn = document.querySelector("#submit-btn button");
+
   errorEl.hidden = true;
+  submitBtn.disabled = true;
 
   try {
     await AuthService.signup(email, password, firstName, lastName);
@@ -78,5 +81,7 @@ document.getElementById("signup-form").addEventListener("submit", async (e) => {
   } catch (err) {
     errorEl.textContent = err.message || "Sign up failed. Please try again.";
     errorEl.hidden = false;
+  } finally {
+    submitBtn.disabled = false;
   }
 });

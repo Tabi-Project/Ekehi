@@ -265,24 +265,24 @@ class NavComponent {
 
     const MOBILE_BREAKPOINT = 768;
 
-    function openMenu() {
+    const openMenu = () => {
       menu.classList.add("nav__links--open");
       toggle.setAttribute("aria-expanded", "true");
       toggle.setAttribute("aria-label", "Close navigation menu");
-    }
+    };
 
-    function closeMenu() {
+    const closeMenu = () => {
       menu.classList.remove("nav__links--open");
       toggle.setAttribute("aria-expanded", "false");
       toggle.setAttribute("aria-label", "Open navigation menu");
-    }
+    };
 
-    toggle.addEventListener("click", function () {
+    toggle.addEventListener("click", () => {
       const isOpen = menu.classList.contains("nav__links--open");
       isOpen ? closeMenu() : openMenu();
     });
 
-    document.addEventListener("click", function (e) {
+    document.addEventListener("click", (e) => {
       if (
         menu.classList.contains("nav__links--open") &&
         !inner.contains(e.target)
@@ -291,7 +291,7 @@ class NavComponent {
       }
     });
 
-    window.addEventListener("resize", function () {
+    window.addEventListener("resize", () => {
       if (
         window.innerWidth > MOBILE_BREAKPOINT &&
         menu.classList.contains("nav__links--open")
@@ -300,13 +300,11 @@ class NavComponent {
       }
     });
 
-    menu.querySelectorAll(".nav__link").forEach(function (link) {
-      link.addEventListener("click", function () {
-        closeMenu();
-      });
+    menu.querySelectorAll(".nav__link").forEach((link) => {
+      link.addEventListener("click", () => closeMenu());
     });
 
-    document.addEventListener("keydown", function (e) {
+    document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && menu.classList.contains("nav__links--open")) {
         closeMenu();
         toggle.focus();

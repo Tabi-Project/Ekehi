@@ -6,9 +6,11 @@ import "/shared/components/footer/footer.js";
 import {
   formatAmount,
   daysUntil,
+  diffDays,
   humanize,
   buildQueryString,
 } from "/shared/utils/opportunity.utils.js";
+import EKEHI_ENUMS from "/shared/constants/enums.js";
 
 const searchBar = document.getElementById("search-bar");
 const filterContainer = document.getElementById("filter-dropdowns");
@@ -61,11 +63,7 @@ filterContainer.appendChild(
   Dropdown.create({
     label: "Status",
     name: "status",
-    options: [
-      { value: "open", label: "Open" },
-      { value: "rolling_applications", label: "Rolling Applications" },
-      { value: "closed", label: "Closed" },
-    ],
+    options: Object.entries(EKEHI_ENUMS.listingStatus).map(([value, label]) => ({ value, label })),
     onChange: (value) => onFilterChange("status", value),
   }),
 );
@@ -101,24 +99,15 @@ filterContainer.appendChild(
   Dropdown.create({
     label: "Type",
     name: "opportunity_type",
-    options: [
-      { value: "grant_ngo", label: "Grant (NGO)" },
-      { value: "grant_government", label: "Grant (Government)" },
-      { value: "angel_investment", label: "Angel Investment" },
-      { value: "accelerator", label: "Accelerator" },
-      { value: "loan", label: "Loan" },
-      { value: "microfinance", label: "Microfinance" },
-      { value: "vc", label: "VC" },
-      { value: "prize_money", label: "Prize Money" },
-    ],
+    options: Object.entries(EKEHI_ENUMS.opportunityType).map(([value, label]) => ({ value, label })),
     onChange: (value) => onFilterChange("opportunity_type", value),
   }),
 );
 
 function closingSoon(dateStr, status) {
   if (!dateStr) return humanize(status);
-  const diff = Math.ceil((new Date(dateStr) - Date.now()) / 86_400_000);
-  return diff <= 10 ? "closing soon" : humanize(status);
+  const diff = diffDays(dateStr);
+  return diff !== null && diff <= 10 ? "closing soon" : humanize(status);
 }
 
 function populateOpportunities(opps) {
