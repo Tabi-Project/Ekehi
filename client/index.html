@@ -40,33 +40,54 @@
       </section>
     </header>
 
-    <!-- About Section -->
-    <section class="about-section flex flex-row justify-center">
-      <!-- Left column: Title -->
-      <div class="about-section__container px-8 flex py-16 mx-auto gap-12">
-        <h2
-          class="about-section__container--title text-5xl leading-tight text-inverse flex-1 self-start"
-        >
-          <span class="font-sans">About</span>
-          <span class="about-section__container--title--ekehi font-serif">
-            Ekehi
-          </span>
-        </h2>
+        <!-- About Section -->
+    <section class="about-section">
 
-        <!-- Right column: Content -->
-        <div
-          class="about-section__container--description flex flex-col gap-5 flex-1 px-16"
-        >
-          <p class="text-inverse text-sm font-light">
+      <!-- Background vectors -->
+      <img
+        src="../landing/vectors/cta-vector-left.svg"
+        aria-hidden="true"
+        class="about-section__vector about-section__vector--left"
+      />
+      <img
+        src="../landing/vectors/cta-vector-top-right.svg"
+        aria-hidden="true"
+        class="about-section__vector about-section__vector--top-right"
+      />
+      <img
+        src="../landing/vectors/cta-vector-bottom-right.svg"
+        aria-hidden="true"
+        class="about-section__vector about-section__vector--bottom-right"
+      />
+
+      <div class="about-section__container">
+
+        <!-- Left column: wordmark + inline icon -->
+        <div class="about-section__brand">
+          <h2 class="about-section__title">
+            <span class="about-section__title--about">About</span>
+            <span class="about-section__title--ekehi">Ekehi</span>
+            <img
+              src="../assets/icons/flower.svg"
+              alt=""
+              aria-hidden="true"
+              class="about-section__title--icon"
+            />
+          </h2>
+        </div>
+
+        <!-- Right column: description + button -->
+        <div class="about-section__content">
+          <p class="about-section__description">
             Ekehi is a business intelligence platform for women entrepreneurs
             and SME owners &#8212; providing a searchable database of active
             funding opportunities (VCs, grants, loans, credit schemes), business
             training programmes, and growth resources, all filterable by sector,
             stage, location and funding size.
           </p>
-
-          <a href="#" class="btn btn--secondary self-start">Learn more </a>
+          <a href="#" class="about-section__btn">Learn more</a>
         </div>
+
       </div>
     </section>
 
