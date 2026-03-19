@@ -18,6 +18,17 @@
   border-bottom: none;
 }
 
+.nav-background {
+  background-color: var(--color-bg-base);
+  border-bottom: 1px solid var(--color-border);
+  .nav__link {
+    color: var(--color-text-primary);
+  }
+  .nav__logo-wordmark {
+    color: var(--color-purple-800);
+  }
+}
+
 .nav__logo-wordmark,
 .nav__link,
 h1,
@@ -83,6 +94,11 @@ p {
 
   .nav__toggle-bar {
     background-color: white;
+  }
+  .nav-background {
+    .nav__toggle-bar {
+      background-color: var(--color-text-primary);
+    }
   }
 }
 
