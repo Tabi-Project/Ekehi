@@ -16,7 +16,7 @@ if (heroBtns) {
     }),
   );
   heroBtns.appendChild(
-    Button.create({ label: "Learn more", variant: "outline" }),
+    Button.create({ label: "Learn more", variant: "secondary" }),
   );
 }
 
