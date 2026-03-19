@@ -5,6 +5,7 @@ import "/shared/components/footer/footer.js";
 const heroBtns = document.querySelector(".hero__btns");
 const aboutBtnMount = document.querySelector(".about-btn-mount");
 const ctaBtnMount = document.querySelector(".cta-btn-mount");
+const cards = document.querySelectorAll(".offerings__card");
 
 if (heroBtns) {
   heroBtns.appendChild(
@@ -42,3 +43,13 @@ if (ctaBtnMount) {
     }),
   );
 }
+
+// offering section click setting
+cards.forEach((card) => {
+  card.addEventListener("click", () => {
+    cards.forEach((c) => {
+      c.classList.remove("offerings__card--active");
+    });
+    card.classList.add("offerings__card--active");
+  });
+});
