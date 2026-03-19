@@ -2,6 +2,7 @@ import api from "/shared/services/api.js";
 
 const TOKEN_KEY = "ekehi_access_token";
 const REFRESH_KEY = "ekehi_refresh_token";
+const ROLE_KEY = "ekehi_user_role";
 
 const AuthService = {
   async signup(email, password, firstName, lastName) {
@@ -25,6 +26,14 @@ const AuthService = {
     return body;
   },
 
+  getRole() {
+    return localStorage.getItem(ROLE_KEY) ?? "user";
+  },
+
+  hasRole(...roles) {
+    return roles.includes(AuthService.getRole());
+  },
+
   async logout() {
     try {
       await api.post("/auth/logout", {});
@@ -33,6 +42,7 @@ const AuthService = {
     } finally {
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(REFRESH_KEY);
+      localStorage.removeItem(ROLE_KEY);
       window.location.href = "/login/";
     }
   },
@@ -49,6 +59,7 @@ const AuthService = {
   _storeSession(session) {
     if (session?.access_token) localStorage.setItem(TOKEN_KEY, session.access_token);
     if (session?.refresh_token) localStorage.setItem(REFRESH_KEY, session.refresh_token);
+    if (session?.user?.role) localStorage.setItem(ROLE_KEY, session.user.role);
   },
 };
 

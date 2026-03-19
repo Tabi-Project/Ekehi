@@ -60,4 +60,75 @@ const getOpportunityById = async (req, res, next) => {
   }
 };
 
-module.exports = { getOpportunities, getOpportunityById };
+const createOpportunity = async (req, res, next) => {
+  try {
+    const opportunity = await opportunitiesService.createOpportunity(req.user.id, req.body);
+    return sendSuccess(res, { status: 201, message: "Opportunity submitted for review", data: opportunity });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const updateOpportunity = async (req, res, next) => {
+  try {
+    const opportunity = await opportunitiesService.updateOpportunity(req.params.id, req.user.id, req.body);
+    return sendSuccess(res, { status: 200, message: "Opportunity updated and resubmitted for review", data: opportunity });
+  } catch (err) {
+    if (err.status) return sendError(res, { status: err.status, message: err.message });
+    return next(err);
+  }
+};
+
+const saveOpportunity = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await opportunitiesService.saveOpportunity(req.user.id, id);
+    return sendSuccess(res, { status: 200, message: "Opportunity saved" });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const unsaveOpportunity = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await opportunitiesService.unsaveOpportunity(req.user.id, id);
+    return sendSuccess(res, {
+      status: 200,
+      message: "Opportunity removed from saved",
+    });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const getSavedOpportunities = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const { items, meta } = await opportunitiesService.getSavedOpportunities(
+      req.user.id,
+      {
+        page: Math.max(1, Number(page)),
+        limit: Math.min(100, Math.max(1, Number(limit))),
+      },
+    );
+    return sendSuccess(res, {
+      status: 200,
+      message: "Saved opportunities retrieved successfully",
+      data: items,
+      meta,
+    });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+module.exports = {
+  getOpportunities,
+  getOpportunityById,
+  createOpportunity,
+  updateOpportunity,
+  saveOpportunity,
+  unsaveOpportunity,
+  getSavedOpportunities,
+};

@@ -1,4 +1,5 @@
 import api from "/shared/services/api.js";
+import AuthService from "/shared/services/auth.service.js";
 import Dropdown from "/shared/components/dropdown/dropdown.js";
 import SearchBar from "/shared/components/search-bar/search-bar.js";
 import "/shared/components/nav/nav.js";
@@ -17,6 +18,11 @@ const filterContainer = document.getElementById("filter-dropdowns");
 const totalOpportunities = document.querySelector(".total");
 const listHead = document.querySelector(".list-head");
 const opportunityCard = document.querySelector(".opportunityCard");
+const listLabel = document.getElementById("list-label");
+const tabAllCount = document.getElementById("tab-all-count");
+const tabSavedCount = document.getElementById("tab-saved-count");
+
+let activeTab = "all";
 
 const filters = {
   sector: null,
@@ -145,6 +151,8 @@ async function loadOpportunities() {
     const total = res.meta?.total ?? opportunities.length;
 
     totalOpportunities.innerHTML = total;
+    tabAllCount.textContent = total;
+    listLabel.innerHTML = `All Opportunities (<span class="total">${total}</span>)`;
 
     if (total === 0) {
       opportunityCard.innerHTML = "<p>No Opportunities found</p>";
@@ -156,4 +164,52 @@ async function loadOpportunities() {
   }
 }
 
+async function loadSavedOpportunities() {
+  if (!AuthService.isLoggedIn()) {
+    opportunityCard.innerHTML = `<p>Please <a href="/login/">log in</a> to view your saved opportunities.</p>`;
+    return;
+  }
+
+  opportunityCard.innerHTML = `<p class='loading'>Loading saved opportunities…</p>`;
+  try {
+    const res = await api.get("/opportunities/saved");
+    const opportunities = res.data ?? [];
+    const total = res.meta?.total ?? opportunities.length;
+
+    tabSavedCount.textContent = total;
+    listLabel.innerHTML = `Saved Opportunities (<span class="total">${total}</span>)`;
+
+    if (total === 0) {
+      opportunityCard.innerHTML = "<p>You have no saved opportunities yet.</p>";
+    } else {
+      populateOpportunities(opportunities);
+    }
+  } catch (e) {
+    opportunityCard.innerHTML = `<p class='error-message'>There was an error fetching saved opportunities. ${e.message}</p>`;
+  }
+}
+
+function initTabs() {
+  document.querySelectorAll(".tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const selected = tab.dataset.tab;
+      if (selected === activeTab) return;
+
+      activeTab = selected;
+
+      document.querySelectorAll(".tab").forEach((t) => {
+        t.classList.toggle("tab--active", t.dataset.tab === activeTab);
+        t.setAttribute("aria-selected", String(t.dataset.tab === activeTab));
+      });
+
+      if (activeTab === "all") {
+        loadOpportunities();
+      } else {
+        loadSavedOpportunities();
+      }
+    });
+  });
+}
+
+initTabs();
 loadOpportunities();

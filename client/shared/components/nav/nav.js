@@ -1,5 +1,6 @@
 import AuthService from "/shared/services/auth.service.js";
 import Button from "/shared/components/button/button.js";
+import { REVIEWER_ROLES } from "/shared/utils/admin.utils.js";
 
 const USER_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
   <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.33 0-10 1.672-10 5v1h20v-1c0-3.328-6.67-5-10-5z"/>
@@ -16,13 +17,10 @@ const NAV_CONFIG = {
     { href: "/contributors/", label: "Contributors" },
     { href: "/opportunities/", label: "Opportunities" },
     { href: "/resources/", label: "Resources" },
-    { href: "#", label: "Submissions" },
   ],
   cta: {
     signup: { href: "/signup/", label: "Sign up" },
     login: { href: "/login/", label: "Log in" },
-    postjobs: { href: "#", label: "Post a job" },
-
   },
 };
 
@@ -61,6 +59,18 @@ class NavComponent {
     return anchor;
   }
 
+  #getRoleLinks() {
+    const isReviewer = AuthService.hasRole(...REVIEWER_ROLES);
+    const isContentEditor = AuthService.hasRole("content-editor");
+
+    const links = [];
+    if (isReviewer) links.push({ href: "/admin/", label: "Admin Dashboard" });
+    if (isReviewer) links.push({ href: "/admin/queue/", label: "Review Queue" });
+    if (isContentEditor) links.push({ href: "/submit/", label: "Submit Content" });
+    if (isContentEditor) links.push({ href: "/my-submissions/", label: "My Submissions" });
+    return links;
+  }
+
   #buildAvatar() {
     const wrapper = document.createElement("div");
     wrapper.className = "nav__avatar-wrapper";
@@ -77,17 +87,28 @@ class NavComponent {
     menu.className = "nav__avatar-menu";
     menu.setAttribute("role", "menu");
 
+    this.#getRoleLinks().forEach(({ href, label }) => {
+      const a = document.createElement("a");
+      a.href = href;
+      a.className = "nav__avatar-menu-item";
+      a.setAttribute("role", "menuitem");
+      a.textContent = label;
+      menu.appendChild(a);
+    });
+
+    if (menu.childElementCount > 0) {
+      const divider = document.createElement("hr");
+      divider.className = "nav__avatar-menu-divider";
+      menu.appendChild(divider);
+    }
+
     const logoutBtn = document.createElement("button");
     logoutBtn.type = "button";
     logoutBtn.className = "nav__avatar-menu-item";
     logoutBtn.setAttribute("role", "menuitem");
     logoutBtn.textContent = "Log out";
     logoutBtn.addEventListener("click", () => this.#logout());
-    
-
     menu.appendChild(logoutBtn);
-    
-
 
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -176,21 +197,12 @@ class NavComponent {
     return ul;
   }
 
-  #buildDesktopCTA({ signup, login, postjobs }) {
+  #buildDesktopCTA({ signup, login }) {
     const wrapper = document.createElement("div");
     wrapper.className = "nav__cta";
     wrapper.setAttribute("aria-label", "Account actions");
 
     if (this.#isLoggedIn()) {
-      wrapper.appendChild(
-      Button.create({
-        label: postjobs.label,
-        variant: "outline",
-        size: "sm",
-        as: "a",
-        href: postjobs.href,
-      })
-    ),
       wrapper.appendChild(this.#buildAvatar());
       return wrapper;
     }
@@ -213,16 +225,7 @@ class NavComponent {
         href: login.href,
       }),
     );
-     wrapper.appendChild(
-      Button.create({
-        label: postjobs.label,
-        variant: "outline",
-        size: "sm",
-        as: "a",
-        href: postjobs.href,
-      }),
-    );
-    
+
     return wrapper;
   }
 

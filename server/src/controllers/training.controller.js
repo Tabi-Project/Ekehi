@@ -66,4 +66,23 @@ const getTrainingProgrammeById = async (req, res, next) => {
   }
 };
 
-module.exports = { getTrainingProgrammes, getTrainingProgrammeById };
+const createTraining = async (req, res, next) => {
+  try {
+    const training = await trainingService.createTraining(req.user.id, req.body);
+    return sendSuccess(res, { status: 201, message: "Training submitted for review", data: training });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const updateTraining = async (req, res, next) => {
+  try {
+    const training = await trainingService.updateTraining(req.params.id, req.user.id, req.body);
+    return sendSuccess(res, { status: 200, message: "Training updated and resubmitted for review", data: training });
+  } catch (err) {
+    if (err.status) return sendError(res, { status: err.status, message: err.message });
+    return next(err);
+  }
+};
+
+module.exports = { getTrainingProgrammes, getTrainingProgrammeById, createTraining, updateTraining };

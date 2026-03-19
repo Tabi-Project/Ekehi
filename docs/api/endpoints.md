@@ -101,6 +101,56 @@ Log in an existing user.
 
 ---
 
+### POST /auth/refresh
+
+Exchange a refresh token for a new access token and refresh token pair.
+
+**Auth:** None
+
+**Body (JSON):**
+
+```json
+{
+  "refresh_token": "..."
+}
+```
+
+**Response `200 OK`:**
+
+```json
+{
+  "success": true,
+  "message": "Token refreshed successfully",
+  "data": {
+    "access_token": "...",
+    "refresh_token": "...",
+    "expires_at": 1234567890
+  }
+}
+```
+
+`400 Bad Request` — missing refresh_token
+
+```json
+{
+  "success": false,
+  "message": "refresh_token is required",
+  "data": null
+}
+```
+
+`401 Unauthorized` — invalid or expired refresh token
+
+```json
+{
+  "success": false,
+  "message": "Invalid or expired refresh token",
+  "data": null
+}
+```
+
+---
+
 ### POST /auth/logout
 
 Log out the current user and invalidate the session.
@@ -230,6 +280,117 @@ Get a single approved funding opportunity by ID.
 {
   "success": false,
   "message": "Opportunity not found",
+  "data": null
+}
+```
+
+---
+
+### GET /opportunities/saved
+
+Return the authenticated user's saved opportunities (paginated).
+
+**Auth:** `Bearer {{ekehi_access_token}}`
+
+**Query Params:**
+
+| Key     | Type   | Example | Description                            |
+| ------- | ------ | ------- | -------------------------------------- |
+| `page`  | number | `1`     | Page number (default: 1)               |
+| `limit` | number | `10`    | Items per page (default: 10, max: 100) |
+
+**Response `200 OK`:**
+
+```json
+{
+  "success": true,
+  "message": "Saved opportunities retrieved successfully",
+  "data": [ ...opportunity objects... ],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 5,
+    "totalPages": 1,
+    "hasNextPage": false,
+    "hasPrevPage": false
+  }
+}
+```
+
+**Response `401 Unauthorized`:**
+
+```json
+{
+  "success": false,
+  "message": "Missing or invalid Authorization header",
+  "data": null
+}
+```
+
+---
+
+### POST /opportunities/:id/save
+
+Save an opportunity to the authenticated user's bookmarks. Idempotent — saving an already-saved opportunity is a no-op.
+
+**Auth:** `Bearer {{ekehi_access_token}}`
+
+**Path Variable:**
+
+| Key  | Example                                |
+| ---- | -------------------------------------- |
+| `id` | `edbb662e-7e0b-490b-9ce4-0aeb87406796` |
+
+**Response `200 OK`:**
+
+```json
+{
+  "success": true,
+  "message": "Opportunity saved",
+  "data": null
+}
+```
+
+**Response `401 Unauthorized`:**
+
+```json
+{
+  "success": false,
+  "message": "Missing or invalid Authorization header",
+  "data": null
+}
+```
+
+---
+
+### DELETE /opportunities/:id/save
+
+Remove an opportunity from the authenticated user's bookmarks.
+
+**Auth:** `Bearer {{ekehi_access_token}}`
+
+**Path Variable:**
+
+| Key  | Example                                |
+| ---- | -------------------------------------- |
+| `id` | `edbb662e-7e0b-490b-9ce4-0aeb87406796` |
+
+**Response `200 OK`:**
+
+```json
+{
+  "success": true,
+  "message": "Opportunity removed from saved",
+  "data": null
+}
+```
+
+**Response `401 Unauthorized`:**
+
+```json
+{
+  "success": false,
+  "message": "Missing or invalid Authorization header",
   "data": null
 }
 ```

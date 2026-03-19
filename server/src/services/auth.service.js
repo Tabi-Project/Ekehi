@@ -48,7 +48,14 @@ const signIn = async ({ email, password }) => {
     password,
   });
   if (error) throw error;
-  return data;
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", data.user.id)
+    .single();
+
+  return { ...data, role: profile?.role ?? "user" };
 };
 
 const signOut = async (accessToken) => {

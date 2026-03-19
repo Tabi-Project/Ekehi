@@ -179,6 +179,7 @@
   font-size: var(--text-base);
 }
 
+
 @media screen and (max-width: 768px) {
   .detail-title {
     font-size: var(--text-2xl);

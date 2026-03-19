@@ -1,4 +1,7 @@
 import api from "/shared/services/api.js";
+import AuthService from "/shared/services/auth.service.js";
+import Modal from "/shared/components/modal/modal.js";
+import Button from "/shared/components/button/button.js";
 import "/shared/components/nav/nav.js";
 import "/shared/components/footer/footer.js";
 import {
@@ -93,16 +96,98 @@ function renderBody(opp) {
     </section>`;
 }
 
-function renderActions(opp) {
-  const applyLink = opp.apply_url
-    ? `<a href="${opp.apply_url}" target="_blank" rel="noopener noreferrer" class="btn btn--primary apply-btn">Apply now</a>`
-    : '<p class="no-apply">No application link available.</p>';
+function buildActions(opp) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "detail-actions";
 
-  const contactLine = opp.contact_email
-    ? `<p class="detail-contact">Contact: <a href="mailto:${opp.contact_email}">${opp.contact_email}</a></p>`
-    : "";
+  if (opp.apply_url) {
+    const applyBtn = Button.create({ label: "Apply now", variant: "primary", as: "a", href: opp.apply_url, className: "apply-btn" });
+    applyBtn.target = "_blank";
+    applyBtn.rel = "noopener noreferrer";
+    wrapper.appendChild(applyBtn);
+  } else {
+    const p = document.createElement("p");
+    p.className = "no-apply";
+    p.textContent = "No application link available.";
+    wrapper.appendChild(p);
+  }
 
-  return `<div class="detail-actions">${applyLink}${contactLine}</div>`;
+  const saveBtn = Button.create({ label: "🔖 Save", variant: "outline", className: "save-btn" });
+  saveBtn.dataset.id = opp.id;
+  saveBtn.dataset.saved = "false";
+  saveBtn.setAttribute("aria-pressed", "false");
+  wrapper.appendChild(saveBtn);
+
+  if (opp.contact_email) {
+    const p = document.createElement("p");
+    p.className = "detail-contact";
+    p.innerHTML = `Contact: <a href="mailto:${opp.contact_email}">${opp.contact_email}</a>`;
+    wrapper.appendChild(p);
+  }
+
+  return wrapper;
+}
+
+let saveModal;
+
+function initSaveModal() {
+  saveModal = new Modal({
+    id: "save-modal",
+    className: "modal--centered",
+    content: `
+      <img src="/shared/assets/ekehi-icon.svg" alt="Ekehi" class="modal__icon" />
+      <h2 id="save-modal-title" class="modal__title">Save this opportunity</h2>
+      <p class="modal__body">Create a free account to save and track opportunities that matter to you.</p>
+      <div class="modal__actions"></div>`,
+  });
+
+  const actions = saveModal.el.querySelector(".modal__actions");
+
+  actions.appendChild(Button.create({ label: "Create account", variant: "primary", as: "a", href: "/signup/" }));
+
+  const alreadyP = document.createElement("p");
+  alreadyP.style.cssText = "font-size:var(--text-sm);color:var(--color-text-muted);";
+  alreadyP.innerHTML = `Already have an account? <a href="/login/" style="color:var(--color-primary);">Login</a>`;
+  actions.appendChild(alreadyP);
+
+  actions.appendChild(Button.create({ label: "Continue browsing", variant: "ghost", onClick: () => saveModal.close() }));
+}
+
+async function initSaveButton(opportunityId) {
+  const btn = document.querySelector(".save-btn");
+  if (!btn) return;
+
+  if (AuthService.isLoggedIn()) {
+    const savedRes = await api.get("/opportunities/saved").catch(() => null);
+    const savedIds = savedRes?.data?.map((o) => o.id) ?? [];
+    setSavedState(btn, savedIds.includes(opportunityId));
+  }
+
+  btn.addEventListener("click", async () => {
+    if (!AuthService.isLoggedIn()) {
+      saveModal.open();
+      return;
+    }
+
+    const saved = btn.dataset.saved === "true";
+    setSavedState(btn, !saved);
+
+    try {
+      if (saved) {
+        await api.delete(`/opportunities/${opportunityId}/save`);
+      } else {
+        await api.post(`/opportunities/${opportunityId}/save`, {});
+      }
+    } catch {
+      setSavedState(btn, saved);
+    }
+  });
+}
+
+function setSavedState(btn, isSaved) {
+  btn.dataset.saved = String(isSaved);
+  btn.setAttribute("aria-pressed", String(isSaved));
+  btn.textContent = isSaved ? "🔖 Saved" : "🔖 Save";
 }
 
 function render(opp) {
@@ -116,8 +201,11 @@ function render(opp) {
     ${renderHeader(opp)}
     ${renderStats(opp, deadlineDate)}
     ${renderBody(opp)}
-    ${renderActions(opp)}
   `;
+
+  root.appendChild(buildActions(opp));
+  initSaveModal();
+  initSaveButton(opp.id);
 }
 
 function renderError(message) {

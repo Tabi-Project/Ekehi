@@ -37,9 +37,19 @@
         <div class="opportunities__dropdowns flex" id="filter-dropdowns"></div>
       </section>
 
+      <!-- Tabs -->
+      <div class="opportunities__tabs" role="tablist">
+        <button class="tab tab--active" role="tab" aria-selected="true" data-tab="all" id="tab-all">
+          All opportunities (<span id="tab-all-count">0</span>)
+        </button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="saved" id="tab-saved">
+          Saved (<span id="tab-saved-count">0</span>)
+        </button>
+      </div>
+
       <!-- Opportunities List -->
       <section id="opportunity-list-display" aria-label="opportunities">
-        <p class="total-opportunities">
+        <p class="total-opportunities" id="list-label">
           All Opportunities (<span class="total"></span>)
         </p>
 
