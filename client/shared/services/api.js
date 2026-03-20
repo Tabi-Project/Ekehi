@@ -1,7 +1,38 @@
 const BASE_URL = "https://api-ekehi-dev.onrender.com/api/v1";
 
-async function request(path, options = {}) {
-  const token = localStorage.getItem("ekehi_access_token");
+const TOKEN_KEY = "ekehi_access_token";
+const REFRESH_KEY = "ekehi_refresh_token";
+
+function clearSession() {
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(REFRESH_KEY);
+  window.location.href = "/login/";
+}
+
+async function tryRefresh() {
+  const refreshToken = localStorage.getItem(REFRESH_KEY);
+  if (!refreshToken) return false;
+
+  try {
+    const res = await fetch(`${BASE_URL}/auth/refresh`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    });
+
+    if (!res.ok) return false;
+
+    const body = await res.json();
+    localStorage.setItem(TOKEN_KEY, body.data.access_token);
+    localStorage.setItem(REFRESH_KEY, body.data.refresh_token);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function request(path, options = {}, _retry = false) {
+  const token = localStorage.getItem(TOKEN_KEY);
 
   const headers = {
     "Content-Type": "application/json",
@@ -12,10 +43,10 @@ async function request(path, options = {}) {
   const response = await fetch(`${BASE_URL}${path}`, { ...options, headers });
   const body = await response.json().catch(() => ({}));
 
-  if (response.status === 401) {
-    localStorage.removeItem("ekehi_access_token");
-    localStorage.removeItem("ekehi_refresh_token");
-    window.location.href = "/login/";
+  if (response.status === 401 && !_retry) {
+    const refreshed = await tryRefresh();
+    if (refreshed) return request(path, options, true);
+    clearSession();
     return;
   }
 

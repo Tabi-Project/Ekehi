@@ -20,8 +20,7 @@ const AuthService = {
   async login(email, password) {
     const body = await api.post("/auth/login", { email, password });
     if (body.data) {
-      localStorage.setItem(TOKEN_KEY, body.data.access_token);
-      localStorage.setItem(REFRESH_KEY, body.data.refresh_token);
+      AuthService._storeSession(body.data);
     }
     return body;
   },
