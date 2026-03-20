@@ -120,3 +120,6 @@ body {
     padding-inline: var(--space-5);
   }
 }
+.auth-step[hidden] {
+  display: none;
+}
