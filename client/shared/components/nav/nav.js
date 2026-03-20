@@ -9,7 +9,7 @@ const USER_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height
 const NAV_CONFIG = {
   logo: {
     href: "/",
-    src: "/assets/icons/ekehi-logo.png",
+    src: "/assets/icons/ekehi-logo2.png",
     alt: "Ekehi",
     wordmark: "ekehi",
   },
@@ -219,7 +219,7 @@ class NavComponent {
     wrapper.appendChild(
       Button.create({
         label: login.label,
-        variant: "outline",
+        variant: "secondary",
         size: "sm",
         as: "a",
         href: login.href,
