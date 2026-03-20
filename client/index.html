@@ -19,30 +19,26 @@
       <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
 
       <!-- Hero Section -->
-      <section class="hero | flex flex-col justify-center items-center">
+      <section class="hero">
         <div class="hero__content">
-          <h1 class="leading-tight">
-            Find funding and resources built for you
-          </h1>
-          <p class="leading-relaxed">
-            Grants, loans, training programmes, and growth resources for
-            women-led businesses - searchable and always up to date.
-          </p>
-          <div class="hero__btns"></div>
+          <div class="hero__content-title">
+            <h1 class="leading-tight">
+              Find funding and resources built for you
+            </h1>
+          </div>
+          <div class="hero__content-paragraph">
+            <p class="leading-relaxed">
+              Grants, loans, training programmes, and growth resources for
+              women-led businesses - searchable and always up to date.
+            </p>
+            <div class="hero__btns"></div>
+          </div>
         </div>
-        <figure class="hero__display">
-          <img
-            src="assets/images/hero-display.jpg"
-            alt="Woman entrepreneur reviewing business documents at her desk"
-            class="hero-display__image"
-          />
-        </figure>
       </section>
     </header>
 
-        <!-- About Section -->
+    <!-- About Section -->
     <section class="about-section">
-
       <!-- Background vectors -->
       <img
         src="../landing/vectors/cta-vector-left.svg"
@@ -61,7 +57,6 @@
       />
 
       <div class="about-section__container">
-
         <!-- Left column: wordmark + inline icon -->
         <div class="about-section__brand">
           <h2 class="about-section__title">
@@ -87,7 +82,6 @@
           </p>
           <a href="#" class="about-section__btn">Learn more</a>
         </div>
-
       </div>
     </section>
 
@@ -111,13 +105,19 @@
 
       <figure class="value-proposition__visual mx-auto w-full rounded-xl">
         <img
-          src="assets/images/value-proposition-display.jpg"
+          src="assets/images/value-proposition-display.png"
           alt="Ekehi platform collage showing funding and business resources"
           class="value-proposition__visual-image"
         />
+        <div class="value-proposition__overlay" aria-hidden="true"></div>
       </figure>
 
       <div class="value-proposition__captions flex flex-row gap-8 mx-auto">
+        <p class="value-proposition__caption flex-1 text-muted">
+          You get clear summaries, real deadlines, eligibility breakdowns, and
+          direct application links. No digging. No insider spreadsheets. Just
+          aligned access.
+        </p>
         <p class="value-proposition__caption flex-1 text-muted">
           You get clear summaries, real deadlines, eligibility breakdowns, and
           direct application links. No digging. No insider spreadsheets. Just
@@ -160,64 +160,69 @@
 
     <!-- What We Offer Section -->
     <section class="offerings" aria-labelledby="offerings-heading">
-      <header class="offerings__header">
-        <h2 class="offerings__title" id="offerings-heading">What we offer</h2>
-        <p class="offerings__subtitle">
-          Grants, loans, training programmes, and growth resources for women-led
-          businesses
-        </p>
-      </header>
+      <!-- grid container -->
+      <div class="offerings__grid">
+        <!-- left column -->
+        <div class="offerings__left">
+          <h2 class="offerings__title" id="offerings-heading">What we offer</h2>
+          <ul
+            class="offerings__list"
+            aria-label="Key features of Ekehi platform"
+          >
+            <li class="offerings__item">
+              <div class="offerings__card">
+                <h3 class="offerings__card-title">Funding Database</h3>
+                <p class="offerings__card-description">
+                  Find active grants, loans, and VC funds filtered to your
+                  sector and stage.
+                </p>
+              </div>
+            </li>
 
-      <div class="offerings__body">
-        <ul class="offerings__list" aria-label="Key features of Ekehi platform">
-          <li class="offerings__item" aria-current="true">
-            <article class="offerings__card">
-              <h3 class="offerings__card-title">Funding Database</h3>
-              <p class="offerings__card-description">
-                Find active grants, loans, and VC funds filtered to your sector
-                and stage.
-              </p>
-            </article>
-          </li>
+            <li class="offerings__item" aria-current="true">
+              <div class="offerings__card offerings__card--active">
+                <h3 class="offerings__card-title">Training Programmes</h3>
+                <p class="offerings__card-description">
+                  Browse accelerators, workshops, and courses designed for women
+                  entrepreneurs.
+                </p>
+              </div>
+            </li>
 
-          <li class="offerings__item">
-            <article class="offerings__card">
-              <h3 class="offerings__card-title">Training Programmes</h3>
-              <p class="offerings__card-description">
-                Browse accelerators, workshops, and courses designed for women
-                entrepreneurs.
-              </p>
-            </article>
-          </li>
+            <li class="offerings__item">
+              <div class="offerings__card">
+                <h3 class="offerings__card-title">Business Tools</h3>
+                <p class="offerings__card-description">
+                  Templates, guides, and frameworks to help you plan, pitch, and
+                  scale.
+                </p>
+              </div>
+            </li>
 
-          <li class="offerings__item">
-            <article class="offerings__card">
-              <h3 class="offerings__card-title">Business Tools</h3>
-              <p class="offerings__card-description">
-                Templates, guides, and frameworks to help you plan, pitch, and
-                scale.
-              </p>
-            </article>
-          </li>
+            <li class="offerings__item">
+              <div class="offerings__card">
+                <h3 class="offerings__card-title">Mentorship Network</h3>
+                <p class="offerings__card-description">
+                  Connect with experienced founders and advisors who've built
+                  what you're building.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
 
-          <li class="offerings__item">
-            <article class="offerings__card">
-              <h3 class="offerings__card-title">Mentorship Network</h3>
-              <p class="offerings__card-description">
-                Connect with experienced founders and advisors who've built what
-                you're building.
-              </p>
-            </article>
-          </li>
-        </ul>
-
-        <figure class="offerings__visual">
+        <!-- right column -->
+        <div class="offerings__right">
+          <p class="offerings__subtitle">
+            Grants, loans, training programmes, and growth resources for
+            women-led businesses
+          </p>
           <img
-            src="assets/images/offerings-display.jpg"
-            alt="Woman entrepreneur smiling while using her laptop"
-            class="offerings__visual-image"
+            src="/assets/images/offerings-display.jpg"
+            alt="A black woman speaking or presenting to a small group of black women"
+            class="offerings__image"
           />
-        </figure>
+        </div>
       </div>
     </section>
 
