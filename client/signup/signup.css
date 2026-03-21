@@ -10,6 +10,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: var(--color-bg-base);
+  padding-block: var(--space-12);
 }
 
 /* ── auth-container — centred card ──────────────────── */
