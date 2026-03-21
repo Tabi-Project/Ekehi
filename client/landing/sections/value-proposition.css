@@ -5,6 +5,7 @@
 
 .value-proposition__description {
   padding-top: var(--space-2);
+  font-family: var(--font-inter);
 }
 
 .value-proposition__visual {
@@ -28,6 +29,10 @@
 
 .value-proposition__captions {
   max-width: var(--container-wide);
+  font-family: var(--font-inter);
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 @media (max-width: 768px) {
@@ -53,7 +58,7 @@
   }
 
   .value-proposition__captions {
-    flex-direction: column;
+    grid-template-columns: repeat(1, 1fr);
     gap: var(--space-4);
   }
 }
