@@ -10,7 +10,6 @@ body {
   align-items: center;
   justify-content: center;
   background-color: var(--color-bg-base);
-  padding-block: var(--space-12);
 }
 
 /* ── auth-container — centred card ──────────────────── */
@@ -20,6 +19,7 @@ body {
   padding-inline: var(--space-6);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: var(--space-4);
 }

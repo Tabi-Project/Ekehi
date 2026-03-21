@@ -88,7 +88,7 @@ document.getElementById('continue-btn').addEventListener('click', () => {
 
 // ── Step 1 — Back (go to login) ────────────────────────
 document.getElementById('back-btn-1').addEventListener('click', () => {
-  window.location.href = '/client/login/index.html';
+  window.location.href = '/login/';
 });
 
 // ── Step 2 — Back (return to step 1) ──────────────────
