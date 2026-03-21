@@ -41,7 +41,7 @@ const getOpportunities = async (req, res, next) => {
 const getOpportunityById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const opportunity = await opportunitiesService.getOpportunityById(id);
+    const opportunity = await opportunitiesService.getOpportunityById(id, req.user?.id);
 
     if (!opportunity) {
       return sendError(res, { status: 404, message: "Opportunity not found" });

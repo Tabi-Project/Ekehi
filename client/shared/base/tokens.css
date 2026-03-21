@@ -34,6 +34,7 @@
   --color-primary-hover: var(--color-purple-600);
   --color-primary-active: var(--color-purple-700);
   --color-primary-subtle: var(--color-purple-50);
+  --color-error: #d72525;
 
   /* Backgrounds */
   --color-bg-base: var(--color-white);

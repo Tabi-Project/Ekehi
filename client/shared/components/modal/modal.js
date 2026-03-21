@@ -25,9 +25,15 @@ export default class Modal {
   }
 
   #attachListeners() {
-    // Backdrop click closes the modal
+    // Close only when clicking the backdrop (outside the dialog box)
     this.#dialog.addEventListener("click", (e) => {
-      if (e.target === this.#dialog) this.close();
+      const rect = this.#dialog.getBoundingClientRect();
+      const isBackdrop =
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom;
+      if (isBackdrop) this.close();
     });
 
     // Escape key is handled natively by <dialog>, but we listen for it

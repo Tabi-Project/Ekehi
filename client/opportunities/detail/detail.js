@@ -11,11 +11,26 @@ import {
   humanize,
 } from "/shared/utils/opportunity.utils.js";
 
-const root = document.getElementById("detail-root");
+const SAVE_LABEL = { saved: "Saved", unsaved: "Save" };
+
+function getElements() {
+  const root = document.getElementById("detail-root");
+  if (!root) throw new Error("detail-root element not found");
+  return {
+    root,
+    contentEl: root.querySelector(".detail-content"),
+    asideEl: root.querySelector(".detail-aside"),
+    loadingEl: root.querySelector(".loading"),
+    refCodeEl: document.getElementById("detail-ref-code"),
+    currentDetailEl: document.querySelector(".current-detail-page"),
+  };
+}
+
+const els = getElements();
 
 function escapeHtml(str) {
-  if (!str) return "—";
-  return str
+  if (str == null) return "";
+  return String(str)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -30,59 +45,39 @@ function tagList(arr) {
     .join("");
 }
 
-function breadcrumb(refCode = "") {
-  return `
-    <nav class="detail-breadcrumb flex items-center justify-between" aria-label="Breadcrumb">
-      <a href="/opportunities/" class="back-link">← Back to Opportunities</a>
-      ${refCode ? `<span class="ref-code">${refCode}</span>` : ""}
-    </nav>`;
+function eligibilityList(str) {
+  if (!str) return "<p>—</p>";
+  const items = str
+    .split(".")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return `<ul class="eligibility-list">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
 }
 
 function renderHeader(opp) {
   return `
     <header class="detail-header">
+      <h1 class="detail-title">${escapeHtml(opp.opportunity_title)}</h1>
       <div class="detail-header__badges">
-        <span class="badge badge--${opp.status}">${humanize(opp.status)}</span>
         <span class="badge badge--type">${humanize(opp.opportunity_type)}</span>
+        <span class="badge badge--${escapeHtml(opp.status)}">${humanize(opp.status)}</span>
         ${opp.is_women_only ? '<span class="badge badge--flag">Women only</span>' : ""}
         ${opp.is_equity_free ? '<span class="badge badge--flag">Equity free</span>' : ""}
       </div>
-      <h1 class="detail-title">${opp.opportunity_title}</h1>
-      <p class="detail-funder">${opp.funder_name}</p>
     </header>`;
-}
-
-function renderStats(opp, deadlineDate) {
-  const deadlineSub = daysUntil(deadlineDate);
-  return `
-    <section class="detail-stats">
-      <div class="detail-stat">
-        <span class="detail-stat__label">Funding</span>
-        <span class="detail-stat__value">${formatAmount(opp.amount_min, opp.amount_max, opp.currency)}</span>
-      </div>
-      <div class="detail-stat">
-        <span class="detail-stat__label">Deadline</span>
-        <span class="detail-stat__value">${formatDate(deadlineDate)}</span>
-        ${deadlineSub ? `<span class="detail-stat__sub">${deadlineSub}</span>` : ""}
-      </div>
-      <div class="detail-stat">
-        <span class="detail-stat__label">Country</span>
-        <span class="detail-stat__value">${opp.country ?? "—"}</span>
-      </div>
-    </section>`;
 }
 
 function renderBody(opp) {
   return `
     <section class="detail-body">
-      <article class="detail-section">
+      <div class="detail-section">
         <h2>About this opportunity</h2>
-        <p>${escapeHtml(opp.description)}</p>
-      </article>
-      <article class="detail-section">
+        <p>${escapeHtml(opp.description) || "—"}</p>
+      </div>
+      <div class="detail-section">
         <h2>Eligibility criteria</h2>
-        <p>${escapeHtml(opp.eligibility_criteria)}</p>
-      </article>
+        ${eligibilityList(opp.eligibility_criteria)}
+      </div>
       <div class="detail-tags-row">
         <div class="detail-section">
           <h2>Sectors</h2>
@@ -96,76 +91,115 @@ function renderBody(opp) {
     </section>`;
 }
 
-function buildActions(opp) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "detail-actions";
+function renderAsideHTML(opp, deadlineDate) {
+  const deadlineSub = daysUntil(deadlineDate);
+  const contactEmail = escapeHtml(opp.contact_email);
+  const contactHTML = contactEmail
+    ? `<p class="detail-contact">Contact: <a href="mailto:${contactEmail}">${contactEmail}</a></p>`
+    : "";
 
-  if (opp.apply_url) {
-    const applyBtn = Button.create({ label: "Apply now", variant: "primary", as: "a", href: opp.apply_url, className: "apply-btn" });
-    applyBtn.target = "_blank";
-    applyBtn.rel = "noopener noreferrer";
-    wrapper.appendChild(applyBtn);
+  return `
+    <div class="aside-actions"></div>
+    <dl class="detail-meta">
+      <div class="detail-meta__item">
+        <dt class="detail-meta__label">Organiser</dt>
+        <dd class="detail-meta__value">${escapeHtml(opp.funder_name) || "—"}</dd>
+      </div>
+      <div class="detail-meta__item">
+        <dt class="detail-meta__label">Amount</dt>
+        <dd class="detail-meta__value">${formatAmount(opp.amount_min, opp.amount_max, opp.currency)}</dd>
+      </div>
+      <div class="detail-meta__item">
+        <dt class="detail-meta__label">Deadline</dt>
+        <dd class="detail-meta__value">
+          ${formatDate(deadlineDate)}
+          ${deadlineSub ? `<br><span class="detail-meta__sub">${deadlineSub}</span>` : ""}
+        </dd>
+      </div>
+      <div class="detail-meta__item">
+        <dt class="detail-meta__label">Country/Region</dt>
+        <dd class="detail-meta__value">${escapeHtml(opp.country) || "—"}</dd>
+      </div>
+      ${contactHTML}
+    </dl>
+  `;
+}
+
+function appendApplyAction(actionsEl, applyUrl) {
+  if (applyUrl) {
+    const btn = Button.create({
+      label: "Apply",
+      variant: "primary",
+      as: "a",
+      href: applyUrl,
+      className: "apply-btn",
+    });
+    btn.target = "_blank";
+    btn.rel = "noopener noreferrer";
+    actionsEl.appendChild(btn);
   } else {
     const p = document.createElement("p");
     p.className = "no-apply";
     p.textContent = "No application link available.";
-    wrapper.appendChild(p);
+    actionsEl.appendChild(p);
   }
-
-  const saveBtn = Button.create({ label: "🔖 Save", variant: "outline", className: "save-btn" });
-  saveBtn.dataset.id = opp.id;
-  saveBtn.dataset.saved = "false";
-  saveBtn.setAttribute("aria-pressed", "false");
-  wrapper.appendChild(saveBtn);
-
-  if (opp.contact_email) {
-    const p = document.createElement("p");
-    p.className = "detail-contact";
-    p.innerHTML = `Contact: <a href="mailto:${opp.contact_email}">${opp.contact_email}</a>`;
-    wrapper.appendChild(p);
-  }
-
-  return wrapper;
 }
 
-let saveModal;
+function appendSaveButton(actionsEl, oppId) {
+  const saveBtn = Button.create({
+    label: SAVE_LABEL.unsaved,
+    variant: "outline",
+    className: "save-btn",
+  });
+  saveBtn.dataset.id = oppId;
+  saveBtn.dataset.saved = "false";
+  saveBtn.setAttribute("aria-pressed", "false");
+  actionsEl.appendChild(saveBtn);
+  return saveBtn;
+}
 
-function initSaveModal() {
-  saveModal = new Modal({
+function buildAside(opp, deadlineDate) {
+  els.asideEl.innerHTML = renderAsideHTML(opp, deadlineDate);
+  const actionsEl = els.asideEl.querySelector(".aside-actions");
+  appendApplyAction(actionsEl, opp.apply_url);
+  return appendSaveButton(actionsEl, opp.id);
+}
+
+function createSaveModal() {
+  const modal = new Modal({
     id: "save-modal",
     className: "modal--centered",
     content: `
-      <img src="/shared/assets/ekehi-icon.svg" alt="Ekehi" class="modal__icon" />
-      <h2 id="save-modal-title" class="modal__title">Save this opportunity</h2>
+      <img src="/assets/icons/ekehi-logo2.png" alt="Ekehi" class="modal__icon" />
+      <h2 class="modal__title">Save this opportunity</h2>
       <p class="modal__body">Create a free account to save and track opportunities that matter to you.</p>
-      <div class="modal__actions"></div>`,
+      <div class="modal__actions">
+        <a href="/signup/" class="btn btn--primary">Create account</a>
+        <p class="modal__login-hint">Already have an account? <a href="/login/">Login</a></p>
+      </div>`,
   });
 
-  const actions = saveModal.el.querySelector(".modal__actions");
+  modal.el.querySelector(".modal__actions").appendChild(
+    Button.create({
+      label: "Continue browsing",
+      variant: "ghost",
+      onClick: () => modal.close(),
+    }),
+  );
 
-  actions.appendChild(Button.create({ label: "Create account", variant: "primary", as: "a", href: "/signup/" }));
-
-  const alreadyP = document.createElement("p");
-  alreadyP.style.cssText = "font-size:var(--text-sm);color:var(--color-text-muted);";
-  alreadyP.innerHTML = `Already have an account? <a href="/login/" style="color:var(--color-primary);">Login</a>`;
-  actions.appendChild(alreadyP);
-
-  actions.appendChild(Button.create({ label: "Continue browsing", variant: "ghost", onClick: () => saveModal.close() }));
+  return modal;
 }
 
-async function initSaveButton(opportunityId) {
-  const btn = document.querySelector(".save-btn");
-  if (!btn) return;
+function setSavedState(btn, isSaved) {
+  btn.dataset.saved = String(isSaved);
+  btn.setAttribute("aria-pressed", String(isSaved));
+  btn.textContent = isSaved ? SAVE_LABEL.saved : SAVE_LABEL.unsaved;
+}
 
-  if (AuthService.isLoggedIn()) {
-    const savedRes = await api.get("/opportunities/saved").catch(() => null);
-    const savedIds = savedRes?.data?.map((o) => o.id) ?? [];
-    setSavedState(btn, savedIds.includes(opportunityId));
-  }
-
+function registerSaveClick(btn, opportunityId, modal) {
   btn.addEventListener("click", async () => {
     if (!AuthService.isLoggedIn()) {
-      saveModal.open();
+      modal.open();
       return;
     }
 
@@ -184,32 +218,39 @@ async function initSaveButton(opportunityId) {
   });
 }
 
-function setSavedState(btn, isSaved) {
-  btn.dataset.saved = String(isSaved);
-  btn.setAttribute("aria-pressed", String(isSaved));
-  btn.textContent = isSaved ? "🔖 Saved" : "🔖 Save";
+function initSaveButton(saveBtn, opp, modal) {
+  if (AuthService.isLoggedIn()) setSavedState(saveBtn, opp.is_saved ?? false);
+  registerSaveClick(saveBtn, opp.id, modal);
+}
+
+function updatePageMeta(opp) {
+  document.title = `Ekehi — ${opp.opportunity_title}`;
+  if (opp.reference_code) els.refCodeEl.textContent = opp.reference_code;
+  if (opp.opportunity_title)
+    els.currentDetailEl.textContent = opp.opportunity_title;
 }
 
 function render(opp) {
-  document.title = `Ekehi — ${opp.opportunity_title}`;
+  updatePageMeta(opp);
+
   const deadlineDate = opp.application_deadline
     ? new Date(opp.application_deadline)
     : null;
 
-  root.innerHTML = `
-    ${breadcrumb(opp.reference_code)}
-    ${renderHeader(opp)}
-    ${renderStats(opp, deadlineDate)}
-    ${renderBody(opp)}
-  `;
+  els.contentEl.innerHTML = `${renderHeader(opp)}${renderBody(opp)}`;
 
-  root.appendChild(buildActions(opp));
-  initSaveModal();
-  initSaveButton(opp.id);
+  const saveBtn = buildAside(opp, deadlineDate);
+
+  els.loadingEl.remove();
+  els.root.classList.add("is-loaded");
+
+  const modal = createSaveModal();
+  initSaveButton(saveBtn, opp, modal);
 }
 
 function renderError(message) {
-  root.innerHTML = `${breadcrumb()}<p class="error-message">${message}</p>`;
+  els.loadingEl.className = "error-message";
+  els.loadingEl.textContent = message;
 }
 
 async function loadOpportunity() {
@@ -220,8 +261,6 @@ async function loadOpportunity() {
     return;
   }
 
-  root.innerHTML = `<p class="loading">Loading opportunity…</p>`;
-
   try {
     const res = await api.get(`/opportunities/${id}`);
     if (!res.data) {
@@ -229,8 +268,10 @@ async function loadOpportunity() {
       return;
     }
     render(res.data);
-  } catch (e) {
-    renderError(`There was an error loading this opportunity. ${e.message}`);
+  } catch (error) {
+    renderError(
+      `There was an error loading this opportunity. ${error.message}`,
+    );
   }
 }
 

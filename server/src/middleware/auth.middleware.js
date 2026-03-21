@@ -27,4 +27,20 @@ const requireAuth = async (req, res, next) => {
   return next();
 };
 
-module.exports = { requireAuth };
+/**
+ * optionalAuth — same as requireAuth but never blocks the request.
+ * Attaches req.user if a valid token is present; otherwise continues.
+ */
+const optionalAuth = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) return next();
+
+  const token = authHeader.split(" ")[1];
+  const { data } = await supabase.auth.getUser(token);
+  if (data?.user) req.user = data.user;
+
+  return next();
+};
+
+module.exports = { requireAuth, optionalAuth };

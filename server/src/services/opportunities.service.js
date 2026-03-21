@@ -73,7 +73,7 @@ const getOpportunities = async ({
   };
 };
 
-const getOpportunityById = async (id) => {
+const getOpportunityById = async (id, userId = null) => {
   const { data, error } = await supabase
     .from("funding_opportunities")
     .select("*")
@@ -82,7 +82,20 @@ const getOpportunityById = async (id) => {
     .single();
 
   if (error) throw error;
-  return data;
+  if (!data) return null;
+
+  let is_saved = false;
+  if (userId) {
+    const { data: saved } = await supabase
+      .from("saved_opportunities")
+      .select("opportunity_id")
+      .eq("user_id", userId)
+      .eq("opportunity_id", id)
+      .maybeSingle();
+    is_saved = !!saved;
+  }
+
+  return { ...data, is_saved };
 };
 
 const createOpportunity = async (submittedBy, fields) => {

@@ -1,6 +1,10 @@
 .modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border: none;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-sm);
   padding: var(--space-10) var(--space-8);
   max-width: 26rem;
   width: 90%;
@@ -21,6 +25,8 @@
   height: 3rem;
   margin: 0 auto var(--space-4);
   display: block;
+  object-position: center;
+  object-fit: cover;
 }
 
 .modal__title {
