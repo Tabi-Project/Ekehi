@@ -405,13 +405,11 @@
 .badge--open {
   background-color: #f9e6ff;
   color: #9900cc;
-  width: 4rem;
 }
 
 .badge--closed {
   background-color: #ffe6e6;
   color: #d72525;
-  width: 5rem;
 }
 
 .badge--type {

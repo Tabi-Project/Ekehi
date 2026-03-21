@@ -65,6 +65,7 @@ class Dropdown {
     trigger.className = "dropdown__trigger";
     trigger.setAttribute("aria-haspopup", "listbox");
     trigger.setAttribute("aria-expanded", "false");
+    trigger.setAttribute("aria-selected", selected ? "true" : "false");
 
     let currentValue = selected ?? null;
 
@@ -102,6 +103,7 @@ class Dropdown {
           // Deselect
           currentValue = null;
           labelEl.textContent = label;
+          trigger.setAttribute("aria-selected", "false");
           panel.querySelectorAll(".dropdown__option").forEach((o) => {
             o.setAttribute("aria-selected", "false");
           });
@@ -111,6 +113,7 @@ class Dropdown {
           // Select
           currentValue = value;
           labelEl.textContent = optLabel;
+          trigger.setAttribute("aria-selected", "true");
           panel.querySelectorAll(".dropdown__option").forEach((o) => {
             o.setAttribute(
               "aria-selected",

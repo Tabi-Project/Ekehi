@@ -15,12 +15,16 @@ import EKEHI_ENUMS from "/shared/constants/enums.js";
 
 const searchBar = document.getElementById("search-bar");
 const filterContainer = document.getElementById("filter-dropdowns");
-const totalOpportunities = document.querySelector(".total");
 const listHead = document.querySelector(".list-head");
-const opportunityCard = document.querySelector(".opportunityCard");
+const opportunityCards = document.querySelector(".opportunity-cards");
 const listLabel = document.getElementById("list-label");
+const tabsEl = document.querySelector(".opportunities__tabs");
 const tabAllCount = document.getElementById("tab-all-count");
 const tabSavedCount = document.getElementById("tab-saved-count");
+
+const isLoggedIn = AuthService.isLoggedIn();
+tabsEl.style.display = isLoggedIn ? "" : "none";
+listLabel.style.display = isLoggedIn ? "none" : "";
 
 let activeTab = "all";
 
@@ -33,8 +37,12 @@ const filters = {
   search: null,
 };
 
+const toOptions = (enumMap) =>
+  Object.entries(enumMap).map(([value, label]) => ({ value, label }));
+
 function onFilterChange(key, value) {
   filters[key] = value || null;
+  if (activeTab !== "all") setActiveTab("all");
   loadOpportunities();
 }
 
@@ -45,67 +53,35 @@ searchBar.appendChild(
   }),
 );
 
-filterContainer.appendChild(
+filterContainer.append(
   Dropdown.create({
     label: "Sector",
     name: "sector",
-    options: [
-      { value: "agriculture_food", label: "Agriculture & Food Processing" },
-      { value: "beauty_personal_care", label: "Beauty & Personal Care" },
-      { value: "creative_industries", label: "Creative Industries" },
-      { value: "education_edtech", label: "Education & EdTech" },
-      { value: "fashion_textiles", label: "Fashion & Textiles" },
-      { value: "financial_services_fintech", label: "Financial Services & Fintech" },
-      { value: "health_wellness", label: "Health & Wellness" },
-      { value: "logistics_distribution", label: "Logistics & Distribution" },
-      { value: "retail_ecommerce", label: "Retail & E-Commerce" },
-      { value: "technology_digital", label: "Technology & Digital Services" },
-    ],
+    options: toOptions(EKEHI_ENUMS.sector),
     onChange: (value) => onFilterChange("sector", value),
   }),
-);
-
-filterContainer.appendChild(
   Dropdown.create({
     label: "Status",
     name: "status",
-    options: Object.entries(EKEHI_ENUMS.listingStatus).map(([value, label]) => ({ value, label })),
+    options: toOptions(EKEHI_ENUMS.listingStatus),
     onChange: (value) => onFilterChange("status", value),
   }),
-);
-
-filterContainer.appendChild(
   Dropdown.create({
     label: "Business stage",
     name: "stage",
-    options: [
-      { value: "idea", label: "Idea" },
-      { value: "early", label: "Early" },
-      { value: "growth", label: "Growth" },
-    ],
+    options: toOptions(EKEHI_ENUMS.businessStage),
     onChange: (value) => onFilterChange("stage", value),
   }),
-);
-
-filterContainer.appendChild(
   Dropdown.create({
     label: "Region",
     name: "country",
-    options: [
-      { value: "Nigeria", label: "Nigeria" },
-      { value: "Ghana", label: "Ghana" },
-      { value: "Kenya", label: "Kenya" },
-      { value: "South Africa", label: "South Africa" },
-    ],
+    options: toOptions(EKEHI_ENUMS.country),
     onChange: (value) => onFilterChange("country", value),
   }),
-);
-
-filterContainer.appendChild(
   Dropdown.create({
     label: "Type",
     name: "opportunity_type",
-    options: Object.entries(EKEHI_ENUMS.opportunityType).map(([value, label]) => ({ value, label })),
+    options: toOptions(EKEHI_ENUMS.opportunityType),
     onChange: (value) => onFilterChange("opportunity_type", value),
   }),
 );
@@ -116,19 +92,16 @@ function closingSoon(dateStr, status) {
   return diff !== null && diff <= 10 ? "closing soon" : humanize(status);
 }
 
-function populateOpportunities(opps) {
-  listHead.innerHTML = `<p>amount</p> <p>deadline</p>`;
-  opportunityCard.innerHTML = opps
-    .map(
-      (opp) => `
-     <a class="opportunity-card" href="/opportunities/detail/?id=${opp.id}">
+function renderOpportunityCard(opp) {
+  return `
+    <a class="opportunity-card" href="/opportunities/detail/?id=${opp.id}">
       <div class="opportunity-amount">
         <p class="foundation-amount">${formatAmount(opp.amount_min, opp.amount_max, opp.currency)}</p>
         <p class="foundation-type">${humanize(opp.opportunity_type)}</p>
       </div>
-      <div class="opportunity-title">
-        <div class="opportunity-title-tag">
-          <p>${opp.opportunity_title}</p>
+      <div class="flex-1 flex flex-col gap-1">
+        <div class="flex gap-2 items-start">
+          <h3 class="opportunity-title | text-lg">${opp.opportunity_title}</h3>
           <span class='badge badge--${opp.status}'>${closingSoon(opp.application_deadline, opp.status)}</span>
         </div>
         <p class="foundaton-owner">${opp.funder_name}</p>
@@ -137,40 +110,37 @@ function populateOpportunities(opps) {
         <img src="/assets/images/time-vector.png" alt="clock"/>
         <p>${daysUntil(opp.application_deadline) ?? "—"}</p>
       </div>
-     </a>
-     `,
-    )
-    .join("");
+    </a>
+  `;
+}
+
+function populateOpportunities(opps) {
+  listHead.innerHTML = `<p>amount</p> <p>deadline</p>`;
+  opportunityCards.innerHTML = opps.map(renderOpportunityCard).join("");
 }
 
 async function loadOpportunities() {
-  opportunityCard.innerHTML = `<p class='loading'>Loading Opportunities</p>`;
+  opportunityCards.innerHTML = `<p class='loading'>Loading Opportunities</p>`;
   try {
     const res = await api.get(`/opportunities${buildQueryString(filters)}`);
     const opportunities = res.data ?? [];
     const total = res.meta?.total ?? opportunities.length;
 
-    totalOpportunities.innerHTML = total;
     tabAllCount.textContent = total;
     listLabel.innerHTML = `All Opportunities (<span class="total">${total}</span>)`;
 
     if (total === 0) {
-      opportunityCard.innerHTML = "<p>No Opportunities found</p>";
+      opportunityCards.innerHTML = "<p>No Opportunities found</p>";
     } else {
       populateOpportunities(opportunities);
     }
   } catch (e) {
-    opportunityCard.innerHTML = `<p class='error-message'>There was an error fetching opportunities. ${e.message}</p>`;
+    opportunityCards.innerHTML = `<p class='error-message'>There was an error fetching opportunities. ${e.message}</p>`;
   }
 }
 
 async function loadSavedOpportunities() {
-  if (!AuthService.isLoggedIn()) {
-    opportunityCard.innerHTML = `<p>Please <a href="/login/">log in</a> to view your saved opportunities.</p>`;
-    return;
-  }
-
-  opportunityCard.innerHTML = `<p class='loading'>Loading saved opportunities…</p>`;
+  opportunityCards.innerHTML = `<p class='loading'>Loading saved opportunities…</p>`;
   try {
     const res = await api.get("/opportunities/saved");
     const opportunities = res.data ?? [];
@@ -180,27 +150,32 @@ async function loadSavedOpportunities() {
     listLabel.innerHTML = `Saved Opportunities (<span class="total">${total}</span>)`;
 
     if (total === 0) {
-      opportunityCard.innerHTML = "<p>You have no saved opportunities yet.</p>";
+      opportunityCards.innerHTML = "<p>You have no saved opportunities yet.</p>";
     } else {
       populateOpportunities(opportunities);
     }
   } catch (e) {
-    opportunityCard.innerHTML = `<p class='error-message'>There was an error fetching saved opportunities. ${e.message}</p>`;
+    opportunityCards.innerHTML = `<p class='error-message'>There was an error fetching saved opportunities. ${e.message}</p>`;
   }
 }
 
+const tabs = document.querySelectorAll(".tab");
+
+function setActiveTab(name) {
+  activeTab = name;
+  tabs.forEach((t) => {
+    t.classList.toggle("tab--active", t.dataset.tab === activeTab);
+    t.setAttribute("aria-selected", String(t.dataset.tab === activeTab));
+  });
+}
+
 function initTabs() {
-  document.querySelectorAll(".tab").forEach((tab) => {
+  tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       const selected = tab.dataset.tab;
       if (selected === activeTab) return;
 
-      activeTab = selected;
-
-      document.querySelectorAll(".tab").forEach((t) => {
-        t.classList.toggle("tab--active", t.dataset.tab === activeTab);
-        t.setAttribute("aria-selected", String(t.dataset.tab === activeTab));
-      });
+      setActiveTab(selected);
 
       if (activeTab === "all") {
         loadOpportunities();
@@ -211,5 +186,15 @@ function initTabs() {
   });
 }
 
+async function prefetchSavedCount() {
+  try {
+    const res = await api.get("/opportunities/saved?limit=1");
+    tabSavedCount.textContent = res.meta?.total ?? 0;
+  } catch {
+    // non-critical — tab count stays at 0
+  }
+}
+
 initTabs();
 loadOpportunities();
+if (isLoggedIn) prefetchSavedCount();

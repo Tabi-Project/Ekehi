@@ -61,6 +61,32 @@ const EKEHI_ENUMS = {
     online: "Online",
   },
 
+  sector: {
+    agriculture_food: "Agriculture & Food Processing",
+    beauty_personal_care: "Beauty & Personal Care",
+    creative_industries: "Creative Industries",
+    education_edtech: "Education & EdTech",
+    fashion_textiles: "Fashion & Textiles",
+    financial_services_fintech: "Financial Services & Fintech",
+    health_wellness: "Health & Wellness",
+    logistics_distribution: "Logistics & Distribution",
+    retail_ecommerce: "Retail & E-Commerce",
+    technology_digital: "Technology & Digital Services",
+  },
+
+  businessStage: {
+    idea: "Idea",
+    early: "Early",
+    growth: "Growth",
+  },
+
+  country: {
+    Nigeria: "Nigeria",
+    Ghana: "Ghana",
+    Kenya: "Kenya",
+    "South Africa": "South Africa",
+  },
+
   institutionType: {
     commercial_bank: "Commercial Bank",
     development_bank: "Development Bank",
