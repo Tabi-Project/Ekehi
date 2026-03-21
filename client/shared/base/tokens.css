@@ -138,6 +138,7 @@
   --nav-height: 4.25rem; /* 68px */
   --container-max: 75rem; /* 1200px — nav, footer, section containers */
   --container-wide: 72rem; /* 1152px — content blocks */
+  --container-small: 50rem; /* 800px — content blocks */
 
   /*
    * Breakpoints — CSS custom properties cannot be used inside @media queries.
