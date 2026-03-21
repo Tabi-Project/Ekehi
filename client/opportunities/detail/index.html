@@ -18,8 +18,23 @@
       <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
     </header>
 
-    <main class="container" id="detail-root">
-      <p class="loading">Loading opportunity…</p>
+    <main class="container">
+      <nav
+        class="detail-breadcrumb | flex items-center justify-between"
+        aria-label="Breadcrumb"
+      >
+        <div class="flex items-center gap-1">
+          <a href="/opportunities/" class="back-link">Funding Opportunities</a>
+          <img src="/assets/icons/right_line.svg" alt="" aria-hidden="true" />
+          <span aria-current="page" class="current-detail-page"></span>
+        </div>
+        <span class="ref-code" id="detail-ref-code"></span>
+      </nav>
+      <section id="detail-root">
+        <div class="detail-content"></div>
+        <aside class="detail-aside"></aside>
+        <p class="loading">Loading opportunity…</p>
+      </section>
     </main>
 
     <footer id="footer-root" class="footer"></footer>

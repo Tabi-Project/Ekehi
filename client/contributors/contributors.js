@@ -1,7 +1,7 @@
 import "/shared/components/nav/nav.js";
 import "/shared/components/footer/footer.js";
 
-const CARD_VARIANTS = ["blue", "pink", "purple", "green", "yellow"];
+const CARD_VARIANTS = ["blue", "yellow", "pink", "purple", "green"];
 const CONTRIBUTORS_CONTAINER_ID = "contributors-grid";
 
 const contributors = [
@@ -24,11 +24,15 @@ const contributors = [
     style: {
       objectPosition: "bottom center",
       transform: "scale(1.2)",
-      margin: "-20px 0 0 -12px",
+      margin: "-16px 0 0 -12px",
     },
   },
-  { name: "Esther Orieji", role: "Frontend Engineer", image: "" },
-  { name: "Iyobosa Omoruyi", role: "Frontend Engineer", image: "" },
+  {
+    name: "Esther Orieji",
+    role: "Frontend Engineer",
+    image: "profiles/esther-orieji.png",
+  },
+
   {
     name: "Gabriel Abubakar",
     role: "QA Tester",
@@ -39,13 +43,15 @@ const contributors = [
       marginTop: "-4px",
     },
   },
-  { name: "Oluchi Okwuosa", role: "Frontend Engineer", image: "" },
-  { name: "Florence Onwuegbuzie", role: "Frontend Engineer", image: "" },
   {
-    name: "Victor Okoukoni",
+    name: "Oluchi Okwuosa",
     role: "Frontend Engineer",
-    image: "profiles/victor-okoukoni.png",
-    style: { objectPosition: "top center", marginTop: "8px" },
+    image: "profiles/oluchi-okwuosa.png",
+    style: {
+      transform: "scale(0.99)",
+      objectPosition: "bottom right",
+      marginTop: "24px",
+    },
   },
   {
     name: "Michael Babjide Boluwatife",
@@ -54,12 +60,28 @@ const contributors = [
     style: { transform: "scale(1.1)", marginTop: "-4px" },
   },
   {
+    name: "Florence Onwuegbuzie",
+    role: "Frontend Engineer",
+    image: "profiles/florence-onwuegbuzie.png",
+  },
+  {
+    name: "Victor Okoukoni",
+    role: "Frontend Engineer",
+    image: "profiles/victor-okoukoni.png",
+    style: { objectPosition: "top center", marginTop: "8px" },
+  },
+  {
+    name: "Iyobosa Omoruyi",
+    role: "Frontend Engineer",
+    image: "profiles/iyobosa-omoruyi.png",
+    style: { marginTop: "20px" },
+  },
+  {
     name: "Olusegun Adeleke",
     role: "Backend Engineer",
     image: "profiles/olusegun-adeleke.png",
     style: { objectPosition: "top center", marginTop: "16px" },
   },
-  { name: "Sodiq Semiu", role: "Backend Engineer", image: "" },
   {
     name: "Osuji Wisdom",
     role: "UI/UX Designer",
@@ -71,6 +93,7 @@ const contributors = [
     image: "profiles/fatihat-akinwumi.png",
     style: { transform: "scale(1.4)", marginTop: "-4px" },
   },
+  { name: "Sodiq Semiu", role: "Backend Engineer", image: "" },
 ];
 
 function createCardImage({ name, image, style }) {
@@ -103,7 +126,7 @@ function createCardMeta({ name, role }) {
 
 function createContributorCard(contributor, variant) {
   const card = document.createElement("article");
-  card.className = "contributor-card flex flex-col gap-0-5";
+  card.className = "contributor-card flex flex-col";
   card.dataset.variant = variant;
   card.append(createCardImage(contributor), ...createCardMeta(contributor));
   return card;
@@ -113,6 +136,7 @@ function renderContributors(data, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
+  container.innerHTML = "";
   const fragment = document.createDocumentFragment();
   data.forEach((contributor, index) => {
     const variant = CARD_VARIANTS[index % CARD_VARIANTS.length];

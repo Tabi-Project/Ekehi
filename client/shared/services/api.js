@@ -1,11 +1,13 @@
-const BASE_URL = "https://api-ekehi-dev.onrender.com/api/v1";
+const BASE_URL = "http://localhost:3000/api/v1";
 
 const TOKEN_KEY = "ekehi_access_token";
 const REFRESH_KEY = "ekehi_refresh_token";
+const ROLE_KEY = "ekehi_user_role";
 
 function clearSession() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(REFRESH_KEY);
+  localStorage.removeItem(ROLE_KEY);
   window.location.href = "/login/";
 }
 

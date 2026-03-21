@@ -19,19 +19,17 @@
       <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
 
       <!-- Hero Section -->
-      <section class="hero">
-        <div class="hero__content">
-          <div class="hero__content-title">
-            <h1 class="leading-tight">
-              Find funding and resources built for you
-            </h1>
-          </div>
-          <div class="hero__content-paragraph">
-            <p class="leading-relaxed">
+      <section class="hero | flex justify-center items-end">
+        <div class="hero__content px-4">
+          <h1 class="hero__content-title | leading-tight">
+            Find funding and resources built for you
+          </h1>
+          <div class="">
+            <p class="hero__content-paragraph | leading-relaxed">
               Grants, loans, training programmes, and growth resources for
               women-led businesses - searchable and always up to date.
             </p>
-            <div class="hero__btns"></div>
+            <div class="hero__btns | flex justify-end items-center gap-2"></div>
           </div>
         </div>
       </section>
@@ -41,22 +39,22 @@
     <section class="about-section">
       <!-- Background vectors -->
       <img
-        src="../landing/vectors/cta-vector-left.svg"
+        src="../landing/vectors/about-vector-left.svg"
         aria-hidden="true"
         class="about-section__vector about-section__vector--left"
       />
       <img
-        src="../landing/vectors/cta-vector-top-right.svg"
+        src="../landing/vectors/about-vector-top-right.svg"
         aria-hidden="true"
         class="about-section__vector about-section__vector--top-right"
       />
       <img
-        src="../landing/vectors/cta-vector-bottom-right.svg"
+        src="../landing/vectors/about-vector-bottom-right.svg"
         aria-hidden="true"
         class="about-section__vector about-section__vector--bottom-right"
       />
 
-      <div class="about-section__container">
+      <div class="about-section__container | flex gap-16">
         <!-- Left column: wordmark + inline icon -->
         <div class="about-section__brand">
           <h2 class="about-section__title">
@@ -112,13 +110,8 @@
         <div class="value-proposition__overlay" aria-hidden="true"></div>
       </figure>
 
-      <div class="value-proposition__captions flex flex-row gap-8 mx-auto">
-        <p class="value-proposition__caption flex-1 text-muted">
-          You get clear summaries, real deadlines, eligibility breakdowns, and
-          direct application links. No digging. No insider spreadsheets. Just
-          aligned access.
-        </p>
-        <p class="value-proposition__caption flex-1 text-muted">
+      <div class="value-proposition__captions mx-auto">
+        <p class="value-proposition__caption text-muted">
           You get clear summaries, real deadlines, eligibility breakdowns, and
           direct application links. No digging. No insider spreadsheets. Just
           aligned access.
@@ -236,51 +229,63 @@
           <div class="faq-accordion">
             <div class="faq-item">
               <button class="faq-question" aria-expanded="false">
-                <h3 class="faq-question-text">Do I need an account to browse opportunities?</h3>
+                <h3 class="faq-question-text">
+                  Do I need an account to browse opportunities?
+                </h3>
                 <span class="icon" aria-hidden="true">+</span>
               </button>
               <div class="faq-answer">
                 <p class="answer-content">
-                  No. You can search and browse every opportunity on Ekehi without creating an account. Signing up lets you
-                  save opportunities, set alerts, and get weekly digests matched to your sector and stage — but it's
-                  entirely optional.
+                  No. You can search and browse every opportunity on Ekehi
+                  without creating an account. Signing up lets you save
+                  opportunities, set alerts, and get weekly digests matched to
+                  your sector and stage — but it's entirely optional.
                 </p>
               </div>
             </div>
             <div class="faq-item">
               <button class="faq-question" aria-expanded="false">
-                <h3 class="faq-question-text">How do I know if I'm eligible for a funding opportunity?</h3>
+                <h3 class="faq-question-text">
+                  How do I know if I'm eligible for a funding opportunity?
+                </h3>
                 <span class="icon" aria-hidden="true">+</span>
               </button>
               <div class="faq-answer">
                 <p class="answer-content">
-                  Each listing includes a detailed Eligibility section. We categorize opportunities by sector,business
-                  stage, and location. Check these
-                  against your profile to see if you qualify.
+                  Each listing includes a detailed Eligibility section. We
+                  categorize opportunities by sector,business stage, and
+                  location. Check these against your profile to see if you
+                  qualify.
                 </p>
               </div>
             </div>
             <div class="faq-item">
               <button class="faq-question" aria-expanded="false">
-                <h3 class="faq-question-text">How do I report an outdated or closed listing?</h3>
+                <h3 class="faq-question-text">
+                  How do I report an outdated or closed listing?
+                </h3>
                 <span class="icon" aria-hidden="true">+</span>
               </button>
               <div class="faq-answer">
                 <p class="answer-content">
-                  We strive for accuracy, but if you find a broken link or a closed listing, please click the "Report"
-                  button on the opportunity page or contact our support team directly.
+                  We strive for accuracy, but if you find a broken link or a
+                  closed listing, please click the "Report" button on the
+                  opportunity page or contact our support team directly.
                 </p>
               </div>
             </div>
             <div class="faq-item">
               <button class="faq-question" aria-expanded="false">
-                <h3 class="faq-question-text">What countries does Ekehi cover?</h3>
+                <h3 class="faq-question-text">
+                  What countries does Ekehi cover?
+                </h3>
                 <span class="icon" aria-hidden="true">+</span>
               </button>
               <div class="faq-answer">
                 <p class="answer-content">
-                  Our primary focus is Nigeria, but we include Pan-African and global funding opportunities that are
-                  explicitly open to Nigerian founders and small business owners.
+                  Our primary focus is Nigeria, but we include Pan-African and
+                  global funding opportunities that are explicitly open to
+                  Nigerian founders and small business owners.
                 </p>
               </div>
             </div>

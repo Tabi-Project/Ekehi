@@ -1,5 +1,6 @@
 :root {
   /* Purple Scale */
+  --color-purple-25: #fcf3ff;
   --color-purple-50: #f9e6ff;
   --color-purple-100: #f2ccff;
   --color-purple-200: #e599ff;
@@ -33,6 +34,7 @@
   --color-primary-hover: var(--color-purple-600);
   --color-primary-active: var(--color-purple-700);
   --color-primary-subtle: var(--color-purple-50);
+  --color-error: #d72525;
 
   /* Backgrounds */
   --color-bg-base: var(--color-white);
@@ -54,6 +56,7 @@
   /* Typography */
   --font-serif: "DM Serif Text", Georgia, serif;
   --font-sans: "Urbanist", system-ui, sans-serif;
+  --font-inter: "Inter", system-ui, sans-serif;
 
   /* Base unit — change here to rescale all text */
   --font-size-base: 1rem; /* 16px */
@@ -137,6 +140,7 @@
   --nav-height: 4.25rem; /* 68px */
   --container-max: 75rem; /* 1200px — nav, footer, section containers */
   --container-wide: 72rem; /* 1152px — content blocks */
+  --container-small: 50rem; /* 800px — content blocks */
 
   /*
    * Breakpoints — CSS custom properties cannot be used inside @media queries.

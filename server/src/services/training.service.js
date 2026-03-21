@@ -85,4 +85,42 @@ const getTrainingProgrammeById = async (id) => {
   return data;
 };
 
-module.exports = { getTrainingProgrammes, getTrainingProgrammeById };
+const createTraining = async (submittedBy, fields) => {
+  const { data, error } = await supabase
+    .from("training_programmes")
+    .insert({ ...fields, submitted_by: submittedBy, approval_status: "pending" })
+    .select("id, reference_code, programme_name, approval_status")
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+const updateTraining = async (id, submittedBy, fields) => {
+  const { data: existing, error: fetchError } = await supabase
+    .from("training_programmes")
+    .select("submitted_by, approval_status")
+    .eq("id", id)
+    .single();
+
+  if (fetchError) throw fetchError;
+  if (!existing) throw Object.assign(new Error("Training not found"), { status: 404 });
+  if (existing.submitted_by !== submittedBy) {
+    throw Object.assign(new Error("You can only edit your own submissions"), { status: 403 });
+  }
+  if (existing.approval_status === "approved") {
+    throw Object.assign(new Error("Approved content cannot be edited"), { status: 403 });
+  }
+
+  const { data, error } = await supabase
+    .from("training_programmes")
+    .update({ ...fields, approval_status: "pending", updated_at: new Date().toISOString() })
+    .eq("id", id)
+    .select("id, reference_code, programme_name, approval_status")
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+module.exports = { getTrainingProgrammes, getTrainingProgrammeById, createTraining, updateTraining };

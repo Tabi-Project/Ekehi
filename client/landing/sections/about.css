@@ -1,12 +1,6 @@
-/* ==========================================================================
-   About Section — about.css
-   Block: .about-section
-   ========================================================================== */
-
 /* ── about-section — full width dark purple banner ──── */
 .about-section {
-  background-color: #4C0066;
-  width: 100%;
+  background-color: var(--color-purple-800);
   position: relative;
   overflow: hidden;
 }
@@ -16,54 +10,31 @@
   position: absolute;
   pointer-events: none;
   user-select: none;
-  opacity: 0.25;
 }
 
-/* Large compass — left, partially cropped off edge */
 .about-section__vector--left {
-  width: 720px;
-  height: 420px;
   left: 0%;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
-/* Medium compass — upper centre */
-.about-section__vector--top-right {
-  width: 300px;
-  height: 300px;
-  top: -20px;
-  left: 78%;
-}
-
-/* Small compass — lower right */
+.about-section__vector--top-right,
 .about-section__vector--bottom-right {
-  width: 360px;
-  height: 360px;
-  bottom: 0px;
-  left: 78%;
+  right: 0;
 }
 
-/* ── about-section__container — two column layout ───── */
 .about-section__container {
   max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--space-16);
-  padding-block: var(--space-20);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--space-16);
   position: relative;
   z-index: 1;
+
+  margin-inline: auto;
+  padding-inline: var(--space-16);
+  padding-block: calc(var(--spacing) * 40);
 }
 
-/* ── about-section__brand — left column ─────────────── */
 .about-section__brand {
   flex: 1;
 }
 
-/* ── about-section__title ───────────────────────────── */
 .about-section__title {
   display: flex;
   align-items: center;
@@ -87,7 +58,6 @@
   color: var(--color-white);
 }
 
-/* ── Inline sun/flower icon ─────────────────────────── */
 .about-section__title--icon {
   width: 40px;
   height: 40px;
@@ -95,7 +65,6 @@
   flex-shrink: 0;
 }
 
-/* ── about-section__content — right column ──────────── */
 .about-section__content {
   flex: 1;
   display: flex;
@@ -105,12 +74,9 @@
   z-index: 1;
 }
 
-/* ── about-section__description ─────────────────────── */
 .about-section__description {
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  font-weight: var(--font-light);
-  color: var(--color-white);
+  font-family: var(--font-inter);
+  color: var(--color-neutral-300);
   line-height: var(--leading-relaxed);
 }
 
@@ -123,7 +89,7 @@
   font-family: var(--font-sans);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  color: #4C0066;
+  color: #4c0066;
   background-color: var(--color-white);
   border: none;
   border-radius: var(--radius-full);
@@ -150,7 +116,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding-inline: var(--space-6);
-    padding-block: var(--space-12);
+    padding-block: var(--space-16);
     gap: var(--space-8);
   }
 

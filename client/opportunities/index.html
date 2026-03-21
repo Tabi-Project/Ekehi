@@ -19,33 +19,52 @@
     </header>
 
     <main class="container">
-      <!-- Page header -->
-      <section class="page-header text-center">
-        <h1 class="">Funding Opportunities</h1>
+      <header class="opportunities__header | text-center flex flex-col gap-2">
+        <h1>Funding Opportunities</h1>
         <p>
           Explore various funding options available to support your projects and
           initiatives.
         </p>
-      </section>
+      </header>
 
-      <!-- Search + filters -->
       <section class="opportunities__filters">
         <div class="opportunities__search">
           <div id="search-bar"></div>
         </div>
 
-        <div class="opportunities__dropdowns flex" id="filter-dropdowns"></div>
+        <div
+          class="opportunities__dropdowns | flex justify-start flex-wrap gap-4"
+          id="filter-dropdowns"
+        ></div>
       </section>
 
-      <!-- Opportunities List -->
       <section id="opportunity-list-display" aria-label="opportunities">
-        <p class="total-opportunities">
-          All Opportunities (<span class="total"></span>)
-        </p>
+        <div class="opportunities__tabs | flex" role="tablist">
+          <button
+            class="tab tab--active"
+            role="tab"
+            aria-selected="true"
+            data-tab="all"
+            id="tab-all"
+          >
+            All opportunities (<span id="tab-all-count">0</span>)
+          </button>
+          <button
+            class="tab"
+            role="tab"
+            aria-selected="false"
+            data-tab="saved"
+            id="tab-saved"
+          >
+            Saved (<span id="tab-saved-count">0</span>)
+          </button>
+        </div>
 
-        <div class="opportunity-list">
+        <h2 class="opportunities-total | text-lg" id="list-label"></h2>
+
+        <div class="opportunity-list | flex flex-col">
           <div class="list-head"></div>
-          <div class="opportunityCard"></div>
+          <div class="opportunity-cards"></div>
         </div>
       </section>
     </main>
