@@ -11,7 +11,7 @@ const authClient = createClient(supabaseUrl, supabaseAnonKey, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
-const signUp = async ({ email, password, firstName, lastName }) => {
+const signUp = async ({ email, password, firstName, lastName, profileImage }) => {
   const { data, error } = await authClient.auth.signUp({
     email,
     password,
@@ -22,13 +22,37 @@ const signUp = async ({ email, password, firstName, lastName }) => {
 
   if (error) throw error;
 
-  // Best-effort profile creation via service role client (bypasses RLS)
   if (data.user) {
+    let profileImageUrl = null;
+
+    if (profileImage) {
+      const ext = profileImage.mimetype.split("/")[1];
+      const storagePath = `profile-images/${data.user.id}/avatar.${ext}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("ekehi-assets")
+        .upload(storagePath, profileImage.buffer, {
+          contentType: profileImage.mimetype,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.warn("[auth.service] Profile image upload failed:", uploadError.message);
+      } else {
+        const { data: urlData } = supabase.storage
+          .from("ekehi-assets")
+          .getPublicUrl(storagePath);
+        profileImageUrl = urlData.publicUrl;
+      }
+    }
+
+    // Best-effort profile creation via service role client (bypasses RLS)
     const { error: profileError } = await supabase.from("profiles").insert({
       id: data.user.id,
       email,
       first_name: firstName,
       last_name: lastName,
+      profile_image_url: profileImageUrl,
     });
 
     if (profileError) {
