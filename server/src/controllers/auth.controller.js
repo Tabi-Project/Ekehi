@@ -12,11 +12,16 @@ const signUp = async (req, res, next) => {
       });
     }
 
+    const profileImage = req.file
+      ? { buffer: req.file.buffer, mimetype: req.file.mimetype }
+      : null;
+
     const data = await authService.signUp({
       email,
       password,
       firstName,
       lastName,
+      profileImage,
     });
 
     return sendSuccess(res, {

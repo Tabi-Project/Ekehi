@@ -6,10 +6,12 @@ const guidesRoutes = require("./guides.routes");
 const templatesRoutes = require("./templates.routes");
 const adminRoutes = require("./admin.routes");
 const metaRoutes = require("./meta.routes");
+const profileRoutes = require("./profile.routes");
 
 const router = Router();
 
 router.use("/auth", authRoutes);
+router.use("/profile", profileRoutes);
 router.use("/opportunities", opportunitiesRoutes);
 router.use("/trainings", trainingsRoutes);
 router.use("/guides", guidesRoutes);
