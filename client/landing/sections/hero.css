@@ -52,6 +52,7 @@ p {
   font-size: var(--text-5xl);
   font-weight: var(--font-regular);
   text-wrap: pretty;
+  text-transform: capitalize;
 }
 
 .hero__content-paragraph {
@@ -78,12 +79,16 @@ p {
   }
 
   .hero__content-title {
-    text-align: right;
     text-wrap: balance;
-    max-width: 80%;
-    margin-left: auto;
+    max-width: 85%;
+    margin-right: auto;
   }
 
+  .hero__content-title, .hero__content-paragraph, .hero__btns{
+    text-align: left;
+    justify-content: flex-start;
+  }
+  
   .nav__toggle-bar {
     background-color: white;
   }
@@ -94,8 +99,4 @@ p {
   }
 }
 
-@media screen and (max-width: 640px) {
-  .hero__btns {
-    justify-content: center;
-  }
-}
+
