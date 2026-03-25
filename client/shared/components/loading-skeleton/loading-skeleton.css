@@ -72,6 +72,7 @@
   }
   
   .opportunity-amount-sk,
+  .opportunity-body-sk,
   .opportunity-deadline-sk {
     flex: 1;
     width: 100%;
