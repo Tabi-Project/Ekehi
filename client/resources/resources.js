@@ -177,7 +177,7 @@ function loadTemplates() {
       <div class="template-card__visual">
         <div class="template-card__mockup" style="background-color:${item.color}">
           <div class="mockup-header">${item.title}</div>
-          <div class="mockup-img">${item.cover_image}</div>
+          <div class="mockup-img"></div>
         </div>
       </div>
       
