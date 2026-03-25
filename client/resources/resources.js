@@ -1,6 +1,7 @@
 import api from "/shared/services/api.js";
 import Dropdown from "/shared/components/dropdown/dropdown.js";
 import SearchBar from "/shared/components/search-bar/search-bar.js";
+import LoadingSkeleton from "/shared/components/loading-skeleton/loading-skeleton.js";
 import "/shared/components/nav/nav.js";
 import "/shared/components/footer/footer.js";
 import {
@@ -119,7 +120,7 @@ const list = document.getElementById("trainings-list");
 list.className = "trainings-grid";
 
 async function loadTrainings() {
-  list.innerHTML = '<p class="loading-text">Loading...</p>';
+  list.innerHTML = LoadingSkeleton.render("training", 6);
 
   try {
     const res = await api.get(`/trainings${buildQueryString(filters)}`);

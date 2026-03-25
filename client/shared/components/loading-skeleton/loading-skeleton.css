@@ -1,0 +1,125 @@
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: var(--color-neutral-100);
+  background: linear-gradient(90deg, var(--color-neutral-100) 25%, var(--color-neutral-200) 50%, var(--color-neutral-100) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 2s infinite linear;
+}
+
+.skeleton-line {
+  background-color: var(--color-neutral-200);
+  border-radius: var(--radius-sm);
+  width: 100%;
+}
+
+.skeleton-line.short { width: 40%; }
+.skeleton-line.medium { width: 70%; }
+.skeleton-line.long { width: 90%; }
+.skeleton-line.full { width: 100%; }
+
+.skeleton-icon {
+  background-color: var(--color-neutral-200);
+  border-radius: var(--radius-full);
+}
+
+/* Specific to opportunities */
+.opportunity-skeleton {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--color-border);
+  margin-inline: calc(var(--space-4) * -1);
+  padding-inline: var(--space-4);
+  pointer-events: none;
+  user-select: none;
+}
+
+.opportunity-amount-sk {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 0 0 200px;
+}
+
+.opportunity-body-sk {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.opportunity-deadline-sk {
+  flex: 0 0 200px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media screen and (max-width: 768px) {
+  .opportunity-skeleton {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .opportunity-amount-sk,
+  .opportunity-deadline-sk {
+    flex: 1;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Specific to trainings */
+.training-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.training-skeleton__display {
+  width: 100%;
+  border-radius: var(--radius-2xl);
+  aspect-ratio: 352 / 226;
+  background-color: var(--color-neutral-100);
+}
+
+.training-skeleton__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.training-skeleton__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.training-skeleton__meta .skeleton-line {
+  width: 80px;
+  height: var(--space-3);
+}
+
+.training-skeleton__title {
+  height: var(--space-6);
+  width: 80%;
+  margin-block: var(--space-1);
+}
+
+.training-skeleton__desc {
+  height: var(--space-4);
+  width: 100%;
+}
