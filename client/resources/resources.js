@@ -60,6 +60,11 @@ const CARD_COLORS = {
   mentorship_programme: { bg: "#fce7f3", panel: "#f472b6", text: "#831843" },
 };
 
+
+
+
+
+
 function renderDateMeta(deadline) {
   if (!deadline) return "";
   return `<span class="training-card__date">
@@ -134,3 +139,57 @@ async function loadTrainings() {
 
 initTrainingsHeader();
 loadTrainings();
+
+
+
+
+
+const templateData = [
+  {
+    id: "1",
+    title: "Basic financial management template",
+    excerpt: "Explore our Basic Financial Management Template designed specifically for small and medium enterprises! It's an excellent resource to get you ready for global opportunities.",
+    color: "#4ecdc4", 
+    cover_image: null
+  },
+  {
+    id: "2",
+    title: "Tax basics for Nigerian SMEs",
+    excerpt: "Explore our template on Tax Basics for Nigerian SMEs. It's an essential resource to help you navigate the complexities of taxation and ensure your business is ready for success.",
+    color: "#e91e8c", 
+    cover_image: null
+  },
+  {
+    id: "3",
+    title: "Export readiness checklist for SMEs",
+    excerpt: "Check out our template for the Export Readiness Checklist tailored for SMEs! It's a great tool to help you prepare for international markets.",
+    color: "#4caf50",
+    cover_image: null
+  }
+];
+
+function loadTemplates() {
+  const grid = document.getElementById('templates-grid');
+  if (!grid) return;
+
+  grid.innerHTML = templateData.map(item => `
+    <article class="template-card flex flex-col shadow-sm">
+      <div class="template-card__visual">
+        <div class="template-card__mockup" style="background-color:${item.color}">
+          <div class="mockup-header">${item.title}</div>
+          <div class="mockup-img">${item.cover_image}</div>
+        </div>
+      </div>
+      
+      <div class="template-card__content flex flex-col flex-1">
+        <h3 class="font-sans text-lg text-primary mb-3 font-semibold py-2">${item.title}</h3>
+        <p class="text-xs text-secondary leading-relaxed mb-6">${item.excerpt}</p>
+        <a href="#" class="template-card__link mt-auto">
+          Read more <span>→</span>
+        </a>
+      </div>
+    </article>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', loadTemplates);
