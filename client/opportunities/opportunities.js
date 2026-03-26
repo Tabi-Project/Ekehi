@@ -2,6 +2,7 @@ import api from "/shared/services/api.js";
 import AuthService from "/shared/services/auth.service.js";
 import Dropdown from "/shared/components/dropdown/dropdown.js";
 import SearchBar from "/shared/components/search-bar/search-bar.js";
+import LoadingSkeleton from "/shared/components/loading-skeleton/loading-skeleton.js";
 import "/shared/components/nav/nav.js";
 import "/shared/components/footer/footer.js";
 import {
@@ -120,7 +121,7 @@ function populateOpportunities(opps) {
 }
 
 async function loadOpportunities() {
-  opportunityCards.innerHTML = `<p class='loading'>Loading Opportunities</p>`;
+  opportunityCards.innerHTML = LoadingSkeleton.render("opportunity", 5);
   try {
     const res = await api.get(`/opportunities${buildQueryString(filters)}`);
     const opportunities = res.data ?? [];
@@ -140,7 +141,7 @@ async function loadOpportunities() {
 }
 
 async function loadSavedOpportunities() {
-  opportunityCards.innerHTML = `<p class='loading'>Loading saved opportunities…</p>`;
+  opportunityCards.innerHTML = LoadingSkeleton.render("opportunity", 5);
   try {
     const res = await api.get("/opportunities/saved");
     const opportunities = res.data ?? [];
