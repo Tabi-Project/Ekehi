@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Urbanist:wght@300;400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/shared/base/main.css" />
+    <link rel="stylesheet" href="detail.css" />
+    <title>Trainings and Events — Ekehi</title>
+  </head>
+  <body>
+
+    <header class="site-header">
+      <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
+    </header>
+
+    <main class="detail-page" id="detail-root">
+
+      <!-- Loading state -->
+      <div id="detail-loading" class="detail-page__state">
+        <p>Loading...</p>
+      </div>
+
+      <!-- Error state -->
+      <div id="detail-error" class="detail-page__state" hidden>
+        <p id="detail-error-message">Something went wrong. Please try again.</p>
+        <a href="../index.html" class="detail-page__back-link">Back to Training &amp; Resources</a>
+      </div>
+
+      <!-- Content — populated by JS -->
+      <div id="detail-content" hidden>
+        <!-- Breadcrumb -->
+        <nav class="detail-breadcrumb" aria-label="Breadcrumb">
+          <a href="/resources/training/" class="detail-breadcrumb__link">Resources</a>
+          <span class="detail-breadcrumb__sep" aria-hidden="true">›</span>
+          <span id="detail-breadcrumb-title" class="detail-breadcrumb__current"></span>
+        </nav>
+
+        <!-- Hero -->
+        <section class="detail-hero">
+
+          <!-- Left: info -->
+          <div class="detail-hero__info">
+            <p id="detail-datetime" class="detail-hero__datetime"></p>
+            <h1 id="detail-title" class="detail-hero__title"></h1>
+            <a id="detail-cta" href="#" class="detail-hero__cta" target="_blank" rel="noopener noreferrer">
+              Register now
+            </a>
+          </div>
+
+          <!-- Right: cover card — matches training card style -->
+          <div class="detail-hero__cover">
+            <div class="detail-hero__cover-panel" id="detail-cover-panel">
+              <span id="detail-type" class="detail-hero__cover-type"></span>
+              <span id="detail-host" class="detail-hero__cover-host"></span>
+            </div>
+            <img
+              src="/assets/images/black-woman-wearing-glasses.png"
+              class="detail-hero__cover-image"
+              alt="Training cover"
+            />
+          </div>
+
+        </section>
+
+        <!-- Body -->
+        <section class="detail-body">
+
+          <!-- Left: about -->
+          <div class="detail-body__main">
+            <h2 class="detail-body__section-title">About this event</h2>
+            <p id="detail-description" class="detail-body__description"></p>
+          </div>
+
+          <!-- Right: sidebar -->
+          <aside class="detail-sidebar" aria-label="Event details">
+            <h2 class="detail-sidebar__title">Event Details</h2>
+            <ul class="detail-sidebar__list" role="list">
+              <li class="detail-sidebar__item">
+                <span class="detail-sidebar__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/>
+                    <path d="M5.5 8a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0Z" stroke="currentColor" stroke-width="1.2"/>
+                  </svg>
+                </span>
+                <span class="detail-sidebar__value" id="sidebar-format-value"></span>
+              </li>
+              <li class="detail-sidebar__item">
+                <span class="detail-sidebar__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="3.5" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+                    <path d="M5 2v3M11 2v3M2 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span class="detail-sidebar__value" id="sidebar-deadline-value"></span>
+              </li>
+              <li class="detail-sidebar__item">
+                <span class="detail-sidebar__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2Z" stroke="currentColor" stroke-width="1.2"/>
+                    <path d="M2 8h12M8 2c-1.5 2-2 4-2 6s.5 4 2 6M8 2c1.5 2 2 4 2 6s-.5 4-2 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span class="detail-sidebar__value" id="sidebar-language-value">English</span>
+              </li>
+              <li class="detail-sidebar__item">
+                <span class="detail-sidebar__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="5" r="2.5" stroke="currentColor" stroke-width="1.2"/>
+                    <path d="M2.5 13c0-2.485 2.462-4.5 5.5-4.5s5.5 2.015 5.5 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span class="detail-sidebar__value" id="sidebar-provider-value"></span>
+              </li>
+            </ul>
+          </aside>
+
+        </section>
+
+      </div>
+
+    </main>
+
+    <footer id="footer-root" class="footer"></footer>
+
+    <script type="module" src="detail.js"></script>
+
+  </body>
+</html>
