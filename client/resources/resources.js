@@ -259,7 +259,7 @@ function loadTemplates() {
       <div class="template-card__content flex flex-col flex-1">
         <h3 class="font-sans text-lg text-primary mb-3 font-semibold py-2">${item.title}</h3>
         <p class="text-xs text-secondary leading-relaxed mb-6">${item.excerpt}</p>
-        <a href="#" class="template-card__link mt-auto">
+        <a href="/resources/template/?id=${item.id}" class="template-card__link mt-auto">
           Read more <span>→</span>
         </a>
       </div>
