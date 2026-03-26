@@ -1,6 +1,7 @@
 const { createClient } = require("@supabase/supabase-js");
 const supabase = require("../config/supabaseClient");
 const { supabaseUrl, supabaseAnonKey } = require("../config/env");
+const { uploadProfileImage } = require("../utils/storage.utils");
 
 // Separate client for user-facing auth operations (anon key).
 // Must NOT be the service role singleton — signInWithPassword sets an in-memory
@@ -23,26 +24,13 @@ const signUp = async ({ email, password, firstName, lastName, profileImage }) =>
   if (error) throw error;
 
   if (data.user) {
-    let profileImageUrl = null;
+    let profileImagePath = null;
 
     if (profileImage) {
-      const ext = profileImage.mimetype.split("/")[1];
-      const storagePath = `profile-images/${data.user.id}/avatar.${ext}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from("ekehi-assets")
-        .upload(storagePath, profileImage.buffer, {
-          contentType: profileImage.mimetype,
-          upsert: true,
-        });
-
-      if (uploadError) {
-        console.warn("[auth.service] Profile image upload failed:", uploadError.message);
-      } else {
-        const { data: urlData } = supabase.storage
-          .from("ekehi-assets")
-          .getPublicUrl(storagePath);
-        profileImageUrl = urlData.publicUrl;
+      try {
+        profileImagePath = await uploadProfileImage(data.user.id, profileImage);
+      } catch (uploadErr) {
+        console.warn("[auth.service] Profile image upload failed:", uploadErr.message);
       }
     }
 
@@ -52,7 +40,7 @@ const signUp = async ({ email, password, firstName, lastName, profileImage }) =>
       email,
       first_name: firstName,
       last_name: lastName,
-      profile_image_url: profileImageUrl,
+      profile_image_path: profileImagePath,
     });
 
     if (profileError) {

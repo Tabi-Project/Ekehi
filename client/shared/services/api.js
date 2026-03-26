@@ -35,9 +35,10 @@ async function tryRefresh() {
 
 async function request(path, options = {}, _retry = false) {
   const token = localStorage.getItem(TOKEN_KEY);
+  const isFormData = options.body instanceof FormData;
 
   const headers = {
-    "Content-Type": "application/json",
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...options.headers,
   };
@@ -66,10 +67,14 @@ const api = {
   get: (path) => request(path, { method: "GET" }),
   post: (path, body) =>
     request(path, { method: "POST", body: JSON.stringify(body) }),
+  postForm: (path, formData) =>
+    request(path, { method: "POST", body: formData }),
   put: (path, body) =>
     request(path, { method: "PUT", body: JSON.stringify(body) }),
   patch: (path, body) =>
     request(path, { method: "PATCH", body: JSON.stringify(body) }),
+  patchForm: (path, formData) =>
+    request(path, { method: "PATCH", body: formData }),
   delete: (path) => request(path, { method: "DELETE" }),
 };
 

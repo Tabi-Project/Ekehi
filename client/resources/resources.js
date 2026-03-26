@@ -1,6 +1,7 @@
 import api from "/shared/services/api.js";
 import Dropdown from "/shared/components/dropdown/dropdown.js";
 import SearchBar from "/shared/components/search-bar/search-bar.js";
+import LoadingSkeleton from "/shared/components/loading-skeleton/loading-skeleton.js";
 import "/shared/components/nav/nav.js";
 import "/shared/components/footer/footer.js";
 import {
@@ -124,7 +125,7 @@ const list = document.getElementById("trainings-list");
 list.className = "trainings-grid";
 
 async function loadTrainings() {
-  list.innerHTML = '<p class="loading-text">Loading...</p>';
+  list.innerHTML = LoadingSkeleton.render("training", 6);
 
   try {
     const res = await api.get(`/trainings${buildQueryString(filters)}`);
@@ -135,6 +136,80 @@ async function loadTrainings() {
   } catch (err) {
     list.innerHTML = `<p class="error-message">${err.message}</p>`;
   }
+}
+
+// ── Guides ───────────────────────────────────────────
+
+const GUIDES_PLACEHOLDER = [
+  {
+    id: "1",
+    title: "Guide to understanding and improving business credit scores",
+    excerpt:
+      "Unlock your business's full potential by improving your credit score. Check out our guide for expert tips.",
+    cover_image: null,
+  },
+  {
+    id: "2",
+    title: "CAC registration guide for Nigeria",
+    excerpt:
+      "Learn how to register your business with the Corporate Affairs Commission. Read our guide for expert tips.",
+    cover_image: null,
+  },
+  {
+    id: "3",
+    title: "Women's Empowerment Training Guide: A Step-by-Step Approach",
+    excerpt:
+      "Ready to elevate your business? Read our Women's Empowerment Training Guide for actionable strategies.",
+    cover_image: null,
+  },
+];
+
+function renderGuideCard(guide) {
+  const card = document.createElement("div");
+  card.className = "guide-card | flex flex-col gap-3";
+
+  const imageSrc =
+    guide.cover_image ?? "/assets/images/black-woman-wearing-glasses.png";
+
+  card.innerHTML = `
+    <figure class="guide-card__cover">
+      <img
+        src="${imageSrc}"
+        alt="${guide.title}"
+        class="guide-card__image"
+      />
+    </figure>
+    <div class="guide-card__body | flex flex-col gap-2">
+      <h3 class="guide-card__title">${guide.title}</h3>
+      <p class="guide-card__excerpt">${guide.excerpt}</p>
+    </div>
+  `;
+
+  return card;
+}
+
+function initGuidesHeader() {
+  if (document.getElementById("guides-heading")) return;
+  const header = document.createElement("div");
+  header.className = "results-header";
+  header.innerHTML = `
+    <h2 id="guides-heading">Guides</h2>
+    <a href="#" class="view-all-link view-all-link--outlined">View all guides</a>
+  `;
+  document.querySelector(".guides-section").prepend(header);
+}
+
+function loadGuides() {
+  // When a guides API is available, replace the body of this function with:
+  // const res = await api.get('/guides');
+  // const guides = res.data ?? [];
+
+  const guides = GUIDES_PLACEHOLDER;
+  const guidesList = document.getElementById("guides-list");
+  guidesList.className = "guides-grid";
+
+  guidesList.innerHTML = "";
+  guides.forEach((guide) => guidesList.appendChild(renderGuideCard(guide)));
 }
 
 initTrainingsHeader();
@@ -193,3 +268,5 @@ function loadTemplates() {
 }
 
 document.addEventListener('DOMContentLoaded', loadTemplates);
+initGuidesHeader();
+loadGuides();
