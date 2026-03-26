@@ -130,9 +130,14 @@ async function loadTrainings() {
   try {
     const res = await api.get(`/trainings${buildQueryString(filters)}`);
     const programmes = res.data ?? [];
+    const total = res.meta?.total ?? programmes.length;
 
-    list.innerHTML = "";
-    programmes.forEach((p) => list.appendChild(renderTrainingCard(p)));
+    if (total === 0) {
+      list.innerHTML = "<p>No Training & Events found</p>";
+    } else {
+      list.innerHTML = "";
+      programmes.forEach((p) => list.appendChild(renderTrainingCard(p)));
+    }
   } catch (err) {
     list.innerHTML = `<p class="error-message">${err.message}</p>`;
   }
@@ -224,14 +229,14 @@ const templateData = [
     id: "1",
     title: "Basic financial management template",
     excerpt: "Explore our Basic Financial Management Template designed specifically for small and medium enterprises! It's an excellent resource to get you ready for global opportunities.",
-    color: "#4ecdc4", 
+    color: "#4ecdc4",
     cover_image: null
   },
   {
     id: "2",
     title: "Tax basics for Nigerian SMEs",
     excerpt: "Explore our template on Tax Basics for Nigerian SMEs. It's an essential resource to help you navigate the complexities of taxation and ensure your business is ready for success.",
-    color: "#e91e8c", 
+    color: "#e91e8c",
     cover_image: null
   },
   {
@@ -255,7 +260,7 @@ function loadTemplates() {
           <div class="mockup-img"></div>
         </div>
       </div>
-      
+
       <div class="template-card__content flex flex-col flex-1">
         <h3 class="font-sans text-lg text-primary mb-3 font-semibold py-2">${item.title}</h3>
         <p class="text-xs text-secondary leading-relaxed mb-6">${item.excerpt}</p>
