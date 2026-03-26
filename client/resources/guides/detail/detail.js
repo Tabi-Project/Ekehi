@@ -1,8 +1,6 @@
 import "/shared/components/nav/nav.js";
 import "/shared/components/footer/footer.js";
 
-
-
 // Hardcoded guide data
 const guides = {
   1: {
@@ -61,12 +59,7 @@ const guides = {
 // Read guideId from URL
 const params = new URLSearchParams(window.location.search);
 const guideId = params.get("guideId");
-
-console.log("guideId:", guideId);
-
 const guide = guides[guideId];
-
-
 
 // Get DOM elements
 const guideTitle = document.getElementById("guide-title");
@@ -78,7 +71,6 @@ if (!guide) {
   guideTitle.textContent = "Guide not found";
   guideBody.innerHTML = `
     <p>The guide you are looking for does not exist or the link may be broken.</p>
-    <a href="/resources/">Go back to resources</a>
   `;
 } else {
   // Render title
@@ -89,24 +81,42 @@ if (!guide) {
     const group = document.createElement("div");
     group.className = "guide__toc-group";
 
-    const heading = document.createElement("p");
-    heading.className = "guide__toc-heading";
-    heading.textContent = section.heading;
-    group.appendChild(heading);
+    const headingBtn = document.createElement("button");
+    headingBtn.className = "guide__toc-heading";
+    headingBtn.textContent = section.heading;
+    headingBtn.setAttribute("aria-expanded", "true");
+    group.appendChild(headingBtn);
+
+    const itemList = document.createElement("div");
+    itemList.className = "guide__toc-items";
 
     section.items.forEach((item, index) => {
-      const link = document.createElement("span");
-      link.className = "guide__toc-item";
-      link.textContent = item;
+      const btn = document.createElement("button");
+      btn.className = "guide__toc-item";
+      btn.textContent = item;
 
-      // Set first item of first section as active by default
       if (section === guide.sections[0] && index === 0) {
-        link.classList.add("guide__toc-item--active");
+        btn.classList.add("guide__toc-item--active");
       }
 
-      group.appendChild(link);
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".guide__toc-item")
+          .forEach((i) => i.classList.remove("guide__toc-item--active"));
+        btn.classList.add("guide__toc-item--active");
+      });
+
+      itemList.appendChild(btn);
     });
 
+    // Toggle collapse on heading click
+    headingBtn.addEventListener("click", () => {
+      const isExpanded = headingBtn.getAttribute("aria-expanded") === "true";
+      headingBtn.setAttribute("aria-expanded", String(!isExpanded));
+      itemList.style.display = isExpanded ? "none" : "flex";
+    });
+
+    group.appendChild(itemList);
     tocRoot.appendChild(group);
   });
 
