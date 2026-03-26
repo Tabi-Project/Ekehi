@@ -61,11 +61,6 @@ const CARD_COLORS = {
   mentorship_programme: { bg: "#fce7f3", panel: "#f472b6", text: "#831843" },
 };
 
-
-
-
-
-
 function renderDateMeta(deadline) {
   if (!deadline) return "";
   return `<span class="training-card__date">
@@ -84,14 +79,9 @@ function renderTrainingCard(programme) {
   const card = document.createElement("div");
   card.className = "training-card | flex flex-col gap-4";
 
-  const colors =
-    CARD_COLORS[programme.programme_type] ?? CARD_COLORS.accelerator;
-  const typeLabel =
-    EKEHI_ENUMS.programmeType[programme.programme_type] ??
-    programme.programme_type;
-  const locationLabel =
-    EKEHI_ENUMS.locationScope[programme.location_scope] ??
-    programme.location_scope;
+  const colors = CARD_COLORS[programme.programme_type] ?? CARD_COLORS.accelerator;
+  const typeLabel = EKEHI_ENUMS.programmeType[programme.programme_type] ?? programme.programme_type;
+  const locationLabel = EKEHI_ENUMS.locationScope[programme.location_scope] ?? programme.location_scope;
 
   card.innerHTML = `
     <figure class="training-card__display" style="background-color: ${colors.bg}">
@@ -110,6 +100,11 @@ function renderTrainingCard(programme) {
       ${programme.description ? `<p class="training-card__description">${programme.description}</p>` : ""}
     </div>
   `;
+
+  card.addEventListener("click", () => {
+    window.location.href = `/resources/training/detail/?id=${programme.id}`;
+  });
+
   return card;
 }
 
@@ -138,7 +133,7 @@ async function loadTrainings() {
   }
 }
 
-// ── Guides ───────────────────────────────────────────
+// ── Guides ─────────────────────────────────────────────
 
 const GUIDES_PLACEHOLDER = [
   {
@@ -200,10 +195,6 @@ function initGuidesHeader() {
 }
 
 function loadGuides() {
-  // When a guides API is available, replace the body of this function with:
-  // const res = await api.get('/guides');
-  // const guides = res.data ?? [];
-
   const guides = GUIDES_PLACEHOLDER;
   const guidesList = document.getElementById("guides-list");
   guidesList.className = "guides-grid";
@@ -212,42 +203,41 @@ function loadGuides() {
   guides.forEach((guide) => guidesList.appendChild(renderGuideCard(guide)));
 }
 
-initTrainingsHeader();
-loadTrainings();
+// ── Templates ──────────────────────────────────────────
 
-
-
-
-
-const templateData = [
+const TEMPLATES_PLACEHOLDER = [
   {
     id: "1",
     title: "Basic financial management template",
-    excerpt: "Explore our Basic Financial Management Template designed specifically for small and medium enterprises! It's an excellent resource to get you ready for global opportunities.",
-    color: "#4ecdc4", 
-    cover_image: null
+    excerpt:
+      "Explore our Basic Financial Management Template designed specifically for small and medium enterprises! It's an excellent resource to get you ready for global opportunities.",
+    color: "#4ecdc4",
+    cover_image: null,
   },
   {
     id: "2",
     title: "Tax basics for Nigerian SMEs",
-    excerpt: "Explore our template on Tax Basics for Nigerian SMEs. It's an essential resource to help you navigate the complexities of taxation and ensure your business is ready for success.",
-    color: "#e91e8c", 
-    cover_image: null
+    excerpt:
+      "Explore our template on Tax Basics for Nigerian SMEs. It's an essential resource to help you navigate the complexities of taxation and ensure your business is ready for success.",
+    color: "#e91e8c",
+    cover_image: null,
   },
   {
     id: "3",
     title: "Export readiness checklist for SMEs",
-    excerpt: "Check out our template for the Export Readiness Checklist tailored for SMEs! It's a great tool to help you prepare for international markets.",
+    excerpt:
+      "Check out our template for the Export Readiness Checklist tailored for SMEs! It's a great tool to help you prepare for international markets.",
     color: "#4caf50",
-    cover_image: null
-  }
+    cover_image: null,
+  },
 ];
 
 function loadTemplates() {
-  const grid = document.getElementById('templates-grid');
+  const grid = document.getElementById("templates-grid");
   if (!grid) return;
 
-  grid.innerHTML = templateData.map(item => `
+  grid.innerHTML = TEMPLATES_PLACEHOLDER.map(
+    (item) => `
     <article class="template-card flex flex-col shadow-sm">
       <div class="template-card__visual">
         <div class="template-card__mockup" style="background-color:${item.color}">
@@ -255,7 +245,6 @@ function loadTemplates() {
           <div class="mockup-img"></div>
         </div>
       </div>
-      
       <div class="template-card__content flex flex-col flex-1">
         <h3 class="font-sans text-lg text-primary mb-3 font-semibold py-2">${item.title}</h3>
         <p class="text-xs text-secondary leading-relaxed mb-6">${item.excerpt}</p>
@@ -264,9 +253,14 @@ function loadTemplates() {
         </a>
       </div>
     </article>
-  `).join('');
+  `,
+  ).join("");
 }
 
-document.addEventListener('DOMContentLoaded', loadTemplates);
+// ── Init ───────────────────────────────────────────────
+
+initTrainingsHeader();
+loadTrainings();
 initGuidesHeader();
 loadGuides();
+loadTemplates();
