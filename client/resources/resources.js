@@ -125,9 +125,14 @@ async function loadTrainings() {
   try {
     const res = await api.get(`/trainings${buildQueryString(filters)}`);
     const programmes = res.data ?? [];
+    const total = res.meta?.total ?? programmes.length;
 
-    list.innerHTML = "";
-    programmes.forEach((p) => list.appendChild(renderTrainingCard(p)));
+    if (total === 0) {
+      list.innerHTML = "<p>No Training & Events found</p>";
+    } else {
+      list.innerHTML = "";
+      programmes.forEach((p) => list.appendChild(renderTrainingCard(p)));
+    }
   } catch (err) {
     list.innerHTML = `<p class="error-message">${err.message}</p>`;
   }
@@ -209,10 +214,9 @@ const TEMPLATES_PLACEHOLDER = [
   {
     id: "1",
     title: "Basic financial management template",
-    excerpt:
-      "Explore our Basic Financial Management Template designed specifically for small and medium enterprises! It's an excellent resource to get you ready for global opportunities.",
+    excerpt: "Explore our Basic Financial Management Template designed specifically for small and medium enterprises! It's an excellent resource to get you ready for global opportunities.",
     color: "#4ecdc4",
-    cover_image: null,
+    cover_image: null
   },
   {
     id: "2",
@@ -248,7 +252,7 @@ function loadTemplates() {
       <div class="template-card__content flex flex-col flex-1">
         <h3 class="font-sans text-lg text-primary mb-3 font-semibold py-2">${item.title}</h3>
         <p class="text-xs text-secondary leading-relaxed mb-6">${item.excerpt}</p>
-        <a href="#" class="template-card__link mt-auto">
+        <a href="/resources/template/?id=${item.id}" class="template-card__link mt-auto">
           Read more <span>→</span>
         </a>
       </div>
