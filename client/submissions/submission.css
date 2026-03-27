@@ -1,0 +1,207 @@
+.submission__hero {
+  padding-block: var(--space-12) var(--space-8);
+}
+
+.submission__hero h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-regular);
+  color: var(--color-text-primary);
+}
+
+.submission__hero p {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  max-width: 480px;
+  margin-inline: auto;
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Form wrapper ──────────────────────────────────────────────── */
+
+.submission-form {
+  max-width: 720px;
+  margin-inline: auto;
+  padding-bottom: var(--space-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Section card ──────────────────────────────────────────────── */
+
+.form-section {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+}
+
+.form-section__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+  background: none;
+  border: none;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  text-align: left;
+}
+
+.form-section__toggle:hover {
+  background-color: var(--color-neutral-50);
+}
+
+.form-section__chevron {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  transition: transform 200ms ease;
+}
+
+.form-section__toggle[aria-expanded="false"] .form-section__chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Section body ──────────────────────────────────────────────── */
+
+.form-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-6) var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.form-section__body--collapsed {
+  display: none;
+}
+
+/* ── Form row (side-by-side fields) ───────────────────────────── */
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ── Checkboxes ────────────────────────────────────────────────── */
+
+.form-section__checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ── Fieldset (multi-checkbox group) ──────────────────────────── */
+
+.form-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.form-fieldset legend {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.form-fieldset__hint {
+  font-weight: var(--font-regular);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  margin-left: var(--space-1);
+}
+
+.form-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-2) var(--space-4);
+}
+
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.checkbox-option input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* ── Feedback ──────────────────────────────────────────────────── */
+
+.form-feedback {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  line-height: var(--leading-relaxed);
+}
+
+.form-feedback--error {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.form-feedback--success {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+/* ── Actions ───────────────────────────────────────────────────── */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--space-2);
+}
+
+/* ── Dropdown full-width override for form context ────────────── */
+
+.submission-form .dropdown-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.submission-form .dropdown__trigger {
+  flex: 1;
+  justify-content: space-between;
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .submission__hero h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .form-section__toggle {
+    font-size: var(--text-base);
+    padding: var(--space-4) var(--space-4);
+  }
+
+  .form-section__body {
+    padding: var(--space-2) var(--space-4) var(--space-5);
+  }
+
+  .form-checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+}

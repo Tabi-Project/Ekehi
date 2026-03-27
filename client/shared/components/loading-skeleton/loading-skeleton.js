@@ -35,13 +35,42 @@ class LoadingSkeleton {
     `;
   }
 
+  static guide() {
+    return `
+      <div class="guide-skeleton flex flex-col gap-3">
+        <div class="guide-skeleton__cover skeleton-shimmer"></div>
+        <div class="guide-skeleton__body flex flex-col gap-2">
+          <div class="skeleton-line skeleton-shimmer long" style="height: 20px;"></div>
+          <div class="skeleton-line skeleton-shimmer medium" style="height: 14px;"></div>
+          <div class="skeleton-line skeleton-shimmer short" style="height: 14px;"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  static template() {
+    return `
+      <div class="template-skeleton flex flex-col shadow-sm">
+        <div class="template-skeleton__visual skeleton-shimmer"></div>
+        <div class="template-skeleton__body flex flex-col gap-2">
+          <div class="skeleton-line skeleton-shimmer long" style="height: 20px;"></div>
+          <div class="skeleton-line skeleton-shimmer medium" style="height: 14px;"></div>
+          <div class="skeleton-line skeleton-shimmer short" style="height: 14px;"></div>
+        </div>
+      </div>
+    `;
+  }
+
   static render(type, count = 3) {
-    if (type === 'opportunity') {
-      return Array.from({ length: count }).map(() => this.opportunity()).join('');
-    } else if (type === 'training') {
-      return Array.from({ length: count }).map(() => this.training()).join('');
-    }
-    return '';
+    const map = {
+      opportunity: () => this.opportunity(),
+      training: () => this.training(),
+      guide: () => this.guide(),
+      template: () => this.template(),
+    };
+    const builder = map[type];
+    if (!builder) return '';
+    return Array.from({ length: count }).map(() => builder.call(this)).join('');
   }
 }
 

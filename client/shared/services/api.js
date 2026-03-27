@@ -1,4 +1,4 @@
-const BASE_URL = "https://api-ekehi-dev.onrender.com/api/v1";
+const BASE_URL = window.EKEHI_API_URL ?? "http://localhost:3000/api/v1";
 
 const TOKEN_KEY = "ekehi_access_token";
 const REFRESH_KEY = "ekehi_refresh_token";

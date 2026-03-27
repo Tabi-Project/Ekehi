@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rate limiters
 const generalLimiter = rateLimit({
-  windowMs: 2 * 60 * 1000, // 15 minutes
+  windowMs: 2 * 60 * 1000,
   max: 100,
   standardHeaders: true,
   legacyHeaders: false,

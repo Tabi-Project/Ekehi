@@ -1,15 +1,50 @@
-h1,
-h3,
-h2, span {
+.template__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-6);
+}
+
+.template__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.template__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.template__section-heading {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+}
+
+.template__section-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.temp__aside-title {
   font-family: var(--font-sans);
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
 }
-h1 {
-  font-size: var(--text-4xl);
-}
-p {
-  margin-top: var(--space-5);
+
+.temp__aside-author {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  margin-top: var(--space-2);
 }
 .template__content {
   display: grid;

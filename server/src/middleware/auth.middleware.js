@@ -1,21 +1,21 @@
 const supabase = require("../config/supabaseClient");
 const { sendError } = require("../utils/response.utils");
 
-/**
- * requireAuth — verify the Supabase JWT in the Authorization header.
- * Attaches the decoded user to req.user.
- */
-const requireAuth = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
+function extractBearerToken(req) {
+  const auth = req.headers.authorization;
+  if (!auth || !auth.startsWith("Bearer ")) return null;
+  return auth.split(" ")[1];
+}
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+const requireAuth = async (req, res, next) => {
+  const token = extractBearerToken(req);
+
+  if (!token) {
     return sendError(res, {
       status: 401,
       message: "Missing or invalid Authorization header",
     });
   }
-
-  const token = authHeader.split(" ")[1];
 
   const { data, error } = await supabase.auth.getUser(token);
 
@@ -27,16 +27,10 @@ const requireAuth = async (req, res, next) => {
   return next();
 };
 
-/**
- * optionalAuth — same as requireAuth but never blocks the request.
- * Attaches req.user if a valid token is present; otherwise continues.
- */
 const optionalAuth = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  const token = extractBearerToken(req);
+  if (!token) return next();
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) return next();
-
-  const token = authHeader.split(" ")[1];
   const { data } = await supabase.auth.getUser(token);
   if (data?.user) req.user = data.user;
 
