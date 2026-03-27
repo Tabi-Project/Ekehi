@@ -17,7 +17,7 @@ const router = Router();
 
 router.get("/", getOpportunities);
 router.get("/saved", requireAuth, getSavedOpportunities);
-router.post("/", ...contentGuard, createOpportunity);
+router.post("/", requireAuth, createOpportunity);
 router.get("/:id", optionalAuth, getOpportunityById);
 router.put("/:id", ...contentGuard, updateOpportunity);
 router.post("/:id/save", requireAuth, saveOpportunity);

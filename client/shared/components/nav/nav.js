@@ -1,6 +1,7 @@
 import AuthService from "/shared/services/auth.service.js";
 import Button from "/shared/components/button/button.js";
 import { REVIEWER_ROLES } from "/shared/utils/admin.utils.js";
+import api from "/shared/services/api.js";
 
 const USER_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
   <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.33 0-10 1.672-10 5v1h20v-1c0-3.328-6.67-5-10-5z"/>
@@ -17,6 +18,7 @@ const NAV_CONFIG = {
     { href: "/contributors/", label: "Contributors" },
     { href: "/opportunities/", label: "Opportunities" },
     { href: "/resources/", label: "Resources" },
+    { href: "/submissions/", label: "Submissions" },
   ],
   cta: {
     signup: { href: "/signup/", label: "Sign up" },
@@ -315,11 +317,32 @@ class NavComponent {
     });
   }
 
+  async #loadProfileImage(mountEl) {
+    try {
+      const res = await api.get("/profile");
+      const url = res.data?.profile_image_url;
+      if (!url) return;
+
+      const btn = mountEl.querySelector(".nav__avatar");
+      if (!btn) return;
+
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "Profile";
+      img.className = "nav__avatar-img";
+      btn.innerHTML = "";
+      btn.appendChild(img);
+    } catch {
+      // keep placeholder icon on error
+    }
+  }
+
   mount(selector) {
     const mountEl = document.querySelector(selector);
     if (!mountEl) return;
     mountEl.appendChild(this.#buildHTML());
     this.#attachEventListeners(mountEl);
+    if (this.#isLoggedIn()) this.#loadProfileImage(mountEl);
   }
 }
 

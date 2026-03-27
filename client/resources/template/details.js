@@ -1,93 +1,93 @@
+import api from "/shared/services/api.js";
 import "/shared/components/nav/nav.js";
 import "/shared/components/footer/footer.js";
 import Button from "/shared/components/button/button.js";
+
+const CATEGORY_COLORS = {
+  finance: { bg: "#26B3B5", text: "#033F25" },
+  tax: { bg: "#e91e8c", text: "#341539" },
+  export: { bg: "#4caf50", text: "#033F25" },
+};
+const DEFAULT_COLOR = { bg: "#6366f1", text: "#1e1b4b" };
+
 const templateContent = document.getElementById("template-content");
 const templateAside = document.getElementById("template-aside");
 const downloadBtn = document.querySelector(".download_btn");
 
-const templateData = [
-  {
-    id: "1",
-    title: "Basic financial management template",
-    excerpt:
-      "Explore our Basic Financial Management Template designed specifically for small and medium enterprises! It's an excellent resource to get you ready for global opportunities.",
-    color: "#4ecdc4",
-    cover_image: null,
-    author: "Fisayo Rotibi",
-  },
-  {
-    id: "2",
-    title: "Tax basics for Nigerian SMEs",
-    excerpt:
-      "Explore our template on Tax Basics for Nigerian SMEs. It's an essential resource to help you navigate the complexities of taxation and ensure your business is ready for success.",
-    color: "#e91e8c",
-    cover_image: null,
-    author: "Ejemen Iboi",
-  },
-  {
-    id: "3",
-    title: "Export readiness checklist for SMEs",
-    excerpt:
-      "Check out our template for the Export Readiness Checklist tailored for SMEs! It's a great tool to help you prepare for international markets.",
-    color: "#4caf50",
-    cover_image: null,
-    author: "Esther Orieji",
-  },
-];
-
-const card_colors = {
-  fisayo: { bg: "#26B3B5", text: "#033F25" },
-  esther: { bg: "#4caf50", text: "#033F25" },
-  ejemen: { bg: "#e91e8c", text: "#341539" },
-};
-
 const params = new URLSearchParams(window.location.search);
-const templateID = params.get("id");
-const template = templateData.find((t) => t.id === templateID);
+const templateId = params.get("id");
 
-if (downloadBtn) {
-  downloadBtn.appendChild(
-    Button.create({
-      label: "Download template",
-      as: "a",
-      href: "/#/",
-      variant: "primary",
-      className: "btn--radius",
-    }),
-  );
+function renderNotFound() {
+  templateContent.innerHTML = "<h2>Template not found</h2><p>The template you are looking for does not exist or the link is broken.</p>";
+  templateAside.innerHTML = "";
+  downloadBtn.innerHTML = "";
 }
 
-function renderBody(temp) {
-  return `
-    <div class="template__header">
-    <h1>${temp.title}</h1>
-    </div>
-    <div class="detail-body">
-    <p>${temp.excerpt}</p>
-    </div>
- `;
-}
-
-function renderAside(temp) {
-  const authorKey = temp.author.split(" ")[0].toLowerCase();
-  const colors = card_colors[authorKey] ?? card_colors.fisayo;
-  return `
-    <div class="temp__aside" style="background-color: ${colors.bg}">
-    <h3 style="color: ${colors.text}">${temp.title}</h3>
-    <img src=${temp.cover_image ?? "/assets/images/black-woman-wearing-glasses.png"} class="temp__cover-image" alt=${temp.title}>
-    <span style="color: ${colors.text}">with ${temp.author}</span>
-    </div>
+function renderSections(sections) {
+  return sections.map((section) => {
+    const heading = section.heading
+      ? `<h2 class="template__section-heading">${section.heading}</h2>`
+      : "";
+    return `
+      <div class="template__section">
+        ${heading}
+        <p class="template__section-body">${section.body}</p>
+      </div>
     `;
+  }).join("");
 }
 
-function renderTemplate(temp) {
-  if (!template) {
-    templateContent.innerHTML = ` <h2>Template Not found</h2> <p>The template you are looking for does not exist or the link is broken</p>`;
-    templateAside.innerHTML = ` `;
-    downloadBtn.innerHTML = " ";
-  } else {
-    templateContent.innerHTML = `${renderBody(temp)}`;
-    templateAside.innerHTML = `${renderAside(temp)}`;
+function renderTemplate(template) {
+  const colors = CATEGORY_COLORS[template.category] ?? DEFAULT_COLOR;
+  const parsed = template.content ? JSON.parse(template.content) : null;
+  const author = parsed?.author ?? null;
+  const sections = parsed?.sections ?? [];
+
+  templateContent.innerHTML = `
+    <div class="template__header">
+      <h1 class="template__title">${template.title}</h1>
+    </div>
+    <div class="template__body">
+      ${sections.length > 0 ? renderSections(sections) : `<p>${template.description ?? ""}</p>`}
+    </div>
+  `;
+
+  templateAside.innerHTML = `
+    <div class="temp__aside" style="background-color: ${colors.bg}">
+      <h3 class="temp__aside-title" style="color: ${colors.text}">${template.title}</h3>
+      <img
+        src="/assets/images/black-woman-wearing-glasses.png"
+        class="temp__cover-image"
+        alt="${template.title}"
+      />
+      ${author ? `<span class="temp__aside-author" style="color: ${colors.text}">with ${author}</span>` : ""}
+    </div>
+  `;
+
+  if (template.file_url) {
+    downloadBtn.appendChild(
+      Button.create({
+        label: "Download template",
+        as: "a",
+        href: template.file_url,
+        variant: "primary",
+        className: "btn--radius",
+        target: "_blank",
+        rel: "noopener noreferrer",
+      }),
+    );
   }
 }
-renderTemplate(template);
+
+async function loadTemplate() {
+  if (!templateId) return renderNotFound();
+
+  try {
+    const res = await api.get(`/templates/${templateId}`);
+    renderTemplate(res.data);
+  } catch (err) {
+    renderNotFound();
+  }
+}
+
+loadTemplate();

@@ -1,19 +1,16 @@
 const opportunitiesService = require("../services/opportunities.service");
 const { sendSuccess, sendError } = require("../utils/response.utils");
 
+function parsePagination({ page = 1, limit = 10 }) {
+  return {
+    page: Math.max(1, Number(page)),
+    limit: Math.min(100, Math.max(1, Number(limit))),
+  };
+}
+
 const getOpportunities = async (req, res, next) => {
   try {
-    const {
-      search,
-      opportunity_type,
-      sector,
-      stage,
-      country,
-      status,
-      is_women_only,
-      page = 1,
-      limit = 10,
-    } = req.query;
+    const { search, opportunity_type, sector, stage, country, status, is_women_only } = req.query;
 
     const { items, meta } = await opportunitiesService.getOpportunities({
       search,
@@ -23,8 +20,7 @@ const getOpportunities = async (req, res, next) => {
       country,
       status,
       is_women_only,
-      page: Math.max(1, Number(page)),
-      limit: Math.min(100, Math.max(1, Number(limit))),
+      ...parsePagination(req.query),
     });
 
     return sendSuccess(res, {
@@ -40,8 +36,7 @@ const getOpportunities = async (req, res, next) => {
 
 const getOpportunityById = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const opportunity = await opportunitiesService.getOpportunityById(id, req.user?.id);
+    const opportunity = await opportunitiesService.getOpportunityById(req.params.id, req.user?.id);
 
     if (!opportunity) {
       return sendError(res, { status: 404, message: "Opportunity not found" });
@@ -81,8 +76,7 @@ const updateOpportunity = async (req, res, next) => {
 
 const saveOpportunity = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    await opportunitiesService.saveOpportunity(req.user.id, id);
+    await opportunitiesService.saveOpportunity(req.user.id, req.params.id);
     return sendSuccess(res, { status: 200, message: "Opportunity saved" });
   } catch (err) {
     return next(err);
@@ -91,12 +85,8 @@ const saveOpportunity = async (req, res, next) => {
 
 const unsaveOpportunity = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    await opportunitiesService.unsaveOpportunity(req.user.id, id);
-    return sendSuccess(res, {
-      status: 200,
-      message: "Opportunity removed from saved",
-    });
+    await opportunitiesService.unsaveOpportunity(req.user.id, req.params.id);
+    return sendSuccess(res, { status: 200, message: "Opportunity removed from saved" });
   } catch (err) {
     return next(err);
   }
@@ -104,13 +94,9 @@ const unsaveOpportunity = async (req, res, next) => {
 
 const getSavedOpportunities = async (req, res, next) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
     const { items, meta } = await opportunitiesService.getSavedOpportunities(
       req.user.id,
-      {
-        page: Math.max(1, Number(page)),
-        limit: Math.min(100, Math.max(1, Number(limit))),
-      },
+      parsePagination(req.query),
     );
     return sendSuccess(res, {
       status: 200,
