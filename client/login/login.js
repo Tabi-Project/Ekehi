@@ -40,10 +40,9 @@ document.getElementById("return-btn").appendChild(
     full: true,
     type: "button",
     as: "a",
-    href: "/"
+    href: "/",
   }),
 );
-
 
 document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -58,8 +57,8 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   submitBtn.disabled = true;
 
   try {
-    await AuthService.login(email, password);
-    window.location.href = "/opportunities/";
+    const result = await AuthService.login(email, password);
+    if (result?.data) window.location.href = "/opportunities/";
   } catch (err) {
     errorEl.textContent = err.message || "Login failed. Please try again.";
     errorEl.hidden = false;
@@ -67,4 +66,3 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     submitBtn.disabled = false;
   }
 });
-

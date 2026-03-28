@@ -47,7 +47,7 @@ async function request(path, options = {}, _retry = false) {
   const response = await fetch(`${BASE_URL}${path}`, { ...options, headers });
   const body = await response.json().catch(() => ({}));
 
-  if (response.status === 401 && !_retry) {
+  if (response.status === 401 && !_retry && !path.startsWith("/auth/")) {
     const refreshed = await tryRefresh();
     if (refreshed) return request(path, options, true);
     clearSession();
