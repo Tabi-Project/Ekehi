@@ -61,11 +61,6 @@ const CARD_COLORS = {
   mentorship_programme: { bg: "#fce7f3", panel: "#f472b6", text: "#831843" },
 };
 
-
-
-
-
-
 function renderDateMeta(deadline) {
   if (!deadline) return "";
   return `<span class="training-card__date">
@@ -84,14 +79,9 @@ function renderTrainingCard(programme) {
   const card = document.createElement("div");
   card.className = "training-card | flex flex-col gap-4";
 
-  const colors =
-    CARD_COLORS[programme.programme_type] ?? CARD_COLORS.accelerator;
-  const typeLabel =
-    EKEHI_ENUMS.programmeType[programme.programme_type] ??
-    programme.programme_type;
-  const locationLabel =
-    EKEHI_ENUMS.locationScope[programme.location_scope] ??
-    programme.location_scope;
+  const colors = CARD_COLORS[programme.programme_type] ?? CARD_COLORS.accelerator;
+  const typeLabel = EKEHI_ENUMS.programmeType[programme.programme_type] ?? programme.programme_type;
+  const locationLabel = EKEHI_ENUMS.locationScope[programme.location_scope] ?? programme.location_scope;
 
   card.innerHTML = `
     <figure class="training-card__display" style="background-color: ${colors.bg}">
@@ -110,6 +100,11 @@ function renderTrainingCard(programme) {
       ${programme.description ? `<p class="training-card__description">${programme.description}</p>` : ""}
     </div>
   `;
+
+  card.addEventListener("click", () => {
+    window.location.href = `/resources/training/detail/?id=${programme.id}`;
+  });
+
   return card;
 }
 
@@ -143,7 +138,7 @@ async function loadTrainings() {
   }
 }
 
-// ── Guides ───────────────────────────────────────────
+// ── Guides ─────────────────────────────────────────────
 
 function renderGuideCard(guide) {
   const card = document.createElement("a");
