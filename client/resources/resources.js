@@ -140,33 +140,10 @@ async function loadTrainings() {
 
 // ── Guides ─────────────────────────────────────────────
 
-const GUIDES_PLACEHOLDER = [
-  {
-    id: "1",
-    title: "Guide to understanding and improving business credit scores",
-    excerpt:
-      "Unlock your business's full potential by improving your credit score. Check out our guide for expert tips.",
-    cover_image: null,
-  },
-  {
-    id: "2",
-    title: "CAC registration guide for Nigeria",
-    excerpt:
-      "Learn how to register your business with the Corporate Affairs Commission. Read our guide for expert tips.",
-    cover_image: null,
-  },
-  {
-    id: "3",
-    title: "Women's Empowerment Training Guide: A Step-by-Step Approach",
-    excerpt:
-      "Ready to elevate your business? Read our Women's Empowerment Training Guide for actionable strategies.",
-    cover_image: null,
-  },
-];
-
 function renderGuideCard(guide) {
-  const card = document.createElement("div");
+  const card = document.createElement("a");
   card.className = "guide-card | flex flex-col gap-3";
+  card.href = `/resources/guides/detail/?guideId=${guide.id}`;
 
   const imageSrc =
     guide.cover_image ?? "/assets/images/black-woman-wearing-glasses.png";
@@ -181,7 +158,7 @@ function renderGuideCard(guide) {
     </figure>
     <div class="guide-card__body | flex flex-col gap-2">
       <h3 class="guide-card__title">${guide.title}</h3>
-      <p class="guide-card__excerpt">${guide.excerpt}</p>
+      <p class="guide-card__excerpt">${guide.summary}</p>
     </div>
   `;
 
@@ -192,79 +169,74 @@ function initGuidesHeader() {
   if (document.getElementById("guides-heading")) return;
   const header = document.createElement("div");
   header.className = "results-header";
-  header.innerHTML = `
-    <h2 id="guides-heading">Guides</h2>
-    <a href="#" class="view-all-link view-all-link--outlined">View all guides</a>
-  `;
+  header.innerHTML = `<h2 id="guides-heading">Guides</h2>`;
   document.querySelector(".guides-section").prepend(header);
 }
 
-function loadGuides() {
-  const guides = GUIDES_PLACEHOLDER;
+async function loadGuides() {
   const guidesList = document.getElementById("guides-list");
   guidesList.className = "guides-grid";
+  guidesList.innerHTML = LoadingSkeleton.render("guide", 3);
 
-  guidesList.innerHTML = "";
-  guides.forEach((guide) => guidesList.appendChild(renderGuideCard(guide)));
+  try {
+    const res = await api.get("/guides");
+    const guides = res.data ?? [];
+
+    guidesList.innerHTML = "";
+    if (guides.length === 0) {
+      guidesList.innerHTML = "<p>No guides found</p>";
+    } else {
+      guides.forEach((guide) => guidesList.appendChild(renderGuideCard(guide)));
+    }
+  } catch (err) {
+    guidesList.innerHTML = `<p class="error-message">${err.message}</p>`;
+  }
 }
-
-// ── Templates ──────────────────────────────────────────
-
-const TEMPLATES_PLACEHOLDER = [
-  {
-    id: "1",
-    title: "Basic financial management template",
-    excerpt: "Explore our Basic Financial Management Template designed specifically for small and medium enterprises! It's an excellent resource to get you ready for global opportunities.",
-    color: "#4ecdc4",
-    cover_image: null
-  },
-  {
-    id: "2",
-    title: "Tax basics for Nigerian SMEs",
-    excerpt:
-      "Explore our template on Tax Basics for Nigerian SMEs. It's an essential resource to help you navigate the complexities of taxation and ensure your business is ready for success.",
-    color: "#e91e8c",
-    cover_image: null,
-  },
-  {
-    id: "3",
-    title: "Export readiness checklist for SMEs",
-    excerpt:
-      "Check out our template for the Export Readiness Checklist tailored for SMEs! It's a great tool to help you prepare for international markets.",
-    color: "#4caf50",
-    cover_image: null,
-  },
-];
-
-function loadTemplates() {
-  const grid = document.getElementById("templates-grid");
-  if (!grid) return;
-
-  grid.innerHTML = TEMPLATES_PLACEHOLDER.map(
-    (item) => `
-    <article class="template-card flex flex-col shadow-sm">
-      <div class="template-card__visual">
-        <div class="template-card__mockup" style="background-color:${item.color}">
-          <div class="mockup-header">${item.title}</div>
-          <div class="mockup-img"></div>
-        </div>
-      </div>
-      <div class="template-card__content flex flex-col flex-1">
-        <h3 class="font-sans text-lg text-primary mb-3 font-semibold py-2">${item.title}</h3>
-        <p class="text-xs text-secondary leading-relaxed mb-6">${item.excerpt}</p>
-        <a href="/resources/template/?id=${item.id}" class="template-card__link mt-auto">
-          Read more <span>→</span>
-        </a>
-      </div>
-    </article>
-  `,
-  ).join("");
-}
-
-// ── Init ───────────────────────────────────────────────
 
 initTrainingsHeader();
 loadTrainings();
+
+const TEMPLATE_COLORS = ["#4ecdc4", "#e91e8c", "#4caf50", "#6366f1", "#f59e0b"];
+
+async function loadTemplates() {
+  const grid = document.getElementById("templates-grid");
+  if (!grid) return;
+
+  grid.innerHTML = LoadingSkeleton.render("template", 3);
+
+  try {
+    const res = await api.get("/templates");
+    const templates = res.data ?? [];
+
+    if (templates.length === 0) {
+      grid.innerHTML = "<p>No templates found</p>";
+      return;
+    }
+
+    grid.innerHTML = templates.map((item, index) => {
+      const color = TEMPLATE_COLORS[index % TEMPLATE_COLORS.length];
+      return `
+        <article class="template-card flex flex-col shadow-sm">
+          <div class="template-card__visual">
+            <div class="template-card__mockup" style="background-color:${color}">
+              <div class="mockup-header">${item.title}</div>
+              <div class="mockup-img"></div>
+            </div>
+          </div>
+          <div class="template-card__content flex flex-col flex-1">
+            <h3 class="font-sans text-lg text-primary mb-3 font-semibold py-2">${item.title}</h3>
+            <p class="text-xs text-secondary leading-relaxed mb-6">${item.description}</p>
+            <a href="/resources/template/?id=${item.id}" class="template-card__link mt-auto">
+              Read more <span>→</span>
+            </a>
+          </div>
+        </article>
+      `;
+    }).join("");
+  } catch (err) {
+    grid.innerHTML = `<p class="error-message">${err.message}</p>`;
+  }
+}
 initGuidesHeader();
 loadGuides();
 loadTemplates();

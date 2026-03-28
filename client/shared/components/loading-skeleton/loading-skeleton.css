@@ -124,3 +124,42 @@
   height: var(--space-4);
   width: 100%;
 }
+
+/* Specific to guides */
+.guide-skeleton {
+  pointer-events: none;
+  user-select: none;
+}
+
+.guide-skeleton__cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-neutral-100);
+}
+
+.guide-skeleton__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Specific to templates */
+.template-skeleton {
+  pointer-events: none;
+  user-select: none;
+}
+
+.template-skeleton__visual {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-neutral-100);
+}
+
+.template-skeleton__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
