@@ -144,4 +144,12 @@ const getMySubmissions = async (userId) => {
   return results.flat().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 };
 
-module.exports = { getQueue, getContentItem, reviewContent, getReviewHistory, getMySubmissions };
+const deleteContent = async (contentType, contentId) => {
+  const table = CONTENT_TABLES[contentType];
+  if (!table) throw Object.assign(new Error("Invalid content type"), { status: 400 });
+
+  const { error } = await supabase.from(table).delete().eq("id", contentId);
+  if (error) throw error;
+};
+
+module.exports = { getQueue, getContentItem, reviewContent, getReviewHistory, getMySubmissions, deleteContent };

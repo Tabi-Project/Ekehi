@@ -9,7 +9,7 @@ const CONTENT_TYPES = Object.keys(CONTENT_TYPE_LABELS);
 async function loadDashboard() {
   try {
     const { data } = await api.get("/admin/queue?status=pending&limit=100");
-    const items = data?.items ?? [];
+    const items = data ?? [];
 
     renderStatCards(items);
     renderRecentQueue(items.slice(0, 10));

@@ -82,4 +82,14 @@ const getReviewHistory = async (req, res, next) => {
   }
 };
 
-module.exports = { getQueue, getContentItem, reviewContent, getReviewHistory, getMySubmissions };
+const deleteContent = async (req, res, next) => {
+  try {
+    await adminService.deleteContent(req.params.contentType, req.params.id);
+    return sendSuccess(res, { status: 200, message: "Content deleted successfully" });
+  } catch (err) {
+    if (err.status) return sendError(res, { status: err.status, message: err.message });
+    return next(err);
+  }
+};
+
+module.exports = { getQueue, getContentItem, reviewContent, getReviewHistory, getMySubmissions, deleteContent };

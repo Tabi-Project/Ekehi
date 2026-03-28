@@ -134,11 +134,38 @@ function buildDecisionPanel(item, history) {
   historySection.style.marginTop = "var(--space-6)";
   historySection.innerHTML = `<p class="review-history__title">Review History</p>${renderHistory(history)}`;
 
-  col.append(panel, historySection);
+  // --- Danger zone ---
+  const dangerZone = document.createElement("div");
+  dangerZone.className = "danger-zone";
+  dangerZone.innerHTML = `<p class="danger-zone__title">Danger zone</p>`;
+  const btnDelete = Button.create({ label: "Delete permanently", variant: "outline", className: "btn--delete" });
+  dangerZone.appendChild(btnDelete);
+
+  col.append(panel, historySection, dangerZone);
 
   // --- Wire up interactions ---
   const isPending = item.approval_status === "pending";
   const feedbackInput = document.getElementById("feedback-input");
+
+  btnDelete.addEventListener("click", async () => {
+    const confirmed = window.confirm(`Permanently delete "${getItemTitle(item)}"? This cannot be undone.`);
+    if (!confirmed) return;
+
+    btnDelete.disabled = true;
+    btnDelete.textContent = "Deleting…";
+
+    try {
+      await api.delete(`/admin/${contentType}/${contentId}`);
+      window.location.href = "/admin/queue/";
+    } catch (err) {
+      btnDelete.disabled = false;
+      btnDelete.textContent = "Delete permanently";
+      const errEl = dangerZone.querySelector(".error-message") ?? document.createElement("p");
+      errEl.className = "error-message";
+      errEl.textContent = err.message ?? "Delete failed.";
+      dangerZone.appendChild(errEl);
+    }
+  });
 
   if (!isPending) {
     btnApprove.disabled = true;

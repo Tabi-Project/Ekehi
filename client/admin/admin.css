@@ -171,6 +171,10 @@
   border-bottom: 2px solid var(--color-border);
 }
 
+.admin-tabs--status {
+  margin-bottom: var(--space-2);
+}
+
 .admin-tab {
   padding: var(--space-3) var(--space-5);
   font-size: var(--text-sm);
@@ -351,6 +355,37 @@
 
 .btn--reject:hover { background: #fef2f2; }
 .btn--reject:disabled { border-color: var(--color-neutral-300); color: var(--color-neutral-300); cursor: not-allowed; }
+
+.danger-zone {
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+  background: #fff5f5;
+}
+
+.danger-zone__title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: #b91c1c;
+  margin-bottom: var(--space-3);
+}
+
+.btn--delete {
+  width: 100%;
+  background: var(--color-white);
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn--delete:hover { background: #fef2f2; }
+.btn--delete:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* Review history */
 .review-history { margin-top: var(--space-6); }
