@@ -50,9 +50,8 @@
   --color-border-strong: var(--color-neutral-400);
 
   /* Typography */
-  --font-serif: 'DM Serif Text', Georgia, serif;
-  --font-sans: 'Urbanist', system-ui, sans-serif;
-  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --font-serif: 'Lora Variable', Georgia, serif;
 
   /* Layout */
   --nav-height: 4.25rem;
