@@ -2,15 +2,15 @@ import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import type { ComponentProps } from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '#/lib/utils'
 
 const inputVariants = cva(
-  'w-full rounded-md text-base text-text-primary placeholder:text-text-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50',
+  'w-full rounded-md text-base text-text-primary placeholder:text-text-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-purple-50 disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
         default:
-          'h-10 border border-border bg-bg-base px-3 hover:border-border-strong focus-visible:border-primary',
+          'h-12 border border-border bg-bg-base px-3 hover:border-border-strong focus-visible:border-primary',
         filled: 'h-11 border-0 bg-bg-subtle px-3 focus-visible:ring-2',
       },
     },

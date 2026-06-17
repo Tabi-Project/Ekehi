@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-import { ENDPOINTS } from '@/config/endpoints'
-import { env } from '@/config/env'
-import { clearTokens, getRefreshToken, setTokens } from '@/lib/auth/token-store'
+import { ENDPOINTS } from '#/config/endpoints'
+import { env } from '#/config/env'
+import { clearTokens, getRefreshToken, setTokens } from '#/lib/auth/token-store'
 
 const refreshEnvelopeSchema = z.object({
   success: z.literal(true),

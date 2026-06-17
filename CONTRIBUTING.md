@@ -267,7 +267,7 @@ Open a PR on GitHub targeting `development`. Use the template provided.
 - **Functional components only.** Use hooks for state and effects.
 - **Tailwind for styling.** Compose utility classes; avoid one-off CSS files unless necessary.
 - **TanStack Router.** Route components live under `src/routes/`. After adding/renaming a route, run `pnpm generate-routes`.
-- **Imports.** `simple-import-sort` enforces order — let `pnpm fix` sort them. Internal imports use `@/` (e.g. `@/components/Button`).
+- **Imports.** `simple-import-sort` enforces order — let `pnpm fix` sort them. Internal imports use `#/` (e.g. `#/components/Button`).
 - **No unused vars.** Prefix intentionally-unused params with `_`.
 - **Accessibility.** Prefer semantic HTML (`<nav>`, `<main>`, `<button>`). Provide alt text and ARIA where needed.
 - **Data-fetching features.** For features that talk to the API (endpoints, services, query hooks), follow the pattern in [`client/CONTRIBUTING.md`](./client/CONTRIBUTING.md). The `auth` feature is the canonical reference.

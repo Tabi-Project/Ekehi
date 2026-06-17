@@ -1,6 +1,6 @@
-import { ENDPOINTS } from '@/config/endpoints'
-import type { ApiResponse } from '@/lib/api'
-import { makeRequest } from '@/lib/api'
+import { ENDPOINTS } from '#/config/endpoints'
+import type { ApiResponse } from '#/lib/api'
+import { makeRequest } from '#/lib/api'
 
 import type {
   LoginRequest,

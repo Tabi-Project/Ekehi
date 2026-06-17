@@ -19,6 +19,17 @@ export default [
       'import/no-cycle': 'off',
       'import/order': 'off',
       'sort-imports': 'off',
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@/*'],
+              message: "Use the '#/' subpath alias instead of '@/'.",
+            },
+          ],
+        },
+      ],
       '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/require-await': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
