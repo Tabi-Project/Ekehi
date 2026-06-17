@@ -7,7 +7,8 @@ const rateLimit = require("express-rate-limit");
 const { port, nodeEnv, allowedOrigins } = require("./config/env");
 const apiRoutes = require("./routes/index");
 const errorHandler = require("./middleware/errorHandler.middleware");
-const { sendSuccess, sendError } = require("./utils/response.utils");
+const { sendError } = require("./utils/response.utils");
+const healthController = require("./controllers/health.controller");
 
 const app = express();
 
@@ -34,6 +35,9 @@ app.use(morgan(nodeEnv === "production" ? "combined" : "dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Health check (registered before rate limiters so monitors are never throttled)
+app.get("/api/v1/health", healthController.getHealth);
+
 // Rate limiters
 const generalLimiter = rateLimit({
   windowMs: 2 * 60 * 1000,
@@ -59,15 +63,6 @@ const authLimiter = rateLimit({
 
 app.use("/api/v1/auth", authLimiter);
 app.use("/api/v1", generalLimiter);
-
-// Health check (no rate limit, no auth)
-app.get("/api/v1/health", (req, res) => {
-  return sendSuccess(res, {
-    status: 200,
-    message: "Server is healthy",
-    data: { status: "ok" },
-  });
-});
 
 // API routes
 app.use("/api/v1", apiRoutes);
