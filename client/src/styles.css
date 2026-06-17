@@ -83,14 +83,6 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  #app {
-    min-height: 100%;
-  }
-
-  main {
-    min-height: 100svh;
-  }
-
   img,
   picture,
   video,
@@ -98,16 +90,6 @@
   svg {
     display: block;
     max-width: 100%;
-  }
-
-  ul,
-  ol {
-    list-style: none;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
   }
 
   p,
@@ -119,4 +101,68 @@
   h6 {
     overflow-wrap: break-word;
   }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* LAYOUT UTILITIES */
+@utility content-grid {
+  --padding-inline: max(1rem, 1vw);
+  --content-max-width: max(80rem, 80vw);
+  --breakout-max-width: max(90rem, 90vw);
+  --layout-max-width: max(90rem, 90vw);
+
+  --breakout-size: calc(
+    (var(--breakout-max-width) - var(--content-max-width)) / 2
+  );
+
+  display: grid;
+  grid-template-columns:
+    [full-width-start]
+    minmax(var(--padding-inline), 1fr)
+    [breakout-start]
+    minmax(0, var(--breakout-size))
+    [content-start]
+    min(100% - (var(--padding-inline) * 2), var(--content-max-width))
+    [content-end]
+    minmax(0, var(--breakout-size))
+    [breakout-end]
+    minmax(var(--padding-inline), 1fr)
+    [full-width-end];
+
+  & > :not(.breakout, .full-width) {
+    grid-column: content;
+  }
+
+  & > .breakout {
+    grid-column: breakout;
+  }
+
+  & > .full-width {
+    grid-column: full-width;
+  }
+}
+
+@utility breakout {
+  .content-grid > & {
+    grid-column: breakout;
+  }
+}
+
+@utility full-width {
+  .content-grid > & {
+    grid-column: full-width;
+  }
+}
+
+/* OTHERS */
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
