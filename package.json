@@ -11,5 +11,12 @@
     "@commitlint/config-conventional": "^20.4.4",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.6"
+  },
+  "packageManager": "pnpm@10.15.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "lightningcss"
+    ]
   }
 }

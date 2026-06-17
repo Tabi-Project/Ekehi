@@ -192,15 +192,19 @@ Each package has its own `package.json` and own dependency tree. Treat them as s
 
 ### Install
 
+This is a pnpm workspace, so one install covers everything. `pnpm install` installs the
+client and server deps and activates the husky hooks in a single step — and because it is
+a workspace, it works from any directory in the repo (root, `client/`, or `server/`).
+
 ```sh
-# from repo root — installs husky hooks
 pnpm install
+```
 
-# install client deps (pnpm)
-cd client && pnpm install
+If pnpm reports "Ignored build scripts" on the first install, approve them (esbuild and
+lightningcss are already allow-listed):
 
-# install server deps (npm — server is still on JS)
-cd ../server && npm install
+```sh
+pnpm approve-builds
 ```
 
 ### Environment variables
@@ -228,7 +232,7 @@ cp .env.example .env
 cd client && pnpm dev          # http://localhost:3000
 
 # in another
-cd server && npm run dev       # http://localhost:<server-port>
+cd server && pnpm dev          # http://localhost:<server-port>
 ```
 
 

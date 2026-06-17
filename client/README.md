@@ -2,11 +2,13 @@ Welcome to your new TanStack Start app!
 
 # Getting Started
 
-To run this application:
+This package is part of a pnpm workspace. `pnpm install` installs the whole workspace
+(client + server) and activates the git hooks — you can run it from here or from the repo
+root, either works.
 
 ```bash
-pnpm install
-pnpm dev
+pnpm install   # installs the entire workspace
+pnpm dev       # starts the client dev server on http://localhost:3000
 ```
 
 # Building For Production
