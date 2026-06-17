@@ -98,7 +98,7 @@ function FormFieldDescription({
   return (
     <p
       id={descriptionId}
-      className={cn('text-text-muted text-sm', className)}
+      className={cn('text-content-muted text-sm', className)}
       {...props}
     />
   )

@@ -8,7 +8,7 @@ export function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
       aria-hidden
-      className={cn('bg-bg-subtle animate-pulse rounded', className)}
+      className={cn('bg-surface-subtle animate-pulse rounded', className)}
       {...props}
     />
   )
@@ -16,7 +16,7 @@ export function Skeleton({ className, ...props }: SkeletonProps) {
 
 export function OpportunitySkeleton() {
   return (
-    <div className="border-border bg-bg-base flex flex-col gap-3 rounded-lg border p-4">
+    <div className="border-line bg-surface flex flex-col gap-3 rounded-lg border p-4">
       <div className="flex items-baseline gap-3">
         <Skeleton className="h-6 w-24" />
         <Skeleton className="h-4 w-16" />
@@ -33,7 +33,7 @@ export function OpportunitySkeleton() {
 
 export function TrainingSkeleton() {
   return (
-    <div className="border-border bg-bg-base flex flex-col gap-3 overflow-hidden rounded-lg border">
+    <div className="border-line bg-surface flex flex-col gap-3 overflow-hidden rounded-lg border">
       <Skeleton className="h-40 w-full rounded-none" />
       <div className="flex flex-col gap-2 p-4">
         <div className="flex gap-2">

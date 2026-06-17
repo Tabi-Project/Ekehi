@@ -35,19 +35,19 @@
   --color-primary-subtle: var(--color-purple-50);
   --color-error: #d72525;
 
-  --color-bg-base: #ffffff;
-  --color-bg-subtle: var(--color-neutral-50);
-  --color-bg-muted: var(--color-purple-50);
-  --color-bg-cta: #fefaff;
+  --color-surface: #ffffff;
+  --color-surface-subtle: var(--color-neutral-50);
+  --color-surface-muted: var(--color-purple-50);
+  --color-surface-cta: #fefaff;
 
-  --color-text-primary: var(--color-neutral-950);
-  --color-text-secondary: var(--color-neutral-700);
-  --color-text-muted: var(--color-neutral-500);
-  --color-text-inverse: #ffffff;
-  --color-text-on-primary: #ffffff;
+  --color-content: var(--color-neutral-950);
+  --color-content-secondary: var(--color-neutral-700);
+  --color-content-muted: var(--color-neutral-400);
+  --color-content-inverse: #ffffff;
+  --color-on-primary: #ffffff;
 
-  --color-border: var(--color-neutral-300);
-  --color-border-strong: var(--color-neutral-400);
+  --color-line: var(--color-neutral-300);
+  --color-line-strong: var(--color-neutral-400);
 
   /* Typography */
   --font-sans: 'Inter Variable', system-ui, sans-serif;
@@ -77,8 +77,8 @@
   body {
     min-height: 100svh;
     font-family: var(--font-sans);
-    color: var(--color-text-primary);
-    background-color: var(--color-bg-base);
+    color: var(--color-content);
+    background-color: var(--color-surface);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
