@@ -2,7 +2,7 @@
 
 Thank you for contributing to **Ekehi** — a business intelligence platform supporting women entrepreneurs across Africa.
 
-This guide covers everything you need to start contributing, whether you are working on the **frontend** (HTML, CSS, JS) or the **backend** (Node.js, Express, Supabase).
+This guide covers everything you need to start contributing, whether you are working on the **frontend** (React + Vite + TanStack Router) or the **backend** (Node.js + Express + Supabase).
 
 ---
 
@@ -13,6 +13,8 @@ This guide covers everything you need to start contributing, whether you are wor
 3. [Task & Issue Workflow](#task--issue-workflow)
 4. [Branching Strategy](#branching-strategy)
 5. [Development Setup](#development-setup)
+   - [Prerequisites](#prerequisites)
+   - [Clone & Install](#clone--install)
    - [Frontend Setup](#frontend-setup)
    - [Backend Setup](#backend-setup)
 6. [Development Workflow](#development-workflow)
@@ -30,74 +32,74 @@ This guide covers everything you need to start contributing, whether you are wor
 
 ```
 Ekehi/
-├── client/                     # Frontend — HTML, CSS, Vanilla JS
-│   ├── assets/                 # Global images, icons, fonts
-│   ├── shared/                 # Reusable across all pages
-│   │   ├── base/               # Tokens, reset, typography, utilities (main.css imports all)
-│   │   ├── components/         # Nav, footer, button (CSS + JS)
-│   │   ├── constants/          # Shared JS constants (e.g. EKEHI_ENUMS display label maps)
-│   │   └── services/           # API client and auth service (api.js, auth.service.js)
-│   ├── landing/                # Landing page CSS
-│   │   ├── landing.css         # Imports sections in document order
-│   │   └── sections/           # One CSS file per landing section
-│   ├── contributors/           # Contributors page (HTML + CSS + JS)
-│   ├── login/                  # Login page (HTML + CSS)
-│   ├── signup/                 # Sign up page (HTML + CSS)
-│   └── index.html              # Landing page (root — web server convention)
-│
-├── server/                     # Backend — Node.js, Express, Supabase
+├── client/                  # React 19 + Vite + TanStack Router app
 │   ├── src/
-│   │   ├── config/             # Environment & Supabase client setup
-│   │   ├── controllers/        # Route handler logic
-│   │   ├── middleware/         # Auth, error handling, rate limiting
-│   │   ├── models/             # JS constants and enum definitions (e.g. enums.js)
-│   │   ├── routes/             # Express route definitions
-│   │   ├── services/           # Business logic — Supabase queries, filtering, pagination
-│   │   └── utils/              # Shared server utilities
-│   ├── .env.example            # Environment variable template
+│   │   ├── routes/          # TanStack Router file-based routes
+│   │   ├── routeTree.gen.ts # generated — do not edit
+│   │   ├── main.tsx
+│   │   ├── router.tsx
+│   │   └── styles.css
+│   ├── docs/                # client-specific docs (e.g. tooling-plan.md)
+│   ├── public/
+│   ├── eslint.config.js
+│   ├── prettier.config.js
+│   ├── tsconfig.json
+│   ├── vite.config.ts
+│   └── package.json
+│
+├── server/                  # Express API (Node.js)
+│   ├── src/
+│   │   ├── config/          # env + Supabase client
+│   │   ├── controllers/     # HTTP request/response logic
+│   │   ├── middleware/      # auth, error handling, rate limiting
+│   │   ├── models/          # shared JS constants / enums
+│   │   ├── routes/          # Express route definitions
+│   │   ├── services/        # business logic — Supabase queries
+│   │   └── utils/
+│   ├── docs/                # API reference + design notes
+│   │   ├── api/endpoints.md
+│   │   ├── archive/
+│   │   ├── db-refactor.md
+│   │   ├── profile-image-storage-design.md
+│   │   └── system-design-case-study.md
+│   ├── .env.example
 │   └── package.json
 │
 ├── .github/
-│   ├── ISSUE_TEMPLATE/         # Bug, feature, task issue templates
+│   ├── ISSUE_TEMPLATE/
 │   └── pull_request_template.md
 │
-├── docs/
-│   ├── api/                    # API endpoint documentation
-│   └── setup/                  # Local setup guides
-│
+├── .husky/                  # commit-msg + pre-commit hooks
+├── package.json             # root: husky + commitlint + lint-staged only
+├── commitlint.config.cjs
+├── .lintstagedrc.mjs
 ├── CONTRIBUTING.md
 ├── README.md
 └── LICENSE
 ```
 
+`client/` and `server/` are independent packages with their own dependencies. Treat them as separate apps that share a repo.
+
+> The client is on **pnpm**. The server is currently on **npm** and will be modernized when it moves to TypeScript.
+
 ---
 
 ## Before You Start
 
-1. Read the [README](./README.md) to understand the product vision and tech stack.
-2. Make sure you have been assigned a task on **ClickUp** or a **GitHub Issue** before writing any code.
-3. Never start work without a linked issue or task — this prevents duplicated effort.
+1. Read the [README](./README.md) for product vision and tech stack.
+2. Make sure you have a **GitHub Issue** assigned to you before writing code.
+3. Never start work without a linked issue — this prevents duplicated effort.
 
 ---
 
 ## Task & Issue Workflow
 
-All work on Ekehi is driven by tasks. We use **ClickUp** for internal task management and **GitHub Issues** for open tracking.
-
-### If you are an internal contributor (with ClickUp access):
-
-1. Find your assigned task in ClickUp.
-2. Move the task to **In Progress** when you begin.
-3. Open a **GitHub Issue** linked to your ClickUp task (use the appropriate issue template).
-4. Create your branch from `development` using the naming convention below.
-5. When your PR is merged, move the ClickUp task to **Done**.
-
-### If you are an external contributor:
+All work on Ekehi is tracked via **GitHub Issues**.
 
 1. Check existing [GitHub Issues](https://github.com/Tabi-Project/Ekehi/issues) for open tasks.
 2. Comment on the issue to express interest before starting work.
 3. Wait for a maintainer to assign the issue to you.
-4. Then follow the workflow below.
+4. Create your branch from `development` (see below) and open a PR back into `development` when ready.
 
 > **Do not open a PR for work that has no associated issue.**
 
@@ -106,22 +108,22 @@ All work on Ekehi is driven by tasks. We use **ClickUp** for internal task manag
 ## Branching Strategy
 
 ```
-main                        ← Production / stable
+main                        ← Production / stable (release-only)
 │
-development                 ← Integration branch (all PRs target this)
+development                 ← Integration branch — all PRs target this
 │
-├── feature/<feature-name>  ← New feature
+├── feat/<feature-name>     ← New feature
 ├── fix/<bug-name>          ← Bug fix
 ├── docs/<topic>            ← Documentation change
-└── chore/<task>            ← Maintenance (deps, config, tooling)
+├── chore/<task>            ← Maintenance (deps, config, tooling)
+└── refactor/<topic>        ← Internal refactor, no behavior change
 ```
 
 ### Rules
 
 - **Never commit directly to `main` or `development`.**
-- All branches must be created from `development`.
-- All PRs must target `development`, not `main`.
-- `main` is only updated via a release merge from `development` by a maintainer.
+- All branches are created from `development`.
+- All PRs target `development`. `main` updates only via release merge.
 
 ---
 
@@ -131,78 +133,77 @@ development                 ← Integration branch (all PRs target this)
 
 - Git
 - Node.js >= 18
+- pnpm (`npm i -g pnpm`) — for the root and client
 - A code editor (VS Code recommended)
 
-### 1. Fork and Clone
+### Clone & Install
 
 ```bash
 # Fork via GitHub UI, then:
 git clone https://github.com/YOUR_USERNAME/Ekehi.git
 cd Ekehi
 git remote add upstream https://github.com/Tabi-Project/Ekehi.git
-```
 
-### 2. Stay in Sync
-
-Before creating a branch, always pull the latest `development`:
-
-```bash
+# Sync with development
 git checkout development
 git pull upstream development
+
+# Install root tooling (husky + commitlint + lint-staged)
+pnpm install
+
+# Install client deps (pnpm)
+cd client && pnpm install
+
+# Install server deps (npm)
+cd ../server && npm install
 ```
 
----
+After install, husky hooks (`commit-msg`, `pre-commit`) are active for every commit on every branch.
 
 ### Frontend Setup
 
-The frontend is plain HTML, CSS, and JavaScript — no build step required.
-
 ```bash
-# Navigate to the client
 cd client
+pnpm dev          # http://localhost:3000
 ```
 
-Open `index.html` in your browser, or use the **Live Server** VS Code extension for hot reload.
-
-**Frontend contributors work inside `client/` only.**
+**Frontend contributors work inside `client/src/` only.**
 
 | Folder | Your responsibility |
 |---|---|
-| `index.html` | Landing page HTML |
-| `landing/sections/` | Landing page section styles |
-| `shared/components/` | Nav, footer, and button (CSS + JS) |
-| `shared/constants/` | Display label maps (`EKEHI_ENUMS`) — load via `<script>` tag |
-| `shared/services/` | API client (`api.js`) and auth helpers (`auth.service.js`) |
-| `<page-name>/` | Page-specific HTML, CSS, and JS |
+| `src/routes/` | TanStack Router file-based routes |
+| `src/main.tsx`, `src/router.tsx` | Entry + router bootstrap |
+| `src/styles.css` | Global styles, Tailwind layer |
+| `public/` | Static assets shipped as-is |
 
----
+Generated file: `src/routeTree.gen.ts` — never edit by hand. Run `pnpm generate-routes` after changing routes.
 
 ### Backend Setup
 
 ```bash
 cd server
 
-# Install dependencies
+# Install
 npm install
 
 # Copy environment variables
 cp .env.example .env
-# Fill in your values in .env (ask a maintainer for dev credentials)
+# Fill in your values (ask a maintainer for dev credentials)
 
-# Start development server
+# Start dev server
 npm run dev
 ```
 
-The server runs on `http://localhost:3000` by default.
+The server runs on `http://localhost:<port>` per your `.env`.
 
 **Backend contributors work inside `server/src/` only.**
 
 | Folder | Your responsibility |
 |---|---|
-| `routes/` | Define Express routes |
-| `controllers/` | Handle request/response logic (HTTP only) |
+| `routes/` | Express route definitions |
+| `controllers/` | Request/response handling (HTTP only) |
 | `services/` | Business logic — Supabase queries, filtering, pagination |
-| `models/` | Shared JS constants (enum slug arrays used by `meta` endpoint) |
+| `models/` | Shared JS constants / enum arrays |
 | `middleware/` | Auth (`requireAuth`), error handling, rate limiting |
 
 > Never commit `.env`. It is in `.gitignore`. Use `.env.example` for sharing variable names.
@@ -216,7 +217,7 @@ The server runs on `http://localhost:3000` by default.
 ```bash
 git checkout development
 git pull upstream development
-git checkout -b feature/your-feature-name
+git checkout -b feat/your-feature-name
 ```
 
 ### 2. Make your changes
@@ -224,22 +225,36 @@ git checkout -b feature/your-feature-name
 - Keep changes focused on the task at hand.
 - Do not refactor unrelated code in the same PR.
 
-### 3. Commit your work
+### 3. Verify before commit
 
-Follow the [commit message format](#commit-message-format).
+If you touched `client/`:
+
+```bash
+cd client
+pnpm check        # lint + typecheck + format check
+pnpm fix          # auto-fix lint + format if check fails
+```
+
+If you touched `server/`, run the server locally and exercise the changed routes (Postman or curl).
+
+### 4. Commit your work
+
+Follow the [commit message format](#commit-message-format). The `commit-msg` hook will block messages that don't match — this applies to **every** commit, client or server.
 
 ```bash
 git add .
 git commit -m "feat: add filter by sector on opportunities page"
 ```
 
-### 4. Push and open a PR
+The `pre-commit` hook runs `lint-staged` on changed files in `client/` (server files are not auto-linted yet). If it fails, fix and re-stage.
+
+### 5. Push and open a PR
 
 ```bash
-git push origin feature/your-feature-name
+git push origin feat/your-feature-name
 ```
 
-Then open a Pull Request on GitHub targeting `development`. Use the PR template provided.
+Open a PR on GitHub targeting `development`. Use the template provided.
 
 ---
 
@@ -247,17 +262,14 @@ Then open a Pull Request on GitHub targeting `development`. Use the PR template 
 
 ### Frontend Conventions
 
-- Use **semantic HTML** — prefer `<nav>`, `<section>`, `<article>`, `<main>` over generic `<div>`.
-- CSS class naming follows **BEM** (Block Element Modifier): `.card__title`, `.filter--active`.
-- Always use **design tokens** from `shared/base/tokens.css` for all colors, spacing, and font sizes. Never hardcode raw values (e.g. use `var(--space-4)`, not `16px`).
-- Use the standard breakpoints only: `400px` · `768px` · `900px` · `1200px`. Do not introduce new ones.
-- JavaScript is vanilla — no frameworks, no bundler. Keep functions small and single-purpose.
-- No jQuery or external UI libraries unless approved by the team.
-- Responsive design is required — mobile-first approach.
-
-**Adding a new page:** Create `client/<page-name>/` with `index.html` and `<page-name>.css`. Every page must load `shared/base/main.css`, mount `#nav-root` (with `nav.js`) and `#footer-root` (with `footer.js`). Use `contributors/` as the reference implementation.
-
-**Adding a landing section:** Create `client/landing/sections/<section-name>.css` and import it in `client/landing/landing.css` in document order.
+- **TypeScript everywhere.** Use `.ts`/`.tsx`. No untyped JS in `src/`.
+- **Functional components only.** Use hooks for state and effects.
+- **Tailwind for styling.** Compose utility classes; avoid one-off CSS files unless necessary.
+- **TanStack Router.** Route components live under `src/routes/`. After adding/renaming a route, run `pnpm generate-routes`.
+- **Imports.** `simple-import-sort` enforces order — let `pnpm fix` sort them. Internal imports use `@/` (e.g. `@/components/Button`).
+- **No unused vars.** Prefix intentionally-unused params with `_`.
+- **Accessibility.** Prefer semantic HTML (`<nav>`, `<main>`, `<button>`). Provide alt text and ARIA where needed.
+- **Data-fetching features.** For features that talk to the API (endpoints, services, query hooks), follow the pattern in [`client/CONTRIBUTING.md`](./client/CONTRIBUTING.md). The `auth` feature is the canonical reference.
 
 ### Backend Conventions
 
@@ -273,11 +285,13 @@ Then open a Pull Request on GitHub targeting `development`. Use the PR template 
 
 ## Commit Message Format
 
-We follow the [Conventional Commits](https://www.conventionalcommits.org/) standard:
+We follow [Conventional Commits](https://www.conventionalcommits.org/). The `commit-msg` hook (commitlint) **enforces this — bad messages are rejected before the commit lands.** This applies to every commit, regardless of whether you touched `client/`, `server/`, or repo-root tooling.
 
 ```
-<type>: <short description>
+<type>(<scope>): <short description>
 ```
+
+`<scope>` is optional but recommended (e.g. `auth`, `opportunities`, `routing`).
 
 | Type | When to use |
 |---|---|
@@ -288,19 +302,20 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) stand
 | `refactor` | Code restructure, no behavior change |
 | `chore` | Tooling, dependencies, config |
 | `test` | Adding or updating tests |
+| `perf` | Performance improvement |
 
 **Examples:**
 
 ```bash
-feat: add opportunity search filter by sector
-fix: resolve CORS error on /api/opportunities
-docs: add backend setup guide
-chore: update express to v4.19
+feat(opportunities): add sector filter
+fix(auth): handle expired token on refresh
+docs: update backend setup
+chore: bump tanstack/react-router
 ```
 
 - Use the imperative mood: "add", not "added" or "adds".
 - Keep the subject under 72 characters.
-- Reference the issue number where applicable: `feat: add sector filter (#12)`
+- Reference issues in the body: `Closes #12`.
 
 ---
 
@@ -308,24 +323,24 @@ chore: update express to v4.19
 
 Your PR must include:
 
-- **Clear title** following the commit format: `feat: add sector filter`
+- **Clear title** following the commit format: `feat(opportunities): add sector filter`
 - **Description** of what was done and why
 - **Screenshots** for any UI changes
 - **Linked issue**: use `Closes #<issue-number>` in the PR body
-- **ClickUp task link** (if applicable)
 
-PRs that do not follow the template or lack a linked issue will be held for revision.
+PRs that lack a linked issue or fail the checklist below will be held for revision.
 
 ### PR Checklist
 
 Before requesting review, confirm:
 
 - [ ] Branch is up to date with `development`
-- [ ] Code follows the conventions in this guide
-- [ ] No `.env` files or secrets are committed
-- [ ] UI changes are tested on mobile and desktop
-- [ ] Backend changes have been tested locally with Postman or curl (see `docs/api/endpoints.md`)
-- [ ] PR is linked to a GitHub issue or ClickUp task
+- [ ] `pnpm check` passes locally if you touched `client/`
+- [ ] Commit messages follow Conventional Commits
+- [ ] No `.env` files or secrets committed
+- [ ] UI changes tested on mobile and desktop
+- [ ] Backend changes tested locally with Postman or curl (see [`server/docs/api/endpoints.md`](./server/docs/api/endpoints.md))
+- [ ] PR is linked to a GitHub issue
 
 ---
 
@@ -337,7 +352,9 @@ Open a [GitHub Issue](https://github.com/Tabi-Project/Ekehi/issues/new/choose) u
 - Steps to reproduce
 - Expected vs actual behaviour
 - Screenshots or screen recordings if applicable
-- Browser / Node version
+- Browser / Node version, OS
+- Package: `client/`, `server/`, or tooling
+- Commit SHA or branch
 
 ---
 
