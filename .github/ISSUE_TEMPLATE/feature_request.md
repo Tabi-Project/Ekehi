@@ -16,11 +16,12 @@ What problem does this address?
 How should this feature work?
 
 ## Acceptance Criteria
+- [ ] Tests added or updated
+- [ ] `pnpm check` passes
 - [ ] Criteria 1
 - [ ] Criteria 2
 
-## Area
-[ ] Frontend  [ ] Backend  [ ] Both
-
-## ClickUp Task (if applicable)
-Link:
+## Package
+- [ ] `client/`
+- [ ] `server/`
+- [ ] Both

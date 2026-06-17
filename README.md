@@ -141,19 +141,127 @@ Initial resources include:
 
 ## API Reference
 
-See [`docs/api/endpoints.md`](./docs/api/endpoints.md) for the full endpoint reference, including request/response shapes, query params, and error codes.
+See [`server/docs/api/endpoints.md`](./server/docs/api/endpoints.md) for the full endpoint reference, including request/response shapes, query params, and error codes.
 
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Frontend | HTML, CSS, JavaScript |
+| Frontend framework | React 19 + Vite + TanStack Router |
+| Styling | Tailwind CSS 4 |
+| Frontend testing | Vitest + Testing Library |
 | Backend | Node.js + Express |
 | Database | Supabase (PostgreSQL) |
 | Search | Supabase Full-Text Search |
 | Authentication | Supabase Auth + JWT |
+| File storage | Supabase Storage |
 | Email | Resend or Mailgun |
 | Admin CMS | Directus or custom admin panel |
-| Hosting | Netlify (frontend), Railway / Render (backend) |
+| Tooling | ESLint 9, Prettier 3, Husky, lint-staged, commitlint |
+| Package manager | pnpm (client + root), npm (server) |
+| Hosting | Netlify (frontend), Render (backend) |
+
+
+## Repo Layout
+
+This repo holds two independent packages plus root-level tooling:
+
+```
+.
+├── client/          # React 19 + Vite + TanStack Router app
+│   ├── src/
+│   └── docs/        # client-specific docs (e.g. tooling-plan.md)
+├── server/          # Express API
+│   ├── src/
+│   └── docs/        # server-specific docs (API reference, design notes)
+├── .husky/          # git hooks (commit-msg, pre-commit)
+├── package.json     # root: husky + commitlint + lint-staged only
+└── README.md
+```
+
+Each package has its own `package.json` and own dependency tree. Treat them as separate apps that happen to share a repo.
+
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js ≥ 18
+- pnpm (`npm i -g pnpm`)
+
+### Install
+
+```sh
+# from repo root — installs husky hooks
+pnpm install
+
+# install client deps (pnpm)
+cd client && pnpm install
+
+# install server deps (npm — server is still on JS)
+cd ../server && npm install
+```
+
+### Environment variables
+
+The client validates env vars at build time and at app boot via [zod](https://zod.dev). Missing or malformed values throw immediately with a clear error.
+
+```sh
+cd client
+cp .env.example .env.local
+# edit .env.local with your local API + site URLs
+```
+
+The server reads its env from `server/.env`:
+
+```sh
+cd server
+cp .env.example .env
+# ask a maintainer for dev credentials
+```
+
+### Run locally
+
+```sh
+# in one terminal
+cd client && pnpm dev          # http://localhost:3000
+
+# in another
+cd server && npm run dev       # http://localhost:<server-port>
+```
+
+
+## Contributing
+
+### Commit messages
+
+Conventional Commits is enforced by the `commit-msg` hook (commitlint). Format:
+
+`<type>(<scope>): <subject>`
+
+Examples: `feat(auth): add password reset`, `fix(opportunities): handle empty filter`, `chore: bump deps`.
+
+### Pre-commit hook
+
+`pre-commit` runs `lint-staged` over changed files in `client/`:
+
+- `*.{ts,tsx,js,jsx,mjs,cjs}` → `eslint --fix` → `prettier --write`
+- `*.{css,json,md,mdx,yml,yaml}` → `prettier --write`
+
+If a check fails, the commit is blocked. Fix and re-stage.
+
+### Quality scripts (client)
+
+```sh
+pnpm lint           # eslint
+pnpm typecheck      # tsc --noEmit
+pnpm format:check   # prettier check
+pnpm check          # all three above
+pnpm fix            # auto-fix lint + format
+```
+
+Run `pnpm check` before pushing.
+
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the deeper contributor guide.
 

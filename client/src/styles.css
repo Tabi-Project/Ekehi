@@ -1,0 +1,123 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Purple scale */
+  --color-purple-25: #fcf3ff;
+  --color-purple-50: #f9e6ff;
+  --color-purple-100: #f2ccff;
+  --color-purple-200: #e599ff;
+  --color-purple-300: #d966ff;
+  --color-purple-400: #cc33ff;
+  --color-purple-500: #bf00ff;
+  --color-purple-600: #9900cc;
+  --color-purple-700: #730099;
+  --color-purple-800: #4c0066;
+  --color-purple-900: #260033;
+  --color-purple-950: #130019;
+
+  /* Neutral scale */
+  --color-neutral-50: #fbfbfb;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a09ea9;
+  --color-neutral-500: #72717b;
+  --color-neutral-600: #53525c;
+  --color-neutral-700: #403f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
+
+  /* Semantic */
+  --color-primary: var(--color-purple-700);
+  --color-primary-hover: var(--color-purple-600);
+  --color-primary-active: var(--color-purple-700);
+  --color-primary-subtle: var(--color-purple-50);
+  --color-error: #d72525;
+
+  --color-bg-base: #ffffff;
+  --color-bg-subtle: var(--color-neutral-50);
+  --color-bg-muted: var(--color-purple-50);
+  --color-bg-cta: #fefaff;
+
+  --color-text-primary: var(--color-neutral-950);
+  --color-text-secondary: var(--color-neutral-700);
+  --color-text-muted: var(--color-neutral-500);
+  --color-text-inverse: #ffffff;
+  --color-text-on-primary: #ffffff;
+
+  --color-border: var(--color-neutral-300);
+  --color-border-strong: var(--color-neutral-400);
+
+  /* Typography */
+  --font-serif: 'DM Serif Text', Georgia, serif;
+  --font-sans: 'Urbanist', system-ui, sans-serif;
+  --font-inter: 'Inter', system-ui, sans-serif;
+
+  /* Layout */
+  --nav-height: 4.25rem;
+  --container-max: 75rem;
+  --container-wide: 72rem;
+  --container-small: 50rem;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+  }
+
+  body {
+    min-height: 100svh;
+    font-family: var(--font-sans);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #app {
+    min-height: 100%;
+  }
+
+  main {
+    min-height: 100svh;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+}

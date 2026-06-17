@@ -1,8 +1,0 @@
-/* Landing Page Sections (order mirrors HTML document flow) */
-@import "./sections/hero.css";
-@import "./sections/about.css";
-@import "./sections/value-proposition.css";
-@import "./sections/mission.css";
-@import "./sections/what-we-offer.css";
-@import "./sections/cta.css";
-@import "./sections/faq.css";
