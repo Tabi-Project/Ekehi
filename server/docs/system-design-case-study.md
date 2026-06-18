@@ -42,11 +42,11 @@ The frontend was built with hardcoded data. The team needed a real API that coul
 
 Three independently deployed systems. Each has a single responsibility:
 
-| System | Responsibility |
-|--------|---------------|
-| Netlify (Client) | Render HTML/CSS/JS. Call the API. Display data. |
-| Render (Server) | Validate requests. Enforce business rules. Query DB. |
-| Supabase | Store data. Handle auth tokens. Enforce schema. |
+| System           | Responsibility                                       |
+| ---------------- | ---------------------------------------------------- |
+| Netlify (Client) | Render HTML/CSS/JS. Call the API. Display data.      |
+| Render (Server)  | Validate requests. Enforce business rules. Query DB. |
+| Supabase         | Store data. Handle auth tokens. Enforce schema.      |
 
 ---
 
@@ -59,6 +59,7 @@ Express has the smallest learning curve and the largest ecosystem. For a team wo
 ### Why Supabase over raw PostgreSQL?
 
 Supabase provides:
+
 - A managed Postgres instance with no DevOps overhead
 - A built-in Auth service (JWT issuance, refresh, email confirmation)
 - Row Level Security (RLS) at the database layer
@@ -199,7 +200,7 @@ Every response, success or error, uses the same shape:
 ```js
 // config/supabaseClient.js
 const supabase = createClient(url, serviceRoleKey, {
-  auth: { autoRefreshToken: false, persistSession: false }
+  auth: { autoRefreshToken: false, persistSession: false },
 });
 module.exports = supabase;
 ```
@@ -212,15 +213,17 @@ Instead of building a WHERE clause string, filters are applied conditionally to 
 
 ```js
 let query = supabase
-  .from('funding_opportunities')
-  .select(FIELDS, { count: 'exact' })
-  .eq('approval_status', 'approved');   // always applied
+  .from("funding_opportunities")
+  .select(FIELDS, { count: "exact" })
+  .eq("approval_status", "approved"); // always applied
 
 if (search) query = query.or(`opportunity_title.ilike.%${search}%,...`);
-if (sector) query = query.eq('sector', sector);
-if (country) query = query.eq('country', country);
+if (sector) query = query.eq("sector", sector);
+if (country) query = query.eq("country", country);
 
-query = query.range(offset, offset + limit - 1).order('created_at', { ascending: false });
+query = query
+  .range(offset, offset + limit - 1)
+  .order("created_at", { ascending: false });
 ```
 
 The `approval_status` filter is hardcoded — not a user parameter. This is the core access control: unapproved records are never reachable regardless of what the client sends.
@@ -255,8 +258,8 @@ const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 10 });
 // All other API endpoints — relaxed
 const generalLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 
-app.use('/api/v1/auth', authLimiter);   // applied first (more specific)
-app.use('/api/v1', generalLimiter);
+app.use("/api/v1/auth", authLimiter); // applied first (more specific)
+app.use("/api/v1", generalLimiter);
 ```
 
 Auth routes get both limiters — `authLimiter` fires first, and if the request is not rejected, `generalLimiter` also runs. This is intentional: auth attempts are counted in both windows.
@@ -304,16 +307,18 @@ ALLOWED_ORIGINS=https://your-app.netlify.app,http://localhost:5500
 ### Base Fetch Wrapper (`api.js`)
 
 ```js
-const BASE_URL = window.EKEHI_API_URL || 'http://localhost:3000/api/v1';
+const BASE_URL = window.EKEHI_API_URL || "http://localhost:3000/api/v1";
 
 async function request(path, options = {}) {
-  const token = localStorage.getItem('ekehi_access_token');
+  const token = localStorage.getItem("ekehi_access_token");
   const headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
   const response = await fetch(`${BASE_URL}${path}`, { ...options, headers });
-  if (response.status === 401) { /* clear tokens, redirect to login */ }
+  if (response.status === 401) {
+    /* clear tokens, redirect to login */
+  }
   if (!response.ok) throw new Error(body.message);
   return body;
 }
@@ -323,7 +328,9 @@ async function request(path, options = {}) {
 
 ```html
 <!-- In production HTML, loaded before api.js -->
-<script>window.EKEHI_API_URL = 'https://ekehi-api.onrender.com/api/v1';</script>
+<script>
+  window.EKEHI_API_URL = "https://ekehi-api.onrender.com/api/v1";
+</script>
 <script src="/client/shared/services/api.js"></script>
 ```
 
@@ -350,6 +357,7 @@ npm install -D nodemon
 Create `src/` with the folder structure above. Start with `config/env.js` and `config/supabaseClient.js`, then build outward: utils → middleware → services → controllers → routes → app.js.
 
 Add to `package.json`:
+
 ```json
 "scripts": {
   "dev": "nodemon src/app.js",
@@ -390,14 +398,14 @@ curl http://localhost:3000/api/v1/opportunities
 
 ## What This Architecture Does Not Cover
 
-| Concern | Status |
-|---------|--------|
-| Input validation (Joi/Zod) | Not implemented — added in Week 3 |
-| Admin routes (POST, PATCH) | Week 3 scope |
-| Refresh token rotation | Not implemented |
-| Request logging to a service | Using Morgan to stdout only |
-| Database migrations | Managed manually via Supabase Studio |
-| Tests (unit + integration) | Not yet written |
+| Concern                      | Status                               |
+| ---------------------------- | ------------------------------------ |
+| Input validation (Joi/Zod)   | Not implemented — added in Week 3    |
+| Admin routes (POST, PATCH)   | Week 3 scope                         |
+| Refresh token rotation       | Not implemented                      |
+| Request logging to a service | Using Morgan to stdout only          |
+| Database migrations          | Managed manually via Supabase Studio |
+| Tests (unit + integration)   | Not yet written                      |
 
 ---
 
