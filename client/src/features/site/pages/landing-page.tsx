@@ -1,7 +1,9 @@
+import { HeroSection } from '#/features/site/components/hero'
+
 export function LandingPage() {
   return (
     <div>
-      <h1>Landing Page</h1>
+      <HeroSection />
     </div>
   )
 }
