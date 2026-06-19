@@ -1,4 +1,5 @@
 # Ekehi Backend API — Week 2 Sprint Plan
+
 ## Auth + GET endpoints for Opportunities & Training Programmes
 
 ---
@@ -28,30 +29,30 @@ Client (Netlify)  →  Express Server (Render)  →  Supabase (PostgreSQL + Auth
 
 ### Backend (server/src/)
 
-| # | File | Purpose |
-|---|------|---------|
-| 1 | `config/supabaseClient.js` | Init Supabase client (service role, stateless singleton) |
-| 2 | `utils/response.utils.js` | `sendSuccess`, `sendError`, `buildPaginationMeta` |
-| 3 | `middleware/errorHandler.middleware.js` | Global 4-arg Express error handler |
-| 4 | `middleware/auth.middleware.js` | `requireAuth` — verify Supabase JWT (ready for Week 3) |
-| 5 | `services/auth.service.js` | `signUp`, `signIn`, `signOut` via Supabase Auth SDK |
-| 6 | `services/opportunities.service.js` | `getOpportunities` (filter-query-builder), `getOpportunityById` |
-| 7 | `services/training.service.js` | `getTrainingProgrammes`, `getTrainingProgrammeById` |
-| 8 | `controllers/auth.controller.js` | Parse req → call service → send response |
-| 9 | `controllers/opportunities.controller.js` | Parse query params → call service → paginated response |
-| 10 | `controllers/training.controller.js` | Same as above for training |
-| 11 | `routes/auth.routes.js` | `POST /signup`, `POST /login`, `POST /logout` |
-| 12 | `routes/opportunities.routes.js` | `GET /`, `GET /:id` |
-| 13 | `routes/training.routes.js` | `GET /`, `GET /:id` |
-| 14 | `routes/index.js` | Route aggregator — mounts all 3 route files |
-| 15 | `app.js` | Express entry point — helmet, CORS, morgan, rate limiters, routes, error handler |
+| #   | File                                      | Purpose                                                                          |
+| --- | ----------------------------------------- | -------------------------------------------------------------------------------- |
+| 1   | `config/supabaseClient.js`                | Init Supabase client (service role, stateless singleton)                         |
+| 2   | `utils/response.utils.js`                 | `sendSuccess`, `sendError`, `buildPaginationMeta`                                |
+| 3   | `middleware/errorHandler.middleware.js`   | Global 4-arg Express error handler                                               |
+| 4   | `middleware/auth.middleware.js`           | `requireAuth` — verify Supabase JWT (ready for Week 3)                           |
+| 5   | `services/auth.service.js`                | `signUp`, `signIn`, `signOut` via Supabase Auth SDK                              |
+| 6   | `services/opportunities.service.js`       | `getOpportunities` (filter-query-builder), `getOpportunityById`                  |
+| 7   | `services/training.service.js`            | `getTrainingProgrammes`, `getTrainingProgrammeById`                              |
+| 8   | `controllers/auth.controller.js`          | Parse req → call service → send response                                         |
+| 9   | `controllers/opportunities.controller.js` | Parse query params → call service → paginated response                           |
+| 10  | `controllers/training.controller.js`      | Same as above for training                                                       |
+| 11  | `routes/auth.routes.js`                   | `POST /signup`, `POST /login`, `POST /logout`                                    |
+| 12  | `routes/opportunities.routes.js`          | `GET /`, `GET /:id`                                                              |
+| 13  | `routes/training.routes.js`               | `GET /`, `GET /:id`                                                              |
+| 14  | `routes/index.js`                         | Route aggregator — mounts all 3 route files                                      |
+| 15  | `app.js`                                  | Express entry point — helmet, CORS, morgan, rate limiters, routes, error handler |
 
 ### Frontend (client/shared/services/)
 
-| # | File | Purpose |
-|---|------|---------|
-| 16 | `api.js` | Base fetch wrapper — attaches Bearer token, handles 401 redirect |
-| 17 | `auth.service.js` | `login`, `signup`, `logout`, `isLoggedIn` — stores tokens in localStorage |
+| #   | File              | Purpose                                                                   |
+| --- | ----------------- | ------------------------------------------------------------------------- |
+| 16  | `api.js`          | Base fetch wrapper — attaches Bearer token, handles 401 redirect          |
+| 17  | `auth.service.js` | `login`, `signup`, `logout`, `isLoggedIn` — stores tokens in localStorage |
 
 ---
 
@@ -76,11 +77,13 @@ GET    /api/v1/training/:id       — Public. Single programme by UUID.
 ## Response Envelope
 
 Every response (success or error):
+
 ```json
 { "success": true, "message": "...", "data": {} }
 ```
 
 List endpoints include a `meta` field:
+
 ```json
 {
   "success": true,
@@ -95,42 +98,58 @@ List endpoints include a `meta` field:
 ## Key Design Decisions
 
 ### Supabase Client
+
 ```js
-createClient(url, serviceRoleKey, { auth: { autoRefreshToken: false, persistSession: false } })
+createClient(url, serviceRoleKey, {
+  auth: { autoRefreshToken: false, persistSession: false },
+});
 ```
+
 Stateless singleton — no session stored server-side.
 
 ### Filter-as-Query-Builder Pattern
+
 Each filter is applied conditionally:
+
 ```js
 if (search) query = query.or(`opportunity_title.ilike.%${search}%,...`);
-if (sector) query = query.eq('sector', sector);
+if (sector) query = query.eq("sector", sector);
 ```
+
 Only `approval_status = 'approved'` rows are ever exposed.
 
 ### Signup → Profile Creation
+
 After `supabase.auth.signUp()`, insert into `profiles` using `user.id`. Profile failure is logged but non-blocking.
 
 ### Middleware Order in app.js
+
 ```
 helmet → cors → morgan → body-parser → auth-rate-limiter → general-rate-limiter → health-check → routes → 404 → errorHandler
 ```
 
 ### CORS
+
 `ALLOWED_ORIGINS` env var (comma-separated). For Render production:
+
 ```
 ALLOWED_ORIGINS=https://your-app.netlify.app,http://localhost:5500,http://127.0.0.1:5500
 ```
 
 ### Frontend Base URL
+
 `api.js` reads `window.EKEHI_API_URL` if set, otherwise falls back to `http://localhost:3000/api/v1`.
 For production, add a `config.js` loaded before `api.js`:
+
 ```html
-<script>window.EKEHI_API_URL = 'https://your-api.onrender.com/api/v1';</script>
+<script>
+  window.EKEHI_API_URL = "https://your-api.onrender.com/api/v1";
+</script>
 <script src="/client/shared/services/api.js"></script>
 ```
 
 ### Script Loading Order
+
 ```html
 <!-- Auth pages -->
 <script src="/client/shared/services/api.js"></script>

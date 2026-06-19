@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { clearTokens, getAccessToken, setTokens } from '@/lib/auth/token-store'
+import { clearTokens, getAccessToken, setTokens } from '#/lib/auth/token-store'
 
 import { AuthService } from './auth.service'
 import type {

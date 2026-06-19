@@ -1,7 +1,7 @@
 import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '#/lib/utils'
 
 import type { InputProps } from './input'
 import { Input } from './input'
@@ -23,7 +23,7 @@ export function PasswordInput({ className, ...props }: PasswordInputProps) {
         type="button"
         aria-label={visible ? 'Hide password' : 'Show password'}
         onClick={() => setVisible((v) => !v)}
-        className="text-text-muted hover:text-text-primary focus-visible:ring-primary absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 focus-visible:ring-2 focus-visible:outline-none"
+        className="text-content-muted hover:text-content focus-visible:ring-primary absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 focus-visible:ring-2 focus-visible:outline-none"
       >
         <Icon size={18} aria-hidden />
       </button>

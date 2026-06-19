@@ -2,7 +2,7 @@ import { Slot } from '@radix-ui/react-slot'
 import type { ComponentProps, ReactNode } from 'react'
 import { createContext, use, useId } from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '#/lib/utils'
 
 import { Label } from './label'
 
@@ -98,7 +98,7 @@ function FormFieldDescription({
   return (
     <p
       id={descriptionId}
-      className={cn('text-text-muted text-sm', className)}
+      className={cn('text-content-muted text-sm', className)}
       {...props}
     />
   )

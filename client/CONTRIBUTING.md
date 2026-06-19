@@ -44,7 +44,7 @@ src/
 - A feature owns its types, service, queries, and pages.
 - Routes (`src/routes/`) import pages only; they contain no business logic.
 - Cross-feature usage goes through the other feature's `*.query.ts` or `*.service.ts` exports, never deep imports.
-- All imports use the `@/` alias (e.g. `import { makeRequest } from '@/lib/api'`). Do not use relative `../../`.
+- All imports use the `#/` alias (e.g. `import { makeRequest } from '#/lib/api'`). Do not use relative `../../`.
 
 ## What the foundation gives you for free
 
@@ -120,8 +120,8 @@ export type ListOpportunitiesResponse = z.infer<
 ### 3. Build the service in `opportunities.service.ts`
 
 ```ts
-import { ENDPOINTS } from '@/config/endpoints'
-import { makeRequest } from '@/lib/api'
+import { ENDPOINTS } from '#/config/endpoints'
+import { makeRequest } from '#/lib/api'
 
 import type {
   ListOpportunitiesQuery,
@@ -153,7 +153,7 @@ Define a key factory, then one hook per server call.
 ```ts
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import type { ApiError } from '@/lib/api'
+import type { ApiError } from '#/lib/api'
 
 import { OpportunitiesService } from './opportunities.service'
 import type {
@@ -236,7 +236,7 @@ Pages never import `makeRequest` or `fetch` directly. If you find yourself reach
 If a list endpoint returns `meta: { page, limit, total, totalPages, hasNextPage, hasPrevPage }`, declare a `Meta` type and return the full envelope from the hook:
 
 ```ts
-import type { ApiResponse } from '@/lib/api'
+import type { ApiResponse } from '#/lib/api'
 
 type PaginationMeta = {
   page: number
@@ -294,7 +294,7 @@ export const SubmissionsService = {
 For endpoints that require a logged-in user, gate the query on the access token to avoid a guaranteed 401 before sign-in:
 
 ```ts
-import { getAccessToken } from '@/lib/auth/token-store'
+import { getAccessToken } from '#/lib/auth/token-store'
 
 useQuery({
   queryKey: ...,
@@ -379,8 +379,8 @@ Each route file follows the same shape:
 ```tsx
 import { createFileRoute } from '@tanstack/react-router'
 
-import { OpportunitiesPage } from '@/features/opportunities/pages/opportunities-page'
-import { pageMeta } from '@/lib/page-meta'
+import { OpportunitiesPage } from '#/features/opportunities/pages/opportunities-page'
+import { pageMeta } from '#/lib/page-meta'
 
 export const Route = createFileRoute('/(layout)/opportunities/')({
   component: OpportunitiesPage,
@@ -403,8 +403,8 @@ A layout is `route.tsx` inside a group directory. It renders `<Outlet />` where 
 // src/routes/(layout)/route.tsx
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
-import { Footer } from '@/components/layout/footer'
-import { Navbar } from '@/components/layout/navbar'
+import { Footer } from '#/components/layout/footer'
+import { Navbar } from '#/components/layout/navbar'
 
 export const Route = createFileRoute('/(layout)')({
   component: SiteLayout,
@@ -431,7 +431,7 @@ The `(protected)` layout runs `beforeLoad` before any child route renders. If th
 // src/routes/(layout)/(protected)/route.tsx
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
-import { getAccessToken } from '@/lib/auth/token-store'
+import { getAccessToken } from '#/lib/auth/token-store'
 
 export const Route = createFileRoute('/(layout)/(protected)')({
   beforeLoad: ({ location }) => {
@@ -495,7 +495,7 @@ File names are kebab-case. Exports use PascalCase for types/components/services 
 - ❌ Throwing custom errors from a service — `makeRequest` throws `ApiError` consistently.
 - ❌ Calling a query hook outside `<QueryClientProvider>` — the provider is wired once in `src/main.tsx`.
 - ❌ Business logic in a route file — routes are wrappers; logic lives in the feature.
-- ❌ Relative imports (`../../lib/api`) — always use the `@/` alias.
+- ❌ Relative imports (`../../lib/api`) — always use the `#/` alias.
 
 ## Pre-PR checklist
 
@@ -507,5 +507,5 @@ File names are kebab-case. Exports use PascalCase for types/components/services 
 - [ ] Cache invalidation hits only what changed.
 - [ ] Page renders loading, error, and empty states.
 - [ ] No `fetch`, no `localStorage`, no third-party HTTP client in feature code.
-- [ ] All imports use the `@/` alias.
+- [ ] All imports use the `#/` alias.
 - [ ] `pnpm lint` clean.

@@ -1,5 +1,5 @@
-import { env } from '@/config/env'
-import { getAccessToken } from '@/lib/auth/token-store'
+import { env } from '#/config/env'
+import { getAccessToken } from '#/lib/auth/token-store'
 
 import { ApiError, isErrorEnvelope, normalizeError } from './errors'
 import { refreshSession } from './refresh'

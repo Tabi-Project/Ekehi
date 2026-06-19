@@ -133,7 +133,7 @@ development                 ← Integration branch — all PRs target this
 
 - Git
 - Node.js >= 18
-- pnpm (`npm i -g pnpm`) — for the root and client
+- pnpm (`npm i -g pnpm`) — manages the entire workspace (root, client, server)
 - A code editor (VS Code recommended)
 
 ### Clone & Install
@@ -148,17 +148,19 @@ git remote add upstream https://github.com/Tabi-Project/Ekehi.git
 git checkout development
 git pull upstream development
 
-# Install root tooling (husky + commitlint + lint-staged)
+# Install the whole workspace from the repo root (one step).
+# Installs client + server deps AND activates husky.
 pnpm install
-
-# Install client deps (pnpm)
-cd client && pnpm install
-
-# Install server deps (npm)
-cd ../server && npm install
 ```
 
-After install, husky hooks (`commit-msg`, `pre-commit`) are active for every commit on every branch.
+If pnpm reports "Ignored build scripts" on the first install, approve them (esbuild and
+lightningcss are already allow-listed; approve any others it flags):
+
+```bash
+pnpm approve-builds
+```
+
+After install, husky hooks (`commit-msg`, `pre-commit`) are active for every commit on every branch — including commits made from inside `client/` or `server/`.
 
 ### Frontend Setup
 
@@ -183,15 +185,14 @@ Generated file: `src/routeTree.gen.ts` — never edit by hand. Run `pnpm generat
 ```bash
 cd server
 
-# Install
-npm install
+# Deps are already installed by the root `pnpm install` — no separate install step.
 
 # Copy environment variables
 cp .env.example .env
 # Fill in your values (ask a maintainer for dev credentials)
 
 # Start dev server
-npm run dev
+pnpm dev
 ```
 
 The server runs on `http://localhost:<port>` per your `.env`.
@@ -266,7 +267,7 @@ Open a PR on GitHub targeting `development`. Use the template provided.
 - **Functional components only.** Use hooks for state and effects.
 - **Tailwind for styling.** Compose utility classes; avoid one-off CSS files unless necessary.
 - **TanStack Router.** Route components live under `src/routes/`. After adding/renaming a route, run `pnpm generate-routes`.
-- **Imports.** `simple-import-sort` enforces order — let `pnpm fix` sort them. Internal imports use `@/` (e.g. `@/components/Button`).
+- **Imports.** `simple-import-sort` enforces order — let `pnpm fix` sort them. Internal imports use `#/` (e.g. `#/components/Button`).
 - **No unused vars.** Prefix intentionally-unused params with `_`.
 - **Accessibility.** Prefer semantic HTML (`<nav>`, `<main>`, `<button>`). Provide alt text and ARIA where needed.
 - **Data-fetching features.** For features that talk to the API (endpoints, services, query hooks), follow the pattern in [`client/CONTRIBUTING.md`](./client/CONTRIBUTING.md). The `auth` feature is the canonical reference.

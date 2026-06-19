@@ -1,7 +1,7 @@
 import { ChevronDown } from 'lucide-react'
 import type { ComponentProps } from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '#/lib/utils'
 
 type SelectProps = ComponentProps<'select'> & {
   placeholder?: string
@@ -17,7 +17,7 @@ export function Select({
     <div className="relative">
       <select
         className={cn(
-          'border-border bg-bg-base text-text-primary hover:border-border-strong focus-visible:border-primary focus-visible:ring-primary h-10 w-full appearance-none rounded-md border px-3 pr-9 text-base transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+          'border-line bg-surface text-content hover:border-line-strong focus-visible:border-primary focus-visible:ring-primary h-10 w-full appearance-none rounded-md border px-3 pr-9 text-base transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
         {...props}
@@ -30,7 +30,7 @@ export function Select({
       <ChevronDown
         size={16}
         aria-hidden
-        className="text-text-muted pointer-events-none absolute top-1/2 right-3 -translate-y-1/2"
+        className="text-content-muted pointer-events-none absolute top-1/2 right-3 -translate-y-1/2"
       />
     </div>
   )

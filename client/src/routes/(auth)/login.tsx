@@ -5,6 +5,9 @@ import { pageMeta } from '#/lib/page-meta'
 
 export const Route = createFileRoute('/(auth)/login')({
   component: LoginPage,
+  validateSearch: (search: Record<string, unknown>): { redirect?: string } => ({
+    redirect: typeof search.redirect === 'string' ? search.redirect : undefined,
+  }),
   head: () =>
     pageMeta({
       title: 'Log in',

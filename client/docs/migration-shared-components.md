@@ -73,7 +73,7 @@ legacy `utilities.css` was **not** carried over — Tailwind utilities cover it.
 ### Conventions
 
 - Each component lives in its own `.tsx` file under `src/components/ui/` and
-  is imported by its full path: `import { Button } from '@/components/ui/button'`.
+  is imported by its full path: `import { Button } from '#/components/ui/button'`.
 - No barrel `index.ts` — explicit paths only.
 - Variants are defined with `class-variance-authority` and exported alongside
   the component.
@@ -250,8 +250,8 @@ string-keyed `render('opportunity', 3)`.
 ## 5. Assets
 
 ```ts
-import { IMAGES } from '@/assets/images'
-import { SVGS } from '@/assets/svgs'
+import { IMAGES } from '#/assets/images'
+import { SVGS } from '#/assets/svgs'
 
 <img src={IMAGES.heroDisplay} alt="…" />
 <img src={SVGS.ekehiLogo} alt="Ekehi" />

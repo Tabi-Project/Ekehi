@@ -3,24 +3,24 @@ import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import type { ComponentProps } from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '#/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+  'inline-flex items-center justify-center gap-2 active:translate-y-0.5 active:scale-[0.99] rounded-md font-medium transition-[colors,scale,translate] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
         primary:
-          'bg-primary text-text-on-primary hover:bg-primary-hover active:bg-primary-active',
-        secondary: 'bg-bg-subtle text-text-primary hover:bg-bg-muted',
+          'bg-primary text-on-primary hover:bg-primary-hover active:bg-primary-active',
+        secondary: 'bg-surface-subtle text-content hover:bg-surface-muted',
         outline:
-          'border border-border bg-transparent text-text-primary hover:bg-bg-subtle',
-        ghost: 'bg-transparent text-text-primary hover:bg-bg-subtle',
+          'border border-line bg-transparent text-content hover:bg-surface-subtle',
+        ghost: 'bg-transparent text-content hover:bg-surface-subtle',
       },
       size: {
-        sm: 'h-8 px-3 text-sm',
-        md: 'h-10 px-4 text-base',
-        lg: 'h-12 px-6 text-lg',
+        sm: 'h-10 px-3 text-sm',
+        md: 'h-12 px-4 text-base',
+        lg: 'h-14 px-6 text-lg',
       },
       full: {
         true: 'w-full',
