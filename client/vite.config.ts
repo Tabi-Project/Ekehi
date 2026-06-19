@@ -15,6 +15,11 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    test: {
+      environment: 'jsdom',
+      globals: true,
+      setupFiles: ['./src/test/setup.ts'],
+    },
     resolve: { tsconfigPaths: true },
     plugins: [
       devtools(),
