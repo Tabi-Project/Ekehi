@@ -1,8 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import React, { useEffect, useRef,useState } from 'react'
 
-import { SVGS } from '@/assets/svgs'
-import { useLogoutMutation, useMeQuery } from '@/features/auth/auth.query'
+import { SVGS } from '#/assets/svgs'
+import { useLogoutMutation, useMeQuery } from '#/features/auth/auth.query'
 
 interface LinkItem {
   to: string

@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import React from 'react'
 
-import { SVGS } from '@/assets/svgs'
+import { SVGS } from '#/assets/svgs'
 
 interface LinkItem {
   label: string
@@ -93,7 +93,7 @@ export const Footer: React.FC = () => {
         <div className="space-y-4 md:col-span-5">
           <Link
             to={brand.to}
-            className="flex w-max items-center space-x-3 text-white"
+            className="flex items-center space-x-3 text-white"
           >
             <img src={brand.logo} alt={brand.wordmark} />
             <span className="font-serif text-2xl font-semibold tracking-wide">
