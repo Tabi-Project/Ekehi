@@ -6,7 +6,7 @@ export function HeroSection() {
     <section className="relative isolate flex min-h-[600px] w-full items-end overflow-hidden px-6 pt-24 pb-1 sm:px-10 sm:pt-32 md:px-16 md:pt-36 lg:min-h-[952px] lg:px-[146px] lg:pt-[180px]">
       {/* Background image */}
       <img
-        src={IMAGES.heroDisplay}
+        src={IMAGES.headerImg}
         alt=""
         aria-hidden="true"
         className="absolute inset-0 -z-10 size-full object-cover"
