@@ -1,3 +1,29 @@
 packages:
   - client
   - server
+
+ignoredBuiltDependencies:
+  - unrs-resolver
+
+onlyBuiltDependencies:
+  - '"'
+  - ','
+  - '-'
+  - '['
+  - ']'
+  - b
+  - c
+  - d
+  - e
+  - esbuild
+  - g
+  - h
+  - i
+  - l
+  - n
+  - o
+  - r
+  - s
+  - t
+  - u
+  - v
