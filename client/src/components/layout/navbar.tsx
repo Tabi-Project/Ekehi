@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import React, { useEffect, useRef,useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { SVGS } from '#/assets/svgs'
 import { useLogoutMutation, useMeQuery } from '#/features/auth/auth.query'
@@ -112,7 +112,6 @@ export const Navbar: React.FC = () => {
     <div className="w-full font-sans" ref={innerRef}>
       <nav className="relative border-b border-gray-100 bg-white">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-
           <Link
             to={logo.to}
             className="flex cursor-pointer items-center space-x-3 text-[#4a0066]"
@@ -135,7 +134,9 @@ export const Navbar: React.FC = () => {
                 key={item.label}
                 to={item.to}
                 activeProps={{ className: 'font-semibold text-[#7a0099]' }}
-                inactiveProps={{ className: 'text-gray-500 hover:text-gray-900' }}
+                inactiveProps={{
+                  className: 'text-gray-500 hover:text-gray-900',
+                }}
                 className="text-sm font-medium transition-colors duration-200"
               >
                 {item.label}
