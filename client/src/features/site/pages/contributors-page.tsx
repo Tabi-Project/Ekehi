@@ -1,3 +1,5 @@
+import './contributors.styles.css'
+
 import { IMAGES } from '#/assets/images'
 
 type Contributor = {
@@ -11,62 +13,62 @@ const imageArray: Contributor[] = [
   {
     name: 'peace braide',
     role: 'frontend engineer',
-    image: IMAGES.peaceMarionbraide,
+    image: IMAGES.contributors.peaceMarionbraide,
   },
   {
     name: 'ejemen iboi',
     role: 'frontend engineer',
-    image: IMAGES.osezeleIboi,
+    image: IMAGES.contributors.osezeleIboi,
   },
   {
     name: 'fatihat akinwunmi',
     role: 'frontend engineer',
-    image: IMAGES.fatihatAkinwumi,
+    image: IMAGES.contributors.fatihatAkinwumi,
   },
   {
     name: 'oluchi okuwuosa',
     role: 'frontend engineer',
-    image: IMAGES.oluchiOkwuosa,
+    image: IMAGES.contributors.oluchiOkwuosa,
   },
   {
     name: 'florence onwuegbuzie',
     role: 'frontend engineer',
-    image: IMAGES.florenceOnwuegbuzie,
+    image: IMAGES.contributors.florenceOnwuegbuzie,
   },
   {
     name: 'esther orieji',
     role: 'frontend engineer',
-    image: IMAGES.estherOrieji,
+    image: IMAGES.contributors.estherOrieji,
   },
   {
     name: 'victor okoukuni',
     role: 'frontend engineer',
-    image: IMAGES.victorOkoukoni,
+    image: IMAGES.contributors.victorOkoukoni,
   },
   {
     name: 'gabriel abubakar',
     role: 'QA engineer',
-    image: IMAGES.gabrielAbubakar,
+    image: IMAGES.contributors.gabrielAbubakar,
   },
   {
     name: 'fisayo rotibi',
     role: 'UI/UX designer',
-    image: IMAGES.fisayoRotibi,
+    image: IMAGES.contributors.fisayoRotibi,
   },
   {
     name: 'olusegun adeleke',
     role: 'backend engineer',
-    image: IMAGES.olusegunAdeleke,
+    image: IMAGES.contributors.olusegunAdeleke,
   },
   {
     name: 'wisdom osuji',
     role: 'UI/UX engineer',
-    image: IMAGES.wisdomOsuji,
+    image: IMAGES.contributors.wisdomOsuji,
   },
   {
     name: 'michael babajide',
     role: 'UI/UX engineer',
-    image: IMAGES.michaelBabajide,
+    image: IMAGES.contributors.michaelBabajide,
   },
 ]
 export function ContributorsPage() {
