@@ -1,0 +1,41 @@
+.mission-section {
+  padding-block: var(--space-32);
+}
+
+.mission__title {
+  font-size: var(--text-lg);
+}
+
+.mission__text {
+  font-size: calc(var(--font-size-base) * 2.75);
+  font-weight: var(--font-medium);
+  margin-inline: auto;
+  max-width: 560px;
+}
+
+.mission-eyebrow {
+  position: relative;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.mission-eyebrow__petal {
+  position: absolute;
+}
+
+.mission-eyebrow__petal--top-left {
+  left: 0;
+  transform: translate(-94%, -120%);
+}
+.mission-eyebrow__petal--bottom-left {
+  left: 0;
+  transform: translate(-130%, -5%);
+}
+.mission-eyebrow__petal--top-right {
+  right: 0;
+  transform: translate(100%, -100%);
+}
+.mission-eyebrow__petal--bottom-right {
+  right: 0;
+  transform: translate(130%, -30%);
+}

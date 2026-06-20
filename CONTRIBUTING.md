@@ -31,30 +31,28 @@ This guide covers everything you need to start contributing, whether you are wor
 ```
 Ekehi/
 ├── client/                     # Frontend — HTML, CSS, Vanilla JS
-│   └── public/
-│       ├── assets/             # Static assets
-│       │   ├── fonts/
-│       │   ├── icons/
-│       │   └── images/
-│       ├── css/
-│       │   ├── base/           # Reset, variables, typography
-│       │   ├── components/     # Reusable UI component styles
-│       │   └── pages/          # Page-specific styles
-│       ├── js/
-│       │   ├── api/            # Fetch wrappers for backend endpoints
-│       │   ├── components/     # Reusable UI logic (modals, filters, etc.)
-│       │   ├── pages/          # Page-specific JS entry points
-│       │   └── utils/          # Shared helper functions
-│       └── pages/              # HTML page files
+│   ├── assets/                 # Global images, icons, fonts
+│   ├── shared/                 # Reusable across all pages
+│   │   ├── base/               # Tokens, reset, typography, utilities (main.css imports all)
+│   │   ├── components/         # Nav, footer, button (CSS + JS)
+│   │   ├── constants/          # Shared JS constants (e.g. EKEHI_ENUMS display label maps)
+│   │   └── services/           # API client and auth service (api.js, auth.service.js)
+│   ├── landing/                # Landing page CSS
+│   │   ├── landing.css         # Imports sections in document order
+│   │   └── sections/           # One CSS file per landing section
+│   ├── contributors/           # Contributors page (HTML + CSS + JS)
+│   ├── login/                  # Login page (HTML + CSS)
+│   ├── signup/                 # Sign up page (HTML + CSS)
+│   └── index.html              # Landing page (root — web server convention)
 │
 ├── server/                     # Backend — Node.js, Express, Supabase
 │   ├── src/
 │   │   ├── config/             # Environment & Supabase client setup
 │   │   ├── controllers/        # Route handler logic
 │   │   ├── middleware/         # Auth, error handling, rate limiting
-│   │   ├── models/             # Supabase query helpers per entity
+│   │   ├── models/             # JS constants and enum definitions (e.g. enums.js)
 │   │   ├── routes/             # Express route definitions
-│   │   ├── services/           # Business logic (email, etc.)
+│   │   ├── services/           # Business logic — Supabase queries, filtering, pagination
 │   │   └── utils/              # Shared server utilities
 │   ├── .env.example            # Environment variable template
 │   └── package.json
@@ -161,21 +159,21 @@ The frontend is plain HTML, CSS, and JavaScript — no build step required.
 
 ```bash
 # Navigate to the client
-cd client/public
+cd client
 ```
 
-Open `pages/index.html` in your browser, or use the **Live Server** VS Code extension for hot reload.
+Open `index.html` in your browser, or use the **Live Server** VS Code extension for hot reload.
 
-**Frontend contributors work inside `client/public/` only.**
+**Frontend contributors work inside `client/` only.**
 
 | Folder | Your responsibility |
 |---|---|
-| `pages/` | HTML pages |
-| `css/components/` | Component-level styles |
-| `css/pages/` | Page-specific styles |
-| `js/api/` | Fetch calls to backend endpoints |
-| `js/components/` | UI interaction logic |
-| `js/pages/` | Page entry point scripts |
+| `index.html` | Landing page HTML |
+| `landing/sections/` | Landing page section styles |
+| `shared/components/` | Nav, footer, and button (CSS + JS) |
+| `shared/constants/` | Display label maps (`EKEHI_ENUMS`) — load via `<script>` tag |
+| `shared/services/` | API client (`api.js`) and auth helpers (`auth.service.js`) |
+| `<page-name>/` | Page-specific HTML, CSS, and JS |
 
 ---
 
@@ -202,10 +200,10 @@ The server runs on `http://localhost:3000` by default.
 | Folder | Your responsibility |
 |---|---|
 | `routes/` | Define Express routes |
-| `controllers/` | Handle request/response logic |
-| `models/` | Supabase queries per entity |
-| `services/` | Business logic (e.g. email sending) |
-| `middleware/` | Auth, error handling |
+| `controllers/` | Handle request/response logic (HTTP only) |
+| `services/` | Business logic — Supabase queries, filtering, pagination |
+| `models/` | Shared JS constants (enum slug arrays used by `meta` endpoint) |
+| `middleware/` | Auth (`requireAuth`), error handling, rate limiting |
 
 > Never commit `.env`. It is in `.gitignore`. Use `.env.example` for sharing variable names.
 
@@ -251,17 +249,21 @@ Then open a Pull Request on GitHub targeting `development`. Use the PR template 
 
 - Use **semantic HTML** — prefer `<nav>`, `<section>`, `<article>`, `<main>` over generic `<div>`.
 - CSS class naming follows **BEM** (Block Element Modifier): `.card__title`, `.filter--active`.
-- One CSS file per page goes in `css/pages/`. Shared component styles go in `css/components/`.
-- JavaScript files are **ES Modules** (`type="module"` in HTML).
-- Keep JS functions small and single-purpose.
+- Always use **design tokens** from `shared/base/tokens.css` for all colors, spacing, and font sizes. Never hardcode raw values (e.g. use `var(--space-4)`, not `16px`).
+- Use the standard breakpoints only: `400px` · `768px` · `900px` · `1200px`. Do not introduce new ones.
+- JavaScript is vanilla — no frameworks, no bundler. Keep functions small and single-purpose.
 - No jQuery or external UI libraries unless approved by the team.
 - Responsive design is required — mobile-first approach.
 
+**Adding a new page:** Create `client/<page-name>/` with `index.html` and `<page-name>.css`. Every page must load `shared/base/main.css`, mount `#nav-root` (with `nav.js`) and `#footer-root` (with `footer.js`). Use `contributors/` as the reference implementation.
+
+**Adding a landing section:** Create `client/landing/sections/<section-name>.css` and import it in `client/landing/landing.css` in document order.
+
 ### Backend Conventions
 
-- Follow **MVC separation**: routes → controllers → models.
-- Controllers handle HTTP concerns only (req, res). Business logic belongs in services or models.
-- All Supabase queries go in `models/`, not in controllers.
+- Follow the layered pattern: **routes → controllers → services**.
+- Controllers handle HTTP concerns only (req, res, next). All business logic and Supabase queries go in `services/`.
+- `models/` contains only shared JS constants (enum arrays). It does not hold DB query logic.
 - Use `async/await` — no raw `.then()` chains.
 - All errors must be passed to the Express error handler via `next(error)`.
 - Validate all incoming request data before processing.
@@ -322,7 +324,7 @@ Before requesting review, confirm:
 - [ ] Code follows the conventions in this guide
 - [ ] No `.env` files or secrets are committed
 - [ ] UI changes are tested on mobile and desktop
-- [ ] Backend changes have been tested locally with Postman or curl
+- [ ] Backend changes have been tested locally with Postman or curl (see `docs/api/endpoints.md`)
 - [ ] PR is linked to a GitHub issue or ClickUp task
 
 ---

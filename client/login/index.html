@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Urbanist:wght@300;400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/shared/base/main.css" />
+    <link rel="stylesheet" href="login.css" />
+    <title>Log in - Ekehi</title>
+  </head>
+  <body>
+    
+
+    <main class="auth-container">
+      <figure class="auth-container__logo">
+        <img
+          src="/assets/icons/logo2.png"
+          alt="Ekehi"
+          width="64"
+          height="64"
+        />
+      </figure>
+      
+      
+      <section class="auth-container__header">
+            <h1 class="auth-container__header--title">Log in</h1>
+            <p class="auth-container__header--description">Log in to access your account and continue your journey!</p>
+      </section>
+      
+      <form id="login-form" class="auth-container__form" novalidate>
+        <div id="email-field"></div>
+        <div id="password-field"></div>
+        <div id="submit-btn"></div>
+        <div id="return-btn" class="return-btnn"></div>
+        <p id="login-error" class="auth-error" hidden></p>
+      </form>
+    </main>
+
+    
+    <script type="module" src="login.js"></script>
+  </body>
+</html>

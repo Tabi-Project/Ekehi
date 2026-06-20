@@ -100,7 +100,7 @@ Sectors include:
 - Education & EdTech
 - Financial Services & Fintech
 - Retail & E-Commerce
-- Manufacturing
+- Manufacturing & Production
 - Creative Industries
 - Logistics & Distribution
 - Beauty & Personal Care
@@ -137,6 +137,11 @@ Initial resources include:
 - SME tax guides
 - Business credit score guide
 - Export readiness checklist
+
+
+## API Reference
+
+See [`docs/api/endpoints.md`](./docs/api/endpoints.md) for the full endpoint reference, including request/response shapes, query params, and error codes.
 
 
 ## Tech Stack

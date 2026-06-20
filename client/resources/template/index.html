@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Urbanist:wght@300;400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/shared/base/main.css" />
+    <link rel="stylesheet" href="details.css" />
+    <title>Ekehi — Resources</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
+    </header>
+
+    <main class="container">
+      <nav
+        class="detail-breadcrumb | flex items-center justify-between"
+        aria-label="Breadcrumb"
+      >
+        <div class="flex items-center gap-1">
+          <a href="/resources/" class="back-link flex flex-row gap-2">
+            <img
+              src="/assets/icons/arrow_left_line.png"
+              alt=""
+              aria-hidden="true"
+            />
+
+            Go Back</a>
+          <span aria-current="page" class="current-template-page"></span>
+        </div>
+      </nav>
+
+      <section class="template__content">
+        <div class="template__detail-content flex flex-col gap-10">
+          <div id="template-content"></div>
+          <div class="download_btn"></div>
+        </div>
+        <aside id="template-aside"></aside>
+      </section>
+    </main>
+
+    <footer id="footer-root" class="footer"></footer>
+    <script type="module" src="details.js"></script>
+  </body>
+</html>

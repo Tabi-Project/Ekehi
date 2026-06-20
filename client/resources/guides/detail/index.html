@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Urbanist:wght@300;400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/shared/base/main.css" />
+    <link rel="stylesheet" href="detail.css" />
+    <title>Ekehi — Guide Details</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
+    </header>
+
+    <main class="container">
+      <!-- Left Sidebar -->
+      <div class="guide">
+        <aside class="guide__sidebar">
+          <a href="/resources/" class="guide__back">← Go back</a>
+          <nav
+            id="toc-root"
+            class="guide__toc"
+            aria-label="Table of contents"
+          ></nav>
+        </aside>
+
+        <!-- Main Content -->
+        <article class="guide__content">
+          <h1 class="guide__title" id="guide-title"></h1>
+          <div class="guide__body" id="guide-body"></div>
+        </article>
+      </div>
+    </main>
+
+    <footer id="footer-root" class="footer"></footer>
+    <script type="module" src="detail.js"></script>
+  </body>
+</html>

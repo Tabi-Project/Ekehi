@@ -26,7 +26,11 @@ If applicable, add screenshots or a screen recording.
 ## Environment
 - Browser / Node version:
 - OS:
-- Area: [ ] Frontend  [ ] Backend
 
-## ClickUp Task (if applicable)
-Link:
+## Package
+- [ ] `client/`
+- [ ] `server/`
+- [ ] Tooling / repo root
+
+## Commit / branch
+SHA or branch where the bug appears:

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Urbanist:wght@300;400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/shared/base/main.css" />
+    <link rel="stylesheet" href="/landing/landing.css" />
+    <title>Ekehi - Search. Fund. Grow.</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <!-- Navigation -->
+      <nav id="nav-root" class="nav" aria-label="Main navigation"></nav>
+
+      <!-- Hero Section -->
+      <section class="hero | flex justify-center items-end">
+        <div class="hero__content px-4">
+          <h1 class="hero__content-title | leading-tight">
+            Find funding and resources built for you
+          </h1>
+          <div class="">
+            <p class="hero__content-paragraph | leading-relaxed">
+              Grants, loans, training programmes, and growth resources for
+              women-led businesses - searchable and always up to date.
+            </p>
+            <div class="hero__btns | flex justify-end items-center gap-2"></div>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <!-- About Section -->
+    <section class="about-section">
+      <!-- Background vectors -->
+      <img
+        src="../landing/vectors/about-vector-left.svg"
+        aria-hidden="true"
+        class="about-section__vector about-section__vector--left"
+      />
+      <img
+        src="../landing/vectors/about-vector-top-right.svg"
+        aria-hidden="true"
+        class="about-section__vector about-section__vector--top-right"
+      />
+      <img
+        src="../landing/vectors/about-vector-bottom-right.svg"
+        aria-hidden="true"
+        class="about-section__vector about-section__vector--bottom-right"
+      />
+
+      <div class="about-section__container | flex gap-16">
+        <!-- Left column: wordmark + inline icon -->
+        <div class="about-section__brand">
+          <h2 class="about-section__title">
+            <span class="about-section__title--about">About</span>
+            <span class="about-section__title--ekehi">Ekehi</span>
+            <img
+              src="../assets/icons/flower.svg"
+              alt=""
+              aria-hidden="true"
+              class="about-section__title--icon"
+            />
+          </h2>
+        </div>
+
+        <!-- Right column: description + button -->
+        <div class="about-section__content">
+          <p class="about-section__description">
+            Ekehi is a business intelligence platform for women entrepreneurs
+            and SME owners &#8212; providing a searchable database of active
+            funding opportunities (VCs, grants, loans, credit schemes), business
+            training programmes, and growth resources, all filterable by sector,
+            stage, location and funding size.
+          </p>
+          <a href="#" class="about-section__btn">Learn more</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Value Proposition Section -->
+    <section class="value-proposition px-8 py-16">
+      <div
+        class="value-proposition__header flex flex-row items-start mx-auto gap-12"
+      >
+        <h2 class="value-proposition__heading flex-1">
+          We're building more than a database
+        </h2>
+
+        <p
+          class="value-proposition__description flex flex-1 items-start text-muted"
+        >
+          We track open grants, women-focused VC funds, angel networks,
+          government schemes, accelerators, and the ecosystem shifts that matter
+          — all in one structured place.
+        </p>
+      </div>
+
+      <figure class="value-proposition__visual mx-auto w-full rounded-xl">
+        <img
+          src="assets/images/value-proposition-display.png"
+          alt="Ekehi platform collage showing funding and business resources"
+          class="value-proposition__visual-image"
+        />
+        <div class="value-proposition__overlay" aria-hidden="true"></div>
+      </figure>
+
+      <div class="value-proposition__captions mx-auto">
+        <p class="value-proposition__caption text-muted">
+          You get clear summaries, real deadlines, eligibility breakdowns, and
+          direct application links. No digging. No insider spreadsheets. Just
+          aligned access.
+        </p>
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section
+      class="mission-section flex flex-col gap-4 text-center w-full px-4"
+    >
+      <div class="mission-eyebrow flex justify-center items-center gap-2">
+        <img
+          src="assets/icons/top-left-deco.svg"
+          alt=""
+          class="mission-eyebrow__petal mission-eyebrow__petal--top-left"
+        />
+        <img
+          src="assets/icons/bottom-left-deco.svg"
+          alt=""
+          class="mission-eyebrow__petal mission-eyebrow__petal--bottom-left"
+        />
+        <h2 class="mission__title">Our Mission</h2>
+        <img
+          src="assets/icons/top-right-deco.svg"
+          alt=""
+          class="mission-eyebrow__petal mission-eyebrow__petal--top-right"
+        />
+        <img
+          src="assets/icons/bottom-right-deco.svg"
+          alt=""
+          class="mission-eyebrow__petal mission-eyebrow__petal--bottom-right"
+        />
+      </div>
+      <p class="mission__text text-md text-primary leading-tight text-center">
+        Helping you discover funding and resources tailored to your needs.
+      </p>
+    </section>
+
+    <!-- What We Offer Section -->
+    <section class="offerings" aria-labelledby="offerings-heading">
+      <!-- grid container -->
+      <div class="offerings__grid">
+        <!-- left column -->
+        <div class="offerings__left">
+          <h2 class="offerings__title" id="offerings-heading">What we offer</h2>
+          <ul
+            class="offerings__list"
+            aria-label="Key features of Ekehi platform"
+          >
+            <li class="offerings__item">
+              <div class="offerings__card">
+                <h3 class="offerings__card-title">Funding Database</h3>
+                <p class="offerings__card-description">
+                  Find active grants, loans, and VC funds filtered to your
+                  sector and stage.
+                </p>
+              </div>
+            </li>
+
+            <li class="offerings__item" aria-current="true">
+              <div class="offerings__card offerings__card--active">
+                <h3 class="offerings__card-title">Training Programmes</h3>
+                <p class="offerings__card-description">
+                  Browse accelerators, workshops, and courses designed for women
+                  entrepreneurs.
+                </p>
+              </div>
+            </li>
+
+            <li class="offerings__item">
+              <div class="offerings__card">
+                <h3 class="offerings__card-title">Business Tools</h3>
+                <p class="offerings__card-description">
+                  Templates, guides, and frameworks to help you plan, pitch, and
+                  scale.
+                </p>
+              </div>
+            </li>
+
+            <li class="offerings__item">
+              <div class="offerings__card">
+                <h3 class="offerings__card-title">Mentorship Network</h3>
+                <p class="offerings__card-description">
+                  Connect with experienced founders and advisors who've built
+                  what you're building.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- right column -->
+        <div class="offerings__right">
+          <p class="offerings__subtitle">
+            Grants, loans, training programmes, and growth resources for
+            women-led businesses
+          </p>
+          <img
+            src="/assets/images/offerings-display.jpg"
+            alt="A black woman speaking or presenting to a small group of black women"
+            class="offerings__image"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="faq-layout-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-accordion-wrapper">
+          <div class="faq-accordion">
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                <h3 class="faq-question-text">
+                  Do I need an account to browse opportunities?
+                </h3>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                <p class="answer-content">
+                  No. You can search and browse every opportunity on Ekehi
+                  without creating an account. Signing up lets you save
+                  opportunities, set alerts, and get weekly digests matched to
+                  your sector and stage — but it's entirely optional.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                <h3 class="faq-question-text">
+                  How do I know if I'm eligible for a funding opportunity?
+                </h3>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                <p class="answer-content">
+                  Each listing includes a detailed Eligibility section. We
+                  categorize opportunities by sector,business stage, and
+                  location. Check these against your profile to see if you
+                  qualify.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                <h3 class="faq-question-text">
+                  How do I report an outdated or closed listing?
+                </h3>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                <p class="answer-content">
+                  We strive for accuracy, but if you find a broken link or a
+                  closed listing, please click the "Report" button on the
+                  opportunity page or contact our support team directly.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                <h3 class="faq-question-text">
+                  What countries does Ekehi cover?
+                </h3>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer">
+                <p class="answer-content">
+                  Our primary focus is Nigeria, but we include Pan-African and
+                  global funding opportunities that are explicitly open to
+                  Nigerian founders and small business owners.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <img
+        src="landing/vectors/cta-vector-left.svg"
+        aria-hidden="true"
+        class="cta__vector cta__vector--left"
+      />
+      <img
+        src="landing/vectors/cta-vector-top-right.svg"
+        aria-hidden="true"
+        class="cta__vector cta__vector--top-right"
+      />
+      <img
+        src="landing/vectors/cta-vector-bottom-right.svg"
+        aria-hidden="true"
+        class="cta__vector cta__vector--bottom-right"
+      />
+
+      <div class="cta__inner">
+        <div class="cta__content">
+          <h2 class="cta__heading">Stop searching.<br />Start finding</h2>
+
+          <p class="cta__body">
+            Discover grants, loans, and resources for women-led
+            businesses&mdash;always current and easy to find.
+          </p>
+
+          <div class="cta-btn-mount"></div>
+        </div>
+
+        <figure class="cta__visual flex justify-center items-center">
+          <img
+            src="assets/images/cta-section-display.png"
+            alt="Women entrepreneurs"
+            class="cta__image"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <footer id="footer-root" class="footer"></footer>
+    <script type="module" src="/landing/landing.js"></script>
+  </body>
+</html>

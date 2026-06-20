@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Signup Page — signup.css
+   References: tokens.css
+   ========================================================================== */
+
+/* ── Full height centred layout — no nav/footer ──────── */
+body {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-base);
+}
+
+/* ── auth-container — centred card ──────────────────── */
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  padding-inline: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* ── auth-logo ───────────────────────────────────────── */
+.auth-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-xl);
+  object-fit: contain;
+  margin-bottom: var(--space-2);
+}
+
+/* ── auth-step ───────────────────────────────────────── */
+.auth-step {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* ── auth-title ──────────────────────────────────────── */
+.auth-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-regular);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+/* ── auth-subtitle ───────────────────────────────────── */
+.auth-subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  text-align: center;
+  margin-top: calc(var(--space-2) * -1);
+}
+
+/* ── auth-form ───────────────────────────────────────── */
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ── auth-btn-back — plain text button ──────────────── */
+.auth-btn-back {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1) 0;
+  text-align: center;
+  width: 100%;
+  transition: color 120ms ease;
+}
+
+.auth-btn-back:hover {
+  color: var(--color-text-primary);
+}
+
+/* ── auth-terms ──────────────────────────────────────── */
+.auth-terms {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: var(--leading-relaxed);
+}
+
+.auth-terms__link {
+  color: var(--color-purple-800);
+  text-decoration: underline;
+  font-weight: var(--font-medium);
+}
+
+.auth-terms__link:hover {
+  color: var(--color-primary);
+}
+
+/* ── auth-error ──────────────────────────────────────── */
+.auth-error {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: #c0392b;
+  text-align: center;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 480px) {
+  .auth-container {
+    padding-inline: var(--space-5);
+  }
+}
+.auth-step[hidden] {
+  display: none;
+}

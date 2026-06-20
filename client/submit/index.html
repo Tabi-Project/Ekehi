@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Urbanist:wght@300;400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/shared/base/main.css" />
+    <link rel="stylesheet" href="/admin/admin.css" />
+    <link rel="stylesheet" href="submit.css" />
+    <title>Ekehi — Submit Content</title>
+  </head>
+  <body>
+    <div class="admin-layout">
+      <aside id="admin-sidebar" class="admin-sidebar"></aside>
+
+      <main class="admin-main">
+        <header class="admin-main__header">
+          <h1 class="admin-main__title">Submit Content</h1>
+          <p class="admin-main__subtitle">Submissions go to the review queue before being published</p>
+        </header>
+
+        <div class="submit-wrap">
+          <div class="submit-type-selector">
+            <label class="submit-type-label">Content type</label>
+            <div class="submit-type-tabs" id="type-tabs">
+              <button class="submit-type-tab is-active" data-type="funding_opportunity">Funding Opportunity</button>
+              <button class="submit-type-tab" data-type="training_programme">Training Programme</button>
+              <button class="submit-type-tab" data-type="guide">Guide</button>
+              <button class="submit-type-tab" data-type="template">Template</button>
+            </div>
+          </div>
+
+          <form id="submit-form" novalidate>
+            <div id="form-fields"></div>
+
+            <div id="form-error" class="error-message" style="display:none; margin-top: var(--space-4);"></div>
+            <div id="form-success" style="display:none; color:#16a34a; font-size:var(--text-sm); margin-top:var(--space-4);"></div>
+
+            <div class="submit-actions"></div>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="/submit/submit.js"></script>
+  </body>
+</html>
