@@ -13,7 +13,7 @@
     "lint-staged": "^16.2.6"
   },
   "packageManager": "pnpm@10.15.0",
-   "pnpm": {
+  "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild",
       "lightningcss"
