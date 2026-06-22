@@ -1,4 +1,5 @@
 import { AboutSection } from '#/features/site/components/about'
+import { FaqSection } from '#/features/site/components/faq'
 import { HeroSection } from '#/features/site/components/hero'
 import { MissionSection } from '#/features/site/components/mission'
 import { ValuePropositionSection } from '#/features/site/components/value-proposition'
@@ -13,6 +14,7 @@ export function LandingPage() {
       <ValuePropositionSection />
       <MissionSection />
       <WhatWeOfferSection />
+      <FaqSection />
     </div>
   )
 }
