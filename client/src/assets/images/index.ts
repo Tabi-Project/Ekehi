@@ -1,3 +1,6 @@
+/* eslint-disable simple-import-sort/imports -- hand-grouped barrel; keep the section comments */
+
+// Contributors
 import estherOrieji from '#/assets/images/contributors/esther-orieji.png'
 import fatihatAkinwumi from '#/assets/images/contributors/fatihat-akinwumi.png'
 import fisayoRotibi from '#/assets/images/contributors/fisayo-rotibi.png'
@@ -12,6 +15,17 @@ import peaceMarionbraide from '#/assets/images/contributors/peace-marionbraide.p
 import victorOkoukoni from '#/assets/images/contributors/victor-okoukoni.png'
 import wisdomOsuji from '#/assets/images/contributors/wisdom-osuji.png'
 
+// Card Backgrounds
+// `?no-inline` keeps these as emitted files, not data URIs. They contain
+// internal url(#filter)/url(#clip) refs; inlined, the first `#` truncates the
+// data URI in CSS url() and the background never renders.
+import cardBgBlue from '#/assets/card-backgrounds/card-bg-blue.svg?no-inline'
+import cardBgGreen from '#/assets/card-backgrounds/card-bg-green.svg?no-inline'
+import cardBgPink from '#/assets/card-backgrounds/card-bg-pink.svg?no-inline'
+import cardBgPurple from '#/assets/card-backgrounds/card-bg-purple.svg?no-inline'
+import cardBgYellow from '#/assets/card-backgrounds/card-bg-yellow.svg?no-inline'
+
+// Others
 import blackWomanWearingGlasses from './black-woman-wearing-glasses.png'
 import ctaSectionDisplay from './cta-section-display.png'
 import headerImg from './header-img.png'
@@ -42,5 +56,12 @@ export const IMAGES = {
     fisayoRotibi,
     fatihatAkinwumi,
     estherOrieji,
+  },
+  cardBackgrounds: {
+    blue: cardBgBlue,
+    yellow: cardBgYellow,
+    pink: cardBgPink,
+    purple: cardBgPurple,
+    green: cardBgGreen,
   },
 } as const
