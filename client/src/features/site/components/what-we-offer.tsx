@@ -19,7 +19,7 @@ const OFFERINGS: Array<Offering> = [
     title: 'Funding Database',
     description:
       'Find active grants, loans, and VC funds filtered to your sector and stage.',
-    image: IMAGES.offeringsDisplay,
+    image: IMAGES.fundingDatabase,
   },
   {
     id: 'training-programmes',
@@ -33,14 +33,14 @@ const OFFERINGS: Array<Offering> = [
     title: 'Business Tools',
     description:
       'Templates, guides, and frameworks to help you plan, pitch, and scale.',
-    image: IMAGES.offeringsDisplay,
+    image: IMAGES.businessTools,
   },
   {
     id: 'mentorship-network',
     title: 'Mentorship Network',
     description:
       "Connect with experienced founders and advisors who've built what you're building.",
-    image: IMAGES.offeringsDisplay,
+    image: IMAGES.mentorshipNetwork,
   },
 ]
 
