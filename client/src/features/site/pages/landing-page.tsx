@@ -1,4 +1,5 @@
 import { AboutSection } from '#/features/site/components/about'
+import { CtaSection } from '#/features/site/components/cta'
 import { FaqSection } from '#/features/site/components/faq'
 import { HeroSection } from '#/features/site/components/hero'
 import { MissionSection } from '#/features/site/components/mission'
@@ -15,6 +16,7 @@ export function LandingPage() {
       <MissionSection />
       <WhatWeOfferSection />
       <FaqSection />
+      <CtaSection />
     </div>
   )
 }
