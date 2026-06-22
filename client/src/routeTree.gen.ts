@@ -20,14 +20,15 @@ import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as layoutprotectedRouteRouteImport } from './routes/(layout)/(protected)/route'
 import { Route as layoutResourcesIndexRouteImport } from './routes/(layout)/resources/index'
 import { Route as layoutOpportunitiesIndexRouteImport } from './routes/(layout)/opportunities/index'
-import { Route as layoutResourcesTemplateRouteImport } from './routes/(layout)/resources/template'
 import { Route as layoutOpportunitiesIdRouteImport } from './routes/(layout)/opportunities/$id'
 import { Route as layoutprotectedSubmitRouteImport } from './routes/(layout)/(protected)/submit'
 import { Route as layoutprotectedSubmissionsRouteImport } from './routes/(layout)/(protected)/submissions'
 import { Route as layoutprotectedMySubmissionsRouteImport } from './routes/(layout)/(protected)/my-submissions'
 import { Route as layoutResourcesTrainingIndexRouteImport } from './routes/(layout)/resources/training/index'
+import { Route as layoutResourcesTemplatesIndexRouteImport } from './routes/(layout)/resources/templates/index'
 import { Route as layoutResourcesGuidesIndexRouteImport } from './routes/(layout)/resources/guides/index'
 import { Route as layoutResourcesTrainingIdRouteImport } from './routes/(layout)/resources/training/$id'
+import { Route as layoutResourcesTemplatesIdRouteImport } from './routes/(layout)/resources/templates/$id'
 import { Route as layoutResourcesGuidesIdRouteImport } from './routes/(layout)/resources/guides/$id'
 
 const layoutRouteRoute = layoutRouteRouteImport.update({
@@ -84,11 +85,6 @@ const layoutOpportunitiesIndexRoute =
     path: '/opportunities/',
     getParentRoute: () => layoutRouteRoute,
   } as any)
-const layoutResourcesTemplateRoute = layoutResourcesTemplateRouteImport.update({
-  id: '/resources/template',
-  path: '/resources/template',
-  getParentRoute: () => layoutRouteRoute,
-} as any)
 const layoutOpportunitiesIdRoute = layoutOpportunitiesIdRouteImport.update({
   id: '/opportunities/$id',
   path: '/opportunities/$id',
@@ -117,6 +113,12 @@ const layoutResourcesTrainingIndexRoute =
     path: '/resources/training/',
     getParentRoute: () => layoutRouteRoute,
   } as any)
+const layoutResourcesTemplatesIndexRoute =
+  layoutResourcesTemplatesIndexRouteImport.update({
+    id: '/resources/templates/',
+    path: '/resources/templates/',
+    getParentRoute: () => layoutRouteRoute,
+  } as any)
 const layoutResourcesGuidesIndexRoute =
   layoutResourcesGuidesIndexRouteImport.update({
     id: '/resources/guides/',
@@ -127,6 +129,12 @@ const layoutResourcesTrainingIdRoute =
   layoutResourcesTrainingIdRouteImport.update({
     id: '/resources/training/$id',
     path: '/resources/training/$id',
+    getParentRoute: () => layoutRouteRoute,
+  } as any)
+const layoutResourcesTemplatesIdRoute =
+  layoutResourcesTemplatesIdRouteImport.update({
+    id: '/resources/templates/$id',
+    path: '/resources/templates/$id',
     getParentRoute: () => layoutRouteRoute,
   } as any)
 const layoutResourcesGuidesIdRoute = layoutResourcesGuidesIdRouteImport.update({
@@ -147,12 +155,13 @@ export interface FileRoutesByFullPath {
   '/submissions': typeof layoutprotectedSubmissionsRoute
   '/submit': typeof layoutprotectedSubmitRoute
   '/opportunities/$id': typeof layoutOpportunitiesIdRoute
-  '/resources/template': typeof layoutResourcesTemplateRoute
   '/opportunities/': typeof layoutOpportunitiesIndexRoute
   '/resources/': typeof layoutResourcesIndexRoute
   '/resources/guides/$id': typeof layoutResourcesGuidesIdRoute
+  '/resources/templates/$id': typeof layoutResourcesTemplatesIdRoute
   '/resources/training/$id': typeof layoutResourcesTrainingIdRoute
   '/resources/guides/': typeof layoutResourcesGuidesIndexRoute
+  '/resources/templates/': typeof layoutResourcesTemplatesIndexRoute
   '/resources/training/': typeof layoutResourcesTrainingIndexRoute
 }
 export interface FileRoutesByTo {
@@ -167,12 +176,13 @@ export interface FileRoutesByTo {
   '/submissions': typeof layoutprotectedSubmissionsRoute
   '/submit': typeof layoutprotectedSubmitRoute
   '/opportunities/$id': typeof layoutOpportunitiesIdRoute
-  '/resources/template': typeof layoutResourcesTemplateRoute
   '/opportunities': typeof layoutOpportunitiesIndexRoute
   '/resources': typeof layoutResourcesIndexRoute
   '/resources/guides/$id': typeof layoutResourcesGuidesIdRoute
+  '/resources/templates/$id': typeof layoutResourcesTemplatesIdRoute
   '/resources/training/$id': typeof layoutResourcesTrainingIdRoute
   '/resources/guides': typeof layoutResourcesGuidesIndexRoute
+  '/resources/templates': typeof layoutResourcesTemplatesIndexRoute
   '/resources/training': typeof layoutResourcesTrainingIndexRoute
 }
 export interface FileRoutesById {
@@ -190,12 +200,13 @@ export interface FileRoutesById {
   '/(layout)/(protected)/submissions': typeof layoutprotectedSubmissionsRoute
   '/(layout)/(protected)/submit': typeof layoutprotectedSubmitRoute
   '/(layout)/opportunities/$id': typeof layoutOpportunitiesIdRoute
-  '/(layout)/resources/template': typeof layoutResourcesTemplateRoute
   '/(layout)/opportunities/': typeof layoutOpportunitiesIndexRoute
   '/(layout)/resources/': typeof layoutResourcesIndexRoute
   '/(layout)/resources/guides/$id': typeof layoutResourcesGuidesIdRoute
+  '/(layout)/resources/templates/$id': typeof layoutResourcesTemplatesIdRoute
   '/(layout)/resources/training/$id': typeof layoutResourcesTrainingIdRoute
   '/(layout)/resources/guides/': typeof layoutResourcesGuidesIndexRoute
+  '/(layout)/resources/templates/': typeof layoutResourcesTemplatesIndexRoute
   '/(layout)/resources/training/': typeof layoutResourcesTrainingIndexRoute
 }
 export interface FileRouteTypes {
@@ -212,12 +223,13 @@ export interface FileRouteTypes {
     | '/submissions'
     | '/submit'
     | '/opportunities/$id'
-    | '/resources/template'
     | '/opportunities/'
     | '/resources/'
     | '/resources/guides/$id'
+    | '/resources/templates/$id'
     | '/resources/training/$id'
     | '/resources/guides/'
+    | '/resources/templates/'
     | '/resources/training/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -232,12 +244,13 @@ export interface FileRouteTypes {
     | '/submissions'
     | '/submit'
     | '/opportunities/$id'
-    | '/resources/template'
     | '/opportunities'
     | '/resources'
     | '/resources/guides/$id'
+    | '/resources/templates/$id'
     | '/resources/training/$id'
     | '/resources/guides'
+    | '/resources/templates'
     | '/resources/training'
   id:
     | '__root__'
@@ -254,12 +267,13 @@ export interface FileRouteTypes {
     | '/(layout)/(protected)/submissions'
     | '/(layout)/(protected)/submit'
     | '/(layout)/opportunities/$id'
-    | '/(layout)/resources/template'
     | '/(layout)/opportunities/'
     | '/(layout)/resources/'
     | '/(layout)/resources/guides/$id'
+    | '/(layout)/resources/templates/$id'
     | '/(layout)/resources/training/$id'
     | '/(layout)/resources/guides/'
+    | '/(layout)/resources/templates/'
     | '/(layout)/resources/training/'
   fileRoutesById: FileRoutesById
 }
@@ -351,13 +365,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof layoutOpportunitiesIndexRouteImport
       parentRoute: typeof layoutRouteRoute
     }
-    '/(layout)/resources/template': {
-      id: '/(layout)/resources/template'
-      path: '/resources/template'
-      fullPath: '/resources/template'
-      preLoaderRoute: typeof layoutResourcesTemplateRouteImport
-      parentRoute: typeof layoutRouteRoute
-    }
     '/(layout)/opportunities/$id': {
       id: '/(layout)/opportunities/$id'
       path: '/opportunities/$id'
@@ -393,6 +400,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof layoutResourcesTrainingIndexRouteImport
       parentRoute: typeof layoutRouteRoute
     }
+    '/(layout)/resources/templates/': {
+      id: '/(layout)/resources/templates/'
+      path: '/resources/templates'
+      fullPath: '/resources/templates/'
+      preLoaderRoute: typeof layoutResourcesTemplatesIndexRouteImport
+      parentRoute: typeof layoutRouteRoute
+    }
     '/(layout)/resources/guides/': {
       id: '/(layout)/resources/guides/'
       path: '/resources/guides'
@@ -405,6 +419,13 @@ declare module '@tanstack/react-router' {
       path: '/resources/training/$id'
       fullPath: '/resources/training/$id'
       preLoaderRoute: typeof layoutResourcesTrainingIdRouteImport
+      parentRoute: typeof layoutRouteRoute
+    }
+    '/(layout)/resources/templates/$id': {
+      id: '/(layout)/resources/templates/$id'
+      path: '/resources/templates/$id'
+      fullPath: '/resources/templates/$id'
+      preLoaderRoute: typeof layoutResourcesTemplatesIdRouteImport
       parentRoute: typeof layoutRouteRoute
     }
     '/(layout)/resources/guides/$id': {
@@ -437,12 +458,13 @@ interface layoutRouteRouteChildren {
   layoutContributorsRoute: typeof layoutContributorsRoute
   layoutIndexRoute: typeof layoutIndexRoute
   layoutOpportunitiesIdRoute: typeof layoutOpportunitiesIdRoute
-  layoutResourcesTemplateRoute: typeof layoutResourcesTemplateRoute
   layoutOpportunitiesIndexRoute: typeof layoutOpportunitiesIndexRoute
   layoutResourcesIndexRoute: typeof layoutResourcesIndexRoute
   layoutResourcesGuidesIdRoute: typeof layoutResourcesGuidesIdRoute
+  layoutResourcesTemplatesIdRoute: typeof layoutResourcesTemplatesIdRoute
   layoutResourcesTrainingIdRoute: typeof layoutResourcesTrainingIdRoute
   layoutResourcesGuidesIndexRoute: typeof layoutResourcesGuidesIndexRoute
+  layoutResourcesTemplatesIndexRoute: typeof layoutResourcesTemplatesIndexRoute
   layoutResourcesTrainingIndexRoute: typeof layoutResourcesTrainingIndexRoute
 }
 
@@ -451,12 +473,13 @@ const layoutRouteRouteChildren: layoutRouteRouteChildren = {
   layoutContributorsRoute: layoutContributorsRoute,
   layoutIndexRoute: layoutIndexRoute,
   layoutOpportunitiesIdRoute: layoutOpportunitiesIdRoute,
-  layoutResourcesTemplateRoute: layoutResourcesTemplateRoute,
   layoutOpportunitiesIndexRoute: layoutOpportunitiesIndexRoute,
   layoutResourcesIndexRoute: layoutResourcesIndexRoute,
   layoutResourcesGuidesIdRoute: layoutResourcesGuidesIdRoute,
+  layoutResourcesTemplatesIdRoute: layoutResourcesTemplatesIdRoute,
   layoutResourcesTrainingIdRoute: layoutResourcesTrainingIdRoute,
   layoutResourcesGuidesIndexRoute: layoutResourcesGuidesIndexRoute,
+  layoutResourcesTemplatesIndexRoute: layoutResourcesTemplatesIndexRoute,
   layoutResourcesTrainingIndexRoute: layoutResourcesTrainingIndexRoute,
 }
 

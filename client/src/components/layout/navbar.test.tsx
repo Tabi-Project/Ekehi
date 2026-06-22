@@ -40,13 +40,13 @@ vi.mock('@tanstack/react-router', () => ({
   },
 }))
 
-vi.mock('@/assets/svgs', () => ({
+vi.mock('#/assets/svgs', () => ({
   SVGS: {
     ekehiLogo: 'logo.svg',
   },
 }))
 
-vi.mock('@/features/auth/auth.query', () => ({
+vi.mock('#/features/auth/auth.query', () => ({
   useMeQuery: vi.fn(),
   useLogoutMutation: vi.fn(),
 }))
