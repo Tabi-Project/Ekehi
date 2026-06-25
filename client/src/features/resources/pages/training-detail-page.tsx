@@ -188,27 +188,32 @@ export function TrainingDetailPage({ id }: { id: string }) {
 
   if (loading) {
     return (
-      <div id="detail-loading" className="loading-container">
-        <TrainingSkeleton />
+      <div className="loading-container text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
         <p>Loading training programme...</p>
+        <TrainingSkeleton />
       </div>
     )
   }
 
   if (error) {
     return (
-      <div id="detail-error" className="detail-page__state" hidden>
-        <p id="detail-error-message">Something went wrong. Please try again.</p>
-        <a href="../index.html" className="detail-page__back-link">
-          Back to Training &amp; Resources
-        </a>
+      <div
+        id="detail-error"
+        className="detail-page__state text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base"
+      >
+        <p id="detail-error-message">
+          Something went wrong, please try again.{' '}
+          <a href="/resources" className="text-primary">
+            Go Back
+          </a>
+        </p>
       </div>
     )
   }
 
   if (!training) {
     return (
-      <div className="error-container">
+      <div className="detail-page__state text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
         <h2>Training Not Found</h2>
         <p>
           The training programme you are looking for does not exist or the link
