@@ -1,7 +1,7 @@
 import { ENDPOINTS } from '#/config/endpoints'
 import { makeRequest } from '#/lib/api'
 
-import type { GuideResponse, TemplateResponse } from './resources.types'
+import type { GuideResponse, TemplateResponse, Training } from './resources.types'
 
 export const GuidesService = {
   byId: (id: string) => {
@@ -10,6 +10,16 @@ export const GuidesService = {
       'GET',
     )
     return guideRequest()
+  },
+}
+
+export const ResourcesService = {
+  byId: (id: string) => {
+    const trainingRequest = makeRequest<Training, void>(
+      ENDPOINTS.training.byId(id),
+      'GET',
+    )
+    return trainingRequest()
   },
 }
 

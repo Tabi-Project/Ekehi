@@ -12,6 +12,9 @@ export const ENDPOINTS = {
     list: '/guides',
     byId: (id: string) => `/guides/${id}`,
   },
+  training: {
+    list: '/trainings',
+    byId: (id: string) => `/trainings/${id}`,
   templates: {
     list: '/templates',
     byId: (id: string) => `/templates/${id}`,

@@ -15,6 +15,18 @@ export const guideResponseSchema = z.object({
 
 export type GuideResponse = z.infer<typeof guideResponseSchema>
 
+export interface Training {
+  id: string
+  programme_name: string
+  programme_type: string
+  description: string
+  provider: string
+  format: 'online' | 'in_person' | 'hybrid'
+  application_deadline: string | null
+  apply_url?: string
+  location_scope?: string
+}
+
 export const templateResponseSchema = z.object({
   id: z.string(),
   title: z.string().trim().min(1),
