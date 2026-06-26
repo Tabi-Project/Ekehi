@@ -14,3 +14,16 @@ export const guideResponseSchema = z.object({
 })
 
 export type GuideResponse = z.infer<typeof guideResponseSchema>
+
+export const templateResponseSchema = z.object({
+  id: z.string(),
+  title: z.string().trim().min(1),
+  description: z.string().nullable(),
+  category: z.string().nullable(),
+  content: z.string().nullable(),
+  file_url: z.string().nullable(),
+  created_at: z.string(),
+  updated_at: z.string(),
+})
+
+export type TemplateResponse = z.infer<typeof templateResponseSchema>
