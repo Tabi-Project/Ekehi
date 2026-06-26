@@ -115,7 +115,12 @@ describe('TemplateDetailPage', () => {
 
     render(<TemplateDetailPage id={mockId} />)
 
-    expect(screen.getByText('Basic financial management template')).toBeTruthy()
+    expect(
+      screen.getByRole('heading', {
+        level: 1,
+        name: 'Basic financial management template',
+      }),
+    ).toBeTruthy()
     expect(screen.getByText('finance')).toBeTruthy()
     expect(
       screen.getByText(/Explore our Basic Financial Management Template/i),

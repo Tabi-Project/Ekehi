@@ -1,7 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { GuidesService, TemplatesService, TemplatesService } from './resources.service'
-import type { GuideResponse, TemplateResponse, Training } from './resources.types'
+import {
+  GuidesService,
+  ResourcesService,
+  TemplatesService,
+} from './resources.service'
+import type {
+  GuideResponse,
+  TemplateResponse,
+  Training,
+} from './resources.types'
 
 export function useGuideQuery(id: string) {
   return useQuery<GuideResponse, Error>({
