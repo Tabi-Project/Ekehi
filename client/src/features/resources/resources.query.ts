@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { GuidesService, ResourcesService } from './resources.service'
-import type { GuideResponse, Training } from './resources.types'
+import { GuidesService, TemplatesService, TemplatesService } from './resources.service'
+import type { GuideResponse, TemplateResponse, Training } from './resources.types'
 
 export function useGuideQuery(id: string) {
   return useQuery<GuideResponse, Error>({
@@ -19,6 +19,17 @@ export function useTrainingQuery(id: string) {
     queryKey: ['training', id] as const,
     queryFn: async () => {
       const response = await ResourcesService.byId(id)
+      return response.data
+    },
+    enabled: !!id,
+  })
+}
+
+export function useTemplateQuery(id: string) {
+  return useQuery<TemplateResponse, Error>({
+    queryKey: ['template', id] as const,
+    queryFn: async () => {
+      const response = await TemplatesService.byId(id)
       return response.data
     },
     enabled: !!id,
