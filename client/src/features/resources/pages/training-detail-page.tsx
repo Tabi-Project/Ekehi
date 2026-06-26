@@ -1,6 +1,5 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
 import {
   ChevronRight,
   Languages,
@@ -12,21 +11,12 @@ import {
 import { IMAGES } from '#/assets/images'
 import { Button } from '#/components/ui/button'
 import { TrainingSkeleton } from '#/components/ui/skeleton'
-import { makeRequest } from '#/lib/api'
 import { daysUntil, formatDate, formatLabel, humanize } from '#/shared/utils'
 
+import { useTrainingQuery } from '../resources.query'
+
 // ── Constants ──────────────────────────────────────────
-interface Training {
-  id: string
-  programme_name: string
-  programme_type: string
-  description: string
-  provider: string
-  format: 'online' | 'in_person' | 'hybrid'
-  application_deadline: string | null
-  apply_url?: string
-  location_scope?: string
-}
+
 const CARD_COLORS: Record<string, { bg: string; text: string; panel: string }> =
   {
     accelerator: { bg: '#F9E6FF', text: '#581c87', panel: '#EFBDFF' },
@@ -44,34 +34,9 @@ const PROGRAMME_TYPES: Record<string, string> = {
   mentorship_programme: 'Mentorship Programme',
 }
 
-const resourcesKeys = {
-  all: ['resources'] as const,
-  training: (id: string) => [...resourcesKeys.all, 'training', id] as const,
-}
-
-const ResourcesService = {
-  training: (id: string) =>
-    makeRequest<Training>(`/trainings/${id}`, 'GET')().then(
-      (response) => response.data,
-    ),
-}
-
-function useTrainingQuery(id: string, enabled = true) {
-  return useQuery<Training, Error>({
-    queryKey: resourcesKeys.training(id),
-    queryFn: () => ResourcesService.training(id),
-    enabled,
-  })
-}
-
 // ── Component ──────────────────────────────────────────
 export function TrainingDetailPage({ id }: { id: string }) {
-  const {
-    data: training,
-    error,
-    isError,
-    isLoading,
-  } = useTrainingQuery(id, Boolean(id))
+  const { data: training, error, isError, isLoading } = useTrainingQuery(id)
 
   if (!id) {
     return (
@@ -126,9 +91,9 @@ export function TrainingDetailPage({ id }: { id: string }) {
   const colors = CARD_COLORS[training.programme_type] ?? CARD_COLORS.accelerator
 
   return (
-    <div className="m-10 max-w-max py-10 md:px-10">
+    <div className="max-w-max py-10 max-lg:mx-6 lg:mx-auto">
       {/* Breadcrumb */}
-      <nav className="breadcrumb flex items-center text-sm font-medium">
+      <nav className="breadcrumb flex items-center text-sm font-normal">
         <a href="/resources" className="text-primary">
           Resources
         </a>
@@ -145,13 +110,13 @@ export function TrainingDetailPage({ id }: { id: string }) {
       <article className="flex justify-between py-8 max-md:flex-col">
         <div className="flex flex-col items-start justify-between md:min-w-1/2">
           <div className="space-y-4">
-            <h1 className="date_time text-content-secondary mb-4 text-sm font-medium md:mb-8">
+            <h1 className="date_time mb-4 text-sm font-medium text-gray-600 md:mb-8">
               {training.application_deadline
                 ? formatDate(training.application_deadline)
                 : 'Date TBC'}
             </h1>
 
-            <h2 className="text-3xl font-medium text-wrap">
+            <h2 className="font-serif text-4xl font-medium text-wrap">
               {training.programme_name || 'Untitled programme'}
             </h2>
           </div>
@@ -164,7 +129,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
               style={{ backgroundColor: colors.panel }}
               className="flex w-1/2 flex-col justify-between rounded-xl p-3"
             >
-              <p className="text-2xl leading-snug font-semibold text-pretty max-sm:text-xl">
+              <p className="text-4xl leading-snug font-medium text-pretty max-sm:text-xl">
                 {typeLabel}
               </p>
               <p>
@@ -189,6 +154,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
                 href={training.apply_url}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="font-medium"
               >
                 Register Now
               </a>
@@ -225,21 +191,23 @@ export function TrainingDetailPage({ id }: { id: string }) {
       </article>
 
       {/* Main Content */}
-      <div className="flex w-full flex-col items-start justify-between gap-10 py-10 md:flex-row md:py-18">
+      <div className="flex w-full flex-col items-start justify-between gap-10 py-10 md:flex-row">
         <article className="space-y-2 md:w-[60%]">
-          <h2 className="text-xl font-semibold capitalize">About this event</h2>
-          <p className="description text-left text-sm">
+          <h2 className="text-xl font-medium text-gray-900 capitalize">
+            About this event
+          </h2>
+          <p className="description text-left font-normal text-gray-700">
             {training.description || 'No description available.'}
           </p>
         </article>
 
-        <aside className="w-full flex-1 space-y-2 md:w-2/3">
+        <aside className="w-full flex-1 space-y-6 md:w-2/3">
           <h2 className="w-full border-b border-black text-xl">
             Event Details
           </h2>
           <div className="flex items-center gap-2 text-sm capitalize">
             <div
-              className="flex size-12 items-center justify-center rounded-md"
+              className="flex size-12 items-center justify-center"
               style={{ backgroundColor: colors.bg }}
             >
               <VideoIcon className="text-content-secondary size-6" />
@@ -249,7 +217,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
 
           <div className="flex items-center gap-2 text-sm capitalize">
             <div
-              className="flex size-12 items-center justify-center rounded-md"
+              className="flex size-12 items-center justify-center"
               style={{ backgroundColor: colors.bg }}
             >
               <LucideCalendarClock className="text-content-secondary size-6" />
@@ -265,7 +233,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
 
           <div className="flex items-center gap-2 text-sm capitalize">
             <div
-              className="flex size-12 items-center justify-center rounded-md"
+              className="flex size-12 items-center justify-center"
               style={{ backgroundColor: colors.bg }}
             >
               <Languages className="text-content-secondary size-6" />
@@ -275,7 +243,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
 
           <div className="flex items-center gap-2 text-sm capitalize">
             <div
-              className="flex size-12 items-center justify-center rounded-md"
+              className="flex size-12 items-center justify-center"
               style={{ backgroundColor: colors.bg }}
             >
               <Speech className="text-content-secondary size-6" />
