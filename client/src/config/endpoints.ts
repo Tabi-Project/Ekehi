@@ -8,4 +8,8 @@ export const ENDPOINTS = {
   me: {
     profile: '/profile',
   },
+  guides: {
+    list: '/guides',
+    byId: (id: string) => `/guides/${id}`,
+  },
 } as const
