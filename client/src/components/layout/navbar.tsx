@@ -109,21 +109,24 @@ export const Navbar: React.FC = () => {
     'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120'
 
   return (
-    <div className="w-full font-sans" ref={innerRef}>
-      <nav className="relative border-b border-gray-100 bg-white">
+    <div
+      className="absolute inset-x-0 top-0 z-50 w-full font-sans"
+      ref={innerRef}
+    >
+      <nav className="relative">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
           <Link
             to={logo.to}
-            className="flex cursor-pointer items-center space-x-3 text-[#4a0066]"
+            className="flex cursor-pointer items-center space-x-3 text-white"
             aria-label="Ekehi homepage"
           >
             <img
-              src={SVGS.ekehiLogo}
+              src={SVGS.ekehiLogo2}
               alt={logo.wordmark}
               width={43}
               height={48}
             />
-            <span className="font-serif text-2xl font-semibold tracking-wide italic">
+            <span className="font-serif text-2xl font-semibold tracking-wide text-white italic">
               {logo.wordmark}
             </span>
           </Link>
@@ -133,9 +136,9 @@ export const Navbar: React.FC = () => {
               <Link
                 key={item.label}
                 to={item.to}
-                activeProps={{ className: 'font-semibold text-[#7a0099]' }}
+                activeProps={{ className: 'font-semibold text-white' }}
                 inactiveProps={{
-                  className: 'text-gray-500 hover:text-gray-900',
+                  className: 'text-white/80 hover:text-white',
                 }}
                 className="text-sm font-medium transition-colors duration-200"
               >
@@ -149,13 +152,13 @@ export const Navbar: React.FC = () => {
               <>
                 <Link
                   to={cta.signup.to}
-                  className="rounded-full bg-[#4a0066] px-6 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#36004d]"
+                  className="rounded-full bg-white px-6 py-2.5 text-center text-sm font-medium text-[#4a0066] shadow-sm transition-colors hover:bg-white/90"
                 >
                   {cta.signup.label}
                 </Link>
                 <Link
                   to={cta.login.to}
-                  className="rounded-full border border-[#4a0066] px-6 py-2.5 text-center text-sm font-medium text-[#4a0066] transition-colors hover:bg-purple-50"
+                  className="rounded-full border border-white px-6 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-white/10"
                 >
                   {cta.login.label}
                 </Link>
@@ -209,7 +212,7 @@ export const Navbar: React.FC = () => {
                   ? 'Close navigation menu'
                   : 'Open navigation menu'
               }
-              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              className="text-white hover:text-white/80 focus:outline-none"
             >
               <svg
                 className="h-6 w-6"
