@@ -38,8 +38,6 @@ describe('TemplateDetailPage', () => {
 
     render(<TemplateDetailPage id={mockId} />)
 
-    // TemplateSkeleton renders its placeholder blocks with aria-hidden,
-    // so we assert on the absence of real content instead of querying text.
     expect(screen.queryByRole('heading')).toBeNull()
   })
 
@@ -98,17 +96,18 @@ describe('TemplateDetailPage', () => {
     expect(screen.getByText('Something went wrong')).toBeTruthy()
   })
 
-  it('renders the template title, category, description, content, and created date on success', () => {
+  it('renders title, category, description, and formatted created date on success', () => {
     vi.mocked(useTemplateQuery).mockReturnValue({
       data: {
         id: mockId,
-        title: 'Pitch Deck Template',
-        description: 'A clean starting point for your fundraising pitch.',
-        category: 'Fundraising',
-        content: 'Slide 1: Problem\nSlide 2: Solution',
+        title: 'Basic financial management template',
+        description:
+          'Explore our Basic Financial Management Template designed for SMEs.',
+        category: 'finance',
+        content: null,
         file_url: null,
-        created_at: '2026-01-15T00:00:00.000Z',
-        updated_at: '2026-01-15T00:00:00.000Z',
+        created_at: '2026-03-26T00:00:00.000Z',
+        updated_at: '2026-03-26T00:00:00.000Z',
       },
       isLoading: false,
       error: null,
@@ -116,16 +115,111 @@ describe('TemplateDetailPage', () => {
 
     render(<TemplateDetailPage id={mockId} />)
 
-    expect(screen.getByText('Pitch Deck Template')).toBeTruthy()
-    expect(screen.getByText('Fundraising')).toBeTruthy()
+    expect(screen.getByText('Basic financial management template')).toBeTruthy()
+    expect(screen.getByText('finance')).toBeTruthy()
     expect(
-      screen.getByText('A clean starting point for your fundraising pitch.'),
+      screen.getByText(/Explore our Basic Financial Management Template/i),
     ).toBeTruthy()
-    expect(screen.getByText(/Slide 1: Problem/)).toBeTruthy()
-    expect(screen.getByText(/15 January 2026/)).toBeTruthy()
+    expect(screen.getByText(/26 March 2026/)).toBeTruthy()
   })
 
-  it('shows the "Open template" link only when file_url is present', () => {
+  it('parses JSON content into formatted sections instead of showing the raw string', () => {
+    const rawContent = JSON.stringify({
+      author: 'Fisayo Rotibi',
+      sections: [
+        {
+          heading: null,
+          body: 'Managing your business finances does not have to be complicated.',
+        },
+        {
+          heading: 'What this template includes',
+          body: 'The template covers five core areas.',
+        },
+      ],
+    })
+
+    vi.mocked(useTemplateQuery).mockReturnValue({
+      data: {
+        id: mockId,
+        title: 'Basic financial management template',
+        description: null,
+        category: 'finance',
+        content: rawContent,
+        file_url: null,
+        created_at: '2026-03-26T00:00:00.000Z',
+        updated_at: '2026-03-26T00:00:00.000Z',
+      },
+      isLoading: false,
+      error: null,
+    } as any)
+
+    render(<TemplateDetailPage id={mockId} />)
+
+    // The raw JSON string itself should never appear on screen.
+    expect(screen.queryByText(/"author":/)).toBeNull()
+
+    // The parsed sections should render as real headings and paragraphs.
+    expect(screen.getByText('What this template includes')).toBeTruthy()
+    expect(
+      screen.getByText(
+        /Managing your business finances does not have to be complicated/i,
+      ),
+    ).toBeTruthy()
+    expect(
+      screen.getByText(/The template covers five core areas/i),
+    ).toBeTruthy()
+  })
+
+  it('renders the author line on the sidebar card when content includes an author', () => {
+    const rawContent = JSON.stringify({
+      author: 'Fisayo Rotibi',
+      sections: [{ heading: null, body: 'Some body text.' }],
+    })
+
+    vi.mocked(useTemplateQuery).mockReturnValue({
+      data: {
+        id: mockId,
+        title: 'Basic financial management template',
+        description: null,
+        category: 'finance',
+        content: rawContent,
+        file_url: null,
+        created_at: '2026-03-26T00:00:00.000Z',
+        updated_at: '2026-03-26T00:00:00.000Z',
+      },
+      isLoading: false,
+      error: null,
+    } as any)
+
+    render(<TemplateDetailPage id={mockId} />)
+
+    expect(screen.getByText('with Fisayo Rotibi')).toBeTruthy()
+  })
+
+  it('falls back to a single plain section when content is not valid JSON', () => {
+    vi.mocked(useTemplateQuery).mockReturnValue({
+      data: {
+        id: mockId,
+        title: 'Legacy plain text template',
+        description: null,
+        category: null,
+        content: 'Just a plain string, not JSON at all.',
+        file_url: null,
+        created_at: '2026-03-26T00:00:00.000Z',
+        updated_at: '2026-03-26T00:00:00.000Z',
+      },
+      isLoading: false,
+      error: null,
+    } as any)
+
+    render(<TemplateDetailPage id={mockId} />)
+
+    expect(
+      screen.getByText('Just a plain string, not JSON at all.'),
+    ).toBeTruthy()
+  })
+
+  it('shows the "Download template" link only when file_url is present', () => {
     vi.mocked(useTemplateQuery).mockReturnValue({
       data: {
         id: mockId,
@@ -143,8 +237,8 @@ describe('TemplateDetailPage', () => {
 
     render(<TemplateDetailPage id={mockId} />)
 
-    const openLink = screen.getByText('Download template')
-    expect(openLink.closest('a')?.getAttribute('href')).toBe(
+    const downloadLink = screen.getByText('Download template')
+    expect(downloadLink.closest('a')?.getAttribute('href')).toBe(
       'https://example.com/template.pdf',
     )
   })
