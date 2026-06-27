@@ -11,7 +11,7 @@ vi.mock('@tanstack/react-router', () => ({
   ),
 }))
 
-vi.mock('@/assets/svgs', () => ({
+vi.mock('#/assets/svgs', () => ({
   SVGS: {
     ekehiLogo2: 'logo2.svg',
   },

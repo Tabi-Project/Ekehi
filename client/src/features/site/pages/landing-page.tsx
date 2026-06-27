@@ -1,7 +1,22 @@
+import { AboutSection } from '#/features/site/components/about'
+import { CtaSection } from '#/features/site/components/cta'
+import { FaqSection } from '#/features/site/components/faq'
+import { HeroSection } from '#/features/site/components/hero'
+import { MissionSection } from '#/features/site/components/mission'
+import { ValuePropositionSection } from '#/features/site/components/value-proposition'
+
+import { WhatWeOfferSection } from '../components/what-we-offer'
+
 export function LandingPage() {
   return (
     <div>
-      <h1>Landing Page</h1>
+      <HeroSection />
+      <AboutSection />
+      <ValuePropositionSection />
+      <MissionSection />
+      <WhatWeOfferSection />
+      <FaqSection />
+      <CtaSection />
     </div>
   )
 }

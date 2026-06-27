@@ -9,13 +9,23 @@ const mockMutate = vi.fn()
 let mockCurrentPath = '/'
 
 vi.mock('@tanstack/react-router', () => ({
-  Link: ({ to, children, activeProps, inactiveProps, className, ...props }: any) => {
-    const isActive = to === '/' ? mockCurrentPath === '/' : mockCurrentPath.startsWith(to)
+  Link: ({
+    to,
+    children,
+    activeProps,
+    inactiveProps,
+    className,
+    ...props
+  }: any) => {
+    const isActive =
+      to === '/' ? mockCurrentPath === '/' : mockCurrentPath.startsWith(to)
 
     const combinedClasses = [
       className,
-      isActive ? activeProps?.className : inactiveProps?.className
-    ].filter(Boolean).join(' ')
+      isActive ? activeProps?.className : inactiveProps?.className,
+    ]
+      .filter(Boolean)
+      .join(' ')
 
     return (
       <a
@@ -30,13 +40,13 @@ vi.mock('@tanstack/react-router', () => ({
   },
 }))
 
-vi.mock('@/assets/svgs', () => ({
+vi.mock('#/assets/svgs', () => ({
   SVGS: {
     ekehiLogo: 'logo.svg',
   },
 }))
 
-vi.mock('@/features/auth/auth.query', () => ({
+vi.mock('#/features/auth/auth.query', () => ({
   useMeQuery: vi.fn(),
   useLogoutMutation: vi.fn(),
 }))
