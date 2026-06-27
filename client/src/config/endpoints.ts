@@ -8,6 +8,12 @@ export const ENDPOINTS = {
   me: {
     profile: '/profile',
   },
+  opportunities: {
+    list: '/opportunities',
+    detail: (id: string) => `/opportunities/${id}`,
+    save: (id: string) => `/opportunities/${id}/save`,
+    unsave: (id: string) => `/opportunities/${id}/save`,
+  },
   guides: {
     list: '/guides',
     byId: (id: string) => `/guides/${id}`,
