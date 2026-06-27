@@ -7,8 +7,9 @@ export const Route = createFileRoute('/(layout)/(protected)/submissions')({
   component: SubmissionsPage,
   head: () =>
     pageMeta({
-      title: 'Submissions',
-      description: 'Submissions on Ekehi.',
+      title: 'Submit an opportunity',
+      description:
+        'Submit a funding opportunity for women entrepreneurs to the Ekehi team for review.',
       path: '/submissions',
       noIndex: true,
     }),

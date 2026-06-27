@@ -26,4 +26,10 @@ export const ENDPOINTS = {
     list: '/templates',
     byId: (id: string) => `/templates/${id}`,
   },
+  opportunities: {
+    create: '/opportunities',
+  },
+  meta: {
+    get: '/meta',
+  },
 } as const
