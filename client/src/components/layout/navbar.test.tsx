@@ -38,11 +38,14 @@ vi.mock('@tanstack/react-router', () => ({
       </a>
     )
   },
+  useRouterState: ({ select }: any) =>
+    select({ location: { pathname: mockCurrentPath } }),
 }))
 
 vi.mock('#/assets/svgs', () => ({
   SVGS: {
     ekehiLogo: 'logo.svg',
+    ekehiLogo2: 'logo2.svg',
   },
 }))
 

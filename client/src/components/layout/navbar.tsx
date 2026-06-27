@@ -1,8 +1,9 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { SVGS } from '#/assets/svgs'
 import { useLogoutMutation, useMeQuery } from '#/features/auth/auth.query'
+import { cn } from '#/lib/utils'
 
 interface LinkItem {
   to: string
@@ -40,6 +41,19 @@ const NAV_CONFIG: NavConfig = {
 
 export const Navbar: React.FC = () => {
   const { logo, links, cta } = NAV_CONFIG
+
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  })
+  const isHome = pathname === '/'
+
+  const linkBase = 'text-sm font-medium transition-colors duration-200'
+  const linkActive = isHome
+    ? 'font-semibold text-white'
+    : 'font-semibold text-primary'
+  const linkInactive = isHome
+    ? 'text-white/80 hover:text-white'
+    : 'text-content-muted hover:text-content'
 
   const { data: userProfile } = useMeQuery()
   const logoutMutation = useLogoutMutation()
@@ -110,23 +124,33 @@ export const Navbar: React.FC = () => {
 
   return (
     <div
-      className="absolute inset-x-0 top-0 z-50 w-full font-sans"
+      className={cn(
+        'top-0 z-50 w-full font-sans',
+        isHome
+          ? 'absolute inset-x-0'
+          : 'border-line bg-surface sticky border-b',
+      )}
       ref={innerRef}
     >
       <nav className="relative">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
           <Link
             to={logo.to}
-            className="flex cursor-pointer items-center space-x-3 text-white"
+            className="flex cursor-pointer items-center space-x-3"
             aria-label="Ekehi homepage"
           >
             <img
-              src={SVGS.ekehiLogo2}
+              src={isHome ? SVGS.ekehiLogo2 : SVGS.ekehiLogo}
               alt={logo.wordmark}
               width={43}
               height={48}
             />
-            <span className="font-serif text-2xl font-semibold tracking-wide text-white italic">
+            <span
+              className={cn(
+                'font-serif text-2xl font-semibold tracking-wide italic',
+                isHome ? 'text-white' : 'text-content',
+              )}
+            >
               {logo.wordmark}
             </span>
           </Link>
@@ -136,11 +160,9 @@ export const Navbar: React.FC = () => {
               <Link
                 key={item.label}
                 to={item.to}
-                activeProps={{ className: 'font-semibold text-white' }}
-                inactiveProps={{
-                  className: 'text-white/80 hover:text-white',
-                }}
-                className="text-sm font-medium transition-colors duration-200"
+                activeProps={{ className: linkActive }}
+                inactiveProps={{ className: linkInactive }}
+                className={linkBase}
               >
                 {item.label}
               </Link>
@@ -152,13 +174,23 @@ export const Navbar: React.FC = () => {
               <>
                 <Link
                   to={cta.signup.to}
-                  className="rounded-full bg-white px-6 py-2.5 text-center text-sm font-medium text-[#4a0066] shadow-sm transition-colors hover:bg-white/90"
+                  className={cn(
+                    'rounded-full px-6 py-2.5 text-center text-sm font-medium shadow-sm transition-colors',
+                    isHome
+                      ? 'bg-white text-[#4a0066] hover:bg-white/90'
+                      : 'bg-primary text-on-primary hover:bg-primary-hover',
+                  )}
                 >
                   {cta.signup.label}
                 </Link>
                 <Link
                   to={cta.login.to}
-                  className="rounded-full border border-white px-6 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-white/10"
+                  className={cn(
+                    'rounded-full border px-6 py-2.5 text-center text-sm font-medium transition-colors',
+                    isHome
+                      ? 'border-white text-white hover:bg-white/10'
+                      : 'border-primary text-primary hover:bg-primary/10',
+                  )}
                 >
                   {cta.login.label}
                 </Link>
@@ -212,7 +244,12 @@ export const Navbar: React.FC = () => {
                   ? 'Close navigation menu'
                   : 'Open navigation menu'
               }
-              className="text-white hover:text-white/80 focus:outline-none"
+              className={cn(
+                'focus:outline-none',
+                isHome
+                  ? 'text-white hover:text-white/80'
+                  : 'text-content hover:text-content-muted',
+              )}
             >
               <svg
                 className="h-6 w-6"
