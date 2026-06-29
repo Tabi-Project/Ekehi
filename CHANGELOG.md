@@ -8,19 +8,21 @@ and this project loosely follows [Semantic Versioning](https://semver.org/spec/v
 ## [Unreleased]
 
 ### Added
-- Submission page for the submissions flow '(#166)'
+- Submission page for the submissions flow 
 - Opportunity details page '(#164)'
-- Landing page with hero and CTA sections '(#165)'
-- Training details page backed by a data layer, fetching training data via TanStack useQuery '(#161)'
-- Template detail page with its data layer '(#163)'
-- Guide detail page, including tests for GuideDetailPage '(#162)'
+- Landing page with hero and CTA sections 
+- Training details page backed by a data layer, fetching training data via TanStack useQuery 
+- Template detail page with its data layer, , fetching training data via TanStack useQuery 
+- Guide detail page, including tests for GuideDetailPage 
 - Styling for loading and error states
+- Base UI Component Library
+- Updated **`CHANGELOG.md`** (this file).
 
 ### Changed
-- Navbar theming on the submissions page '(#166)'
-- Training data fetching moved to **TanStack useQuery** '(#161)'
+- Navbar theming on the submissions page
+- Training data fetching moved to **TanStack useQuery** 
 - Margin spacing and font styles refined, with domain services relocated
-- Resources content formatting updated, with accompanying test updates '(#163)'
+- Resources content formatting updated, with accompanying test updates 
 
 ### Deprecated
 Nothing in this release
@@ -29,9 +31,9 @@ Nothing in this release
 - Stale 'fix/contributors-page' branch deleted (housekeeping)
 
 ### Fixed
-- Navbar transparency and hero section content layout on the landing page '(#165)'
-- Content formatting in resources '(#163)'
-- **CORS configuration** to allow Netlify deploy previews through (#162)
+- Navbar transparency and hero section content layout on the landing page 
+- Content formatting in resources
+- **CORS configuration** to allow Netlify deploy previews through 
 - Outstanding check errors resolved
 
 ### Security
