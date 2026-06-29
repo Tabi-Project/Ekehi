@@ -8,16 +8,34 @@ and this project loosely follows [Semantic Versioning](https://semver.org/spec/v
 ## [Unreleased]
 
 ### Added
+- Submission page for the submissions flow '(#166)'
+- Opportunity details page '(#164)'
+- Landing page with hero and CTA sections '(#165)'
+- Training details page backed by a data layer, fetching training data via TanStack useQuery '(#161)'
+- Template detail page with its data layer '(#163)'
+- Guide detail page, including tests for GuideDetailPage '(#162)'
+- Styling for loading and error states
 
 ### Changed
+- Navbar theming on the submissions page '(#166)'
+- Training data fetching moved to **TanStack useQuery** '(#161)'
+- Margin spacing and font styles refined, with domain services relocated
+- Resources content formatting updated, with accompanying test updates '(#163)'
 
 ### Deprecated
+Nothing in this release
 
 ### Removed
+- Stale 'fix/contributors-page' branch deleted (housekeeping)
 
 ### Fixed
+- Navbar transparency and hero section content layout on the landing page '(#165)'
+- Content formatting in resources '(#163)'
+- **CORS configuration** to allow Netlify deploy previews through (#162)
+- Outstanding check errors resolved
 
 ### Security
+- Nothing in this release
 
 
 ## [2.0.0] — 2026-06-17
