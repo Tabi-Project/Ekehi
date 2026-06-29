@@ -3,8 +3,8 @@ import { Button } from '#/components/ui/button'
 
 export function AboutSection() {
   return (
-    <section className="relative isolate overflow-hidden bg-purple-800 px-6 py-12 sm:px-10 sm:py-16 md:px-16 lg:px-[146px] lg:py-[60px]">
-      <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between sm:gap-12 lg:gap-16">
+    <section className="relative isolate overflow-hidden bg-purple-800 py-12 sm:py-16 lg:py-[60px]">
+      <div className="mx-auto w-full max-w-7xl px-6 flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between sm:gap-12 lg:gap-16">
         {/* Wordmark */}
         <h2 className="text-content-inverse flex items-center gap-3 font-serif text-3xl sm:text-4xl">
           <span>About</span>

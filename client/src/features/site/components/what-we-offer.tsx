@@ -56,11 +56,11 @@ export function WhatWeOfferSection() {
   return (
     <section
       id="what-we-offer"
-      className="w-full bg-white px-6 py-12 sm:px-10 sm:py-16 md:px-16 lg:px-[146px] lg:py-[100px]"
+      className="w-full bg-white py-12 sm:py-16 lg:py-[100px]"
     >
-      <div className="flex flex-col gap-8 lg:gap-10">
+      <div className="mx-auto w-full max-w-7xl px-6 flex flex-col gap-8 lg:gap-10">
         {/* Heading row */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-12">
+        <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-12">
           <h2 className="text-content font-serif text-2xl sm:text-3xl md:text-4xl">
             What we offer
           </h2>
