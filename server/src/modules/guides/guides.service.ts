@@ -39,13 +39,24 @@ export async function getGuides({
   };
 }
 
-export async function getGuideById(id: string) {
-  const { data, error } = await supabase
+export async function getGuideById(idOrSlug: string) {
+  const isUuid =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+      idOrSlug,
+    );
+
+  let query = supabase
     .from("guides")
     .select("*")
-    .eq("id", id)
-    .eq("approval_status", "approved")
-    .single();
+    .eq("approval_status", "approved");
+
+  if (isUuid) {
+    query = query.eq("id", idOrSlug);
+  } else {
+    query = query.eq("slug", idOrSlug);
+  }
+
+  const { data, error } = await query.single();
 
   if (error) {
     if (error.code === NOT_FOUND_CODE) return null;

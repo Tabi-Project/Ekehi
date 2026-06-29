@@ -39,9 +39,11 @@ describe('GuideDetailPage', () => {
       error: null,
     } as any)
 
-    render(<GuideDetailPage id={mockId} />)
+    render(<GuideDetailPage idOrSlug={mockId} />)
 
-    expect(screen.getByText('Loading guide information...')).toBeTruthy()
+    expect(
+      screen.getByRole('status', { name: /loading guide content/i }),
+    ).toBeTruthy()
   })
 
   it('renders fallback error message when server returns an ApiError', () => {
@@ -56,7 +58,7 @@ describe('GuideDetailPage', () => {
 
     vi.mocked(isApiError).mockReturnValue(true)
 
-    render(<GuideDetailPage id={mockId} />)
+    render(<GuideDetailPage idOrSlug={mockId} />)
 
     expect(screen.getByText('Guide not found')).toBeTruthy()
     expect(screen.getByText('Database failure message connection')).toBeTruthy()
@@ -72,7 +74,7 @@ describe('GuideDetailPage', () => {
 
     vi.mocked(isApiError).mockReturnValue(false)
 
-    render(<GuideDetailPage id={mockId} />)
+    render(<GuideDetailPage idOrSlug={mockId} />)
 
     expect(screen.getByText('Standard broken instance text')).toBeTruthy()
   })
@@ -88,7 +90,7 @@ describe('GuideDetailPage', () => {
       error: null,
     } as any)
 
-    render(<GuideDetailPage id={mockId} />)
+    render(<GuideDetailPage idOrSlug={mockId} />)
 
     expect(screen.getByText('Empty Content Guide')).toBeTruthy()
     expect(
@@ -120,12 +122,12 @@ describe('GuideDetailPage', () => {
       error: null,
     } as any)
 
-    render(<GuideDetailPage id={mockId} />)
+    render(<GuideDetailPage idOrSlug={mockId} />)
 
     expect(screen.getByText('Complete Master Guide')).toBeTruthy()
 
     expect(
-      screen.getByRole('button', { name: /~ Introduction Block/i }),
+      screen.getByRole('button', { name: /-Introduction Block/i }),
     ).toBeTruthy()
     expect(
       screen.getByRole('button', { name: /Deep Dive Focus/i }),
@@ -155,7 +157,7 @@ describe('GuideDetailPage', () => {
       error: null,
     } as any)
 
-    render(<GuideDetailPage id={mockId} />)
+    render(<GuideDetailPage idOrSlug={mockId} />)
 
     const targetedButton = screen.getByRole('button', {
       name: /Second Segment/i,
