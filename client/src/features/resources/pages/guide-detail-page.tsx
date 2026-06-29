@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import React, { useEffect, useRef, useState } from 'react'
 
-import { isApiError } from '#/lib/api'
+import { Skeleton } from '#/components/ui/skeleton'
 
 import { useGuideQuery } from '../resources.query'
 
@@ -15,21 +15,20 @@ interface GuideData {
   content: string
 }
 
-export const GuideDetailPage: React.FC<{ id: string }> = ({ id }) => {
+export const GuideDetailPage: React.FC<{ idOrSlug: string }> = ({
+  idOrSlug,
+}) => {
   const [sections, setSections] = useState<ContentSection[]>([])
   const [activeSectionIndex, setActiveSectionIndex] = useState<number>(0)
 
-  const { data: guide, isLoading, isError, error } = useGuideQuery(id)
+  const { data: guide, isLoading, isError, error } = useGuideQuery(idOrSlug)
 
   const errorMessage = isError
-    ? isApiError(error)
-      ? error.message
-      : error instanceof Error
-        ? error.message
-        : 'An error occurred while loading this guide.'
+    ? error.message || 'An error occurred while loading this guide.'
     : null
 
   const sectionReferences = useRef<(HTMLDivElement | null)[]>([])
+  const isScrollingRef = useRef(false)
 
   useEffect(() => {
     if (!guide) {
@@ -70,21 +69,64 @@ export const GuideDetailPage: React.FC<{ id: string }> = ({ id }) => {
     }
   }, [guide])
 
+  useEffect(() => {
+    if (sections.length === 0 || typeof IntersectionObserver === 'undefined')
+      return
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-15% 0px -75% 0px',
+      threshold: 0,
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (isScrollingRef.current) return
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = sectionReferences.current.indexOf(
+            entry.target as HTMLDivElement,
+          )
+          if (index !== -1) {
+            setActiveSectionIndex(index)
+          }
+        }
+      })
+    }, observerOptions)
+
+    // eslint-disable-next-line unicorn/prevent-abbreviations
+    const currentRefs = [...sectionReferences.current]
+    currentRefs.forEach((ref) => {
+      if (ref) observer.observe(ref)
+    })
+
+    return () => {
+      currentRefs.forEach((ref) => {
+        if (ref) observer.unobserve(ref)
+      })
+      observer.disconnect()
+    }
+  }, [sections])
+
   const handleTocClick = (index: number) => {
+    isScrollingRef.current = true
     setActiveSectionIndex(index)
     sectionReferences.current[index]?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     })
+    setTimeout(() => {
+      isScrollingRef.current = false
+    }, 800)
   }
 
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800">
       {/* Main Content */}
-      <main className="mx-auto max-w-max px-6">
+      <div className="mx-auto w-full max-w-7xl px-6">
         <div className="grid grid-cols-1 gap-16 py-10 md:grid-cols-[250px_1fr] md:items-start">
           {/* Sticky Left Navigation Sidebar */}
-          <aside className="static top-8 md:sticky">
+          <aside className="static top-24 md:sticky md:top-24">
             <Link
               to="/resources/guides"
               className="mb-6 inline-block text-sm text-neutral-500 transition-colors hover:text-[#09090b]"
@@ -93,7 +135,18 @@ export const GuideDetailPage: React.FC<{ id: string }> = ({ id }) => {
             </Link>
 
             {/* Table of Contents */}
-            {sections.length > 0 && (
+            {isLoading ? (
+              <div
+                role="status"
+                aria-label="Loading table of contents"
+                className="mt-6 hidden flex-col gap-3 md:flex"
+              >
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-28" />
+              </div>
+            ) : sections.length > 0 ? (
               <nav
                 className="hidden flex-col gap-2 md:flex"
                 aria-label="Table of contents"
@@ -111,19 +164,56 @@ export const GuideDetailPage: React.FC<{ id: string }> = ({ id }) => {
                           : 'font-normal text-neutral-500 hover:text-[#09090b]'
                       }`}
                     >
-                      {isActive && '~ '}
+                      {isActive && <span className="text-primary mr-1">-</span>}
                       {section.heading}
                     </button>
                   )
                 })}
               </nav>
-            )}
+            ) : null}
           </aside>
 
           <article className="w-full max-w-full md:max-w-170">
             {isLoading ? (
-              <div className="py-12 text-center text-neutral-500">
-                <p className="animate-pulse">Loading guide information...</p>
+              <div
+                role="status"
+                aria-label="Loading guide content"
+                className="flex flex-col gap-8"
+              >
+                {/* Title skeleton */}
+                <Skeleton className="mb-4 h-10 w-3/4" />
+
+                {/* Section 1 */}
+                <div className="flex flex-col gap-3">
+                  <Skeleton className="h-6 w-1/3" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-5/6" />
+                </div>
+
+                {/* Section 2 */}
+                <div className="flex flex-col gap-3">
+                  <Skeleton className="h-6 w-1/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-2/3" />
+                </div>
+
+                {/* Section 3 */}
+                <div className="flex flex-col gap-3">
+                  <Skeleton className="h-6 w-1/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-2/3" />
+                </div>
+
+                {/* Section 4 */}
+                <div className="flex flex-col gap-3">
+                  <Skeleton className="h-6 w-1/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-2/3" />
+                </div>
               </div>
             ) : errorMessage ? (
               <div>
@@ -168,7 +258,7 @@ export const GuideDetailPage: React.FC<{ id: string }> = ({ id }) => {
             )}
           </article>
         </div>
-      </main>
+      </div>
     </div>
   )
 }

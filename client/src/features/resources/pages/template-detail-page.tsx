@@ -57,7 +57,7 @@ export function TemplateDetailPage({ id }: { id: string }) {
 
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-6xl px-6 py-12 lg:px-16">
+      <div className="mx-auto w-full max-w-7xl px-6 py-12">
         <TemplateSkeleton />
       </div>
     )
@@ -96,7 +96,7 @@ export function TemplateDetailPage({ id }: { id: string }) {
     : DEFAULT_CATEGORY_COLOR
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 lg:px-16">
+    <div className="mx-auto w-full max-w-7xl px-6 py-12">
       <Link
         to="/resources/templates"
         className="text-content-secondary hover:text-content mb-6 inline-block text-sm font-medium"

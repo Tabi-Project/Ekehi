@@ -47,8 +47,8 @@ export function FaqSection() {
   }
 
   return (
-    <section className="w-full bg-white px-6 py-12 sm:px-10 sm:py-16 md:px-16 lg:px-[146px] lg:py-[100px]">
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-16">
+    <section className="w-full bg-white py-12 sm:py-16 lg:py-[100px]">
+      <div className="mx-auto w-full max-w-7xl px-6 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-16">
         <h2 className="text-content max-w-xs font-serif text-2xl sm:text-3xl md:text-4xl">
           Frequently Asked Questions
         </h2>

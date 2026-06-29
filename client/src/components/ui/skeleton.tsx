@@ -8,7 +8,7 @@ export function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
       aria-hidden
-      className={cn('bg-surface-subtle animate-pulse rounded', className)}
+      className={cn('bg-gray-100 animate-pulse rounded', className)}
       {...props}
     />
   )
@@ -51,7 +51,7 @@ export function TrainingSkeleton() {
 export function GuideSkeleton() {
   return (
     <div className="flex flex-col gap-3">
-      <Skeleton className="h-40 w-full" />
+      <Skeleton className="h-56 w-full" />
       <div className="flex flex-col gap-2">
         <Skeleton className="h-5 w-full" />
         <Skeleton className="h-3.5 w-3/4" />

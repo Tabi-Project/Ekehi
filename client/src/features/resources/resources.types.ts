@@ -39,3 +39,6 @@ export const templateResponseSchema = z.object({
 })
 
 export type TemplateResponse = z.infer<typeof templateResponseSchema>
+
+export const listGuidesResponseSchema = z.array(guideResponseSchema)
+export type ListGuidesResponse = z.infer<typeof listGuidesResponseSchema>

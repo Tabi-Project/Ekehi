@@ -91,7 +91,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
   const colors = CARD_COLORS[training.programme_type] ?? CARD_COLORS.accelerator
 
   return (
-    <div className="max-w-max py-10 max-lg:mx-6 lg:mx-auto">
+    <div className="mx-auto w-full max-w-7xl px-6 py-10">
       {/* Breadcrumb */}
       <nav className="breadcrumb flex items-center text-sm font-normal">
         <a href="/resources" className="text-primary">

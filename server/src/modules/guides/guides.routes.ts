@@ -13,6 +13,7 @@ import {
 } from "#/modules/guides/guides.controller";
 import {
   createGuideSchema,
+  guideIdOrSlugParamsSchema,
   listGuidesQuery,
   updateGuideSchema,
 } from "#/modules/guides/guides.schema";
@@ -39,7 +40,7 @@ guidesRouter.post(
 
 guidesRouter.get(
   "/:id",
-  validateRequest({ params: idParamsSchema }),
+  validateRequest({ params: guideIdOrSlugParamsSchema }),
   asyncHandler(getGuideById),
 );
 
