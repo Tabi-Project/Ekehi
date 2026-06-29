@@ -103,8 +103,8 @@ const imageArray: Contributor[] = [
 ]
 export function ContributorsPage() {
   return (
-    <main className="flex flex-col items-center justify-center py-10 md:m-20 md:px-10">
-      <div className="max-w-max px-4 pb-5 text-left md:px-8 md:pb-10">
+    <div className="mx-auto w-full max-w-7xl px-6 py-10 md:py-20 flex flex-col items-center">
+      <div className="w-full pb-5 text-left md:pb-10">
         <p className="text-content-secondary mb-4 text-base leading-relaxed">
           Hi, we are the small team contributing to Ekehi, an open-source
           resource center that helps women entrepreneurs across Africa find the
@@ -116,7 +116,7 @@ export function ContributorsPage() {
           Meet us — The Contributors
         </span>
       </div>
-      <div className="grid max-w-max grid-cols-[repeat(auto-fit,minmax(160px,1fr))] justify-center gap-3 px-4 pt-6 pb-16 max-md:w-full md:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] md:gap-6 md:px-8">
+      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(160px,1fr))] justify-center gap-3 pt-6 pb-16 md:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] md:gap-6">
         {imageArray.map(({ name, role, image, style }, index) => {
           const variant = CARD_VARIANTS[index % CARD_VARIANTS.length]
           return (
@@ -147,7 +147,7 @@ export function ContributorsPage() {
           )
         })}
       </div>
-      <div className="max-w-max px-4 pb-5 text-left md:px-8 md:pb-10">
+      <div className="w-full pb-5 text-left md:pb-10">
         <p className="mb-4 text-base leading-relaxed">
           We don't take for granted what it takes to build something like this.
           Ekehi exists because designers gave their weekends, developers shipped
@@ -157,6 +157,6 @@ export function ContributorsPage() {
         </p>
         <span>Thank you, have a wonderful day 👋🏽</span>
       </div>
-    </main>
+    </div>
   )
 }

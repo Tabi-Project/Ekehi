@@ -81,7 +81,7 @@ export const GuideDetailPage: React.FC<{ id: string }> = ({ id }) => {
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-800">
       {/* Main Content */}
-      <main className="mx-auto max-w-max px-6">
+      <div className="mx-auto w-full max-w-7xl px-6">
         <div className="grid grid-cols-1 gap-16 py-10 md:grid-cols-[250px_1fr] md:items-start">
           {/* Sticky Left Navigation Sidebar */}
           <aside className="static top-8 md:sticky">
@@ -168,7 +168,7 @@ export const GuideDetailPage: React.FC<{ id: string }> = ({ id }) => {
             )}
           </article>
         </div>
-      </main>
+      </div>
     </div>
   )
 }
