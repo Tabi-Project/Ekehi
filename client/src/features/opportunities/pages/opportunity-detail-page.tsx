@@ -1,8 +1,10 @@
 import { Bookmark, BookmarkCheck } from 'lucide-react'
 
+import { SVGS } from '#/assets/svgs'
 import { Button } from '#/components/ui/button'
 import { Modal } from '#/components/ui/modal'
 import { getAccessToken } from '#/lib/auth/token-store'
+import { formatAmount } from '#/lib/format'
 
 import {
   useOpportunityDetailQuery,
@@ -11,18 +13,6 @@ import {
 import type { OpportunityDetail } from '../opportunities.types'
 
 // --- Helpers ---
-
-function formatAmount(
-  min: number | null,
-  max: number | null,
-  currency: string | null,
-) {
-  const fmt = (n: number) => `${currency ?? ''}${(n / 1_000_000).toFixed(0)}m`
-  if (min && max) return `${fmt(min)} - ${fmt(max)}`
-  if (min) return fmt(min)
-  if (max) return fmt(max)
-  return '—'
-}
 
 function formatDate(dateString: string | null) {
   if (!dateString) return '—'
@@ -74,36 +64,6 @@ function LinkedInIcon() {
         d="M7.5 9.5H5V19H7.5V9.5ZM6.25 8.5C7.08 8.5 7.75 7.83 7.75 7C7.75 6.17 7.08 5.5 6.25 5.5C5.42 5.5 4.75 6.17 4.75 7C4.75 7.83 5.42 8.5 6.25 8.5ZM19 19H16.5V14.25C16.5 13.01 16.48 11.41 14.77 11.41C13.04 11.41 12.77 12.77 12.77 14.16V19H10.27V9.5H12.67V10.94H12.7C13.04 10.29 13.88 9.6 15.14 9.6C17.67 9.6 19 11.22 19 13.58V19Z"
         fill="white"
       />
-    </svg>
-  )
-}
-
-function InstagramIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="24" height="24" rx="4" fill="url(#ig-grad)" />
-      <path
-        d="M12 8.5C10.07 8.5 8.5 10.07 8.5 12C8.5 13.93 10.07 15.5 12 15.5C13.93 15.5 15.5 13.93 15.5 12C15.5 10.07 13.93 8.5 12 8.5ZM12 14C10.9 14 10 13.1 10 12C10 10.9 10.9 10 12 10C13.1 10 14 10.9 14 12C14 13.1 13.1 14 12 14Z"
-        fill="white"
-      />
-      <path
-        d="M15.5 5.5H8.5C6.84 5.5 5.5 6.84 5.5 8.5V15.5C5.5 17.16 6.84 18.5 8.5 18.5H15.5C17.16 18.5 18.5 17.16 18.5 15.5V8.5C18.5 6.84 17.16 5.5 15.5 5.5ZM17 15.5C17 16.33 16.33 17 15.5 17H8.5C7.67 17 7 16.33 7 15.5V8.5C7 7.67 7.67 7 8.5 7H15.5C16.33 7 17 7.67 17 8.5V15.5Z"
-        fill="white"
-      />
-      <circle cx="16" cy="8" r="1" fill="white" />
-      <defs>
-        <linearGradient id="ig-grad" x1="0" y1="24" x2="24" y2="0">
-          <stop offset="0%" stopColor="#F9CE34" />
-          <stop offset="50%" stopColor="#EE2A7B" />
-          <stop offset="100%" stopColor="#6228D7" />
-        </linearGradient>
-      </defs>
     </svg>
   )
 }
@@ -203,16 +163,8 @@ function SaveModal() {
   return (
     <Modal.Content className="max-w-sm text-center">
       <div className="flex flex-col items-center gap-4">
-        {/* Using a text fallback in case image path fails */}
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100">
-          <img
-            src="../../../assets/svgs/logo2.png"
-            alt="Ekehi"
-            className="h-12 w-12"
-            onError={(error) => {
-              error.currentTarget.style.display = 'none'
-            }}
-          />
+          <img src={SVGS.logo2} alt="Ekehi" className="h-12 w-12" />
         </div>
         <div className="space-y-2">
           <Modal.Title>Save this opportunity</Modal.Title>
@@ -222,11 +174,6 @@ function SaveModal() {
           </Modal.Description>
         </div>
         <div className="w-full space-y-3">
-          <input
-            type="email"
-            placeholder="Enter email address"
-            className="border-line text-content placeholder:text-content-muted w-full rounded-lg border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-purple-500"
-          />
           <Button full asChild>
             <a href="/signup/">Create account</a>
           </Button>
@@ -346,14 +293,6 @@ function OpportunityAside({
             <LinkedInIcon />
           </a>
           <a
-            href="https://www.instagram.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Share on Instagram"
-          >
-            <InstagramIcon />
-          </a>
-          <a
             href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -372,30 +311,6 @@ function OpportunityAside({
         </div>
       </div>
     </aside>
-  )
-}
-
-// --- Newsletter section ---
-
-function NewsletterSection() {
-  return (
-    <div className="space-y-3 pt-2">
-      <h2 className="text-xl font-semibold text-[#18181B]">
-        Never miss an opportunity
-      </h2>
-      <p className="text-sm text-[#403F46]">
-        Subscribe to receive important application and funding deadlines
-        directly in your inbox
-      </p>
-      <div className="flex gap-3">
-        <input
-          type="email"
-          placeholder="Enter email address"
-          className="border-line text-content placeholder:text-content-muted flex-1 rounded-lg border bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-purple-500"
-        />
-        <Button variant="primary">Subscribe</Button>
-      </div>
-    </div>
   )
 }
 
@@ -498,10 +413,6 @@ export function OpportunityDetailPage({ id }: { id: string }) {
                     )}
                   </div>
                 </div>
-              </div>
-
-              <div className="rounded-[4px] bg-white p-6">
-                <NewsletterSection />
               </div>
             </div>
 

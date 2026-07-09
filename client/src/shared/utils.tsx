@@ -6,50 +6,45 @@ export function getOrdinal(n: number) {
 }
 
 export function formatDate(dateString: string): string {
-  try {
-    const date = new Date(dateString)
-    const timeZone = 'Africa/Lagos'
+  const date = new Date(dateString)
+  if (Number.isNaN(date.getTime())) return 'Date TBC'
 
-    const weekday = date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      timeZone,
-    })
+  const timeZone = 'Africa/Lagos'
 
-    const dayDate = Number(
-      date.toLocaleDateString('en-US', { day: 'numeric', timeZone }),
-    )
-    const day = getOrdinal(dayDate)
+  const weekday = date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    timeZone,
+  })
 
-    const month = date.toLocaleDateString('en-US', {
-      month: 'long',
-      timeZone,
-    })
+  const dayDate = Number(
+    date.toLocaleDateString('en-US', { day: 'numeric', timeZone }),
+  )
+  const day = getOrdinal(dayDate)
 
-    const year = date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      timeZone,
-    })
+  const month = date.toLocaleDateString('en-US', {
+    month: 'long',
+    timeZone,
+  })
 
-    return `${weekday}, ${day} ${month}, ${year}.`
-  } catch {
-    return 'Date TBC'
-  }
+  const year = date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    timeZone,
+  })
+
+  return `${weekday}, ${day} ${month}, ${year}.`
 }
 
 export function daysUntil(dateString: string): string {
-  try {
-    const date = new Date(dateString)
-    const now = new Date()
-    const diffTime = date.getTime() - now.getTime()
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  const date = new Date(dateString)
+  if (Number.isNaN(date.getTime())) return 'Date TBC'
 
-    if (diffDays < 0) return 'Expired'
-    if (diffDays === 0) return 'Today'
-    if (diffDays === 1) return 'Tomorrow'
-    return `${diffDays} days`
-  } catch {
-    return 'Date TBC'
-  }
+  const diffTime = date.getTime() - Date.now()
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+  if (diffDays < 0) return 'Expired'
+  if (diffDays === 0) return 'Today'
+  if (diffDays === 1) return 'Tomorrow'
+  return `${diffDays} days`
 }
 
 export function humanize(value: string): string {
