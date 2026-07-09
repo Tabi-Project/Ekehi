@@ -13,6 +13,7 @@ export const ENDPOINTS = {
     detail: (id: string) => `/opportunities/${id}`,
     save: (id: string) => `/opportunities/${id}/save`,
     unsave: (id: string) => `/opportunities/${id}/save`,
+    create: '/opportunities',
   },
   guides: {
     list: '/guides',
@@ -25,9 +26,6 @@ export const ENDPOINTS = {
   templates: {
     list: '/templates',
     byId: (id: string) => `/templates/${id}`,
-  },
-  opportunities: {
-    create: '/opportunities',
   },
   meta: {
     get: '/meta',

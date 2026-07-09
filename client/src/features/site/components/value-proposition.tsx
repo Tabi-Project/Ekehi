@@ -2,8 +2,8 @@ import { IMAGES } from '#/assets/images'
 
 export function ValuePropositionSection() {
   return (
-    <section className="w-full bg-white px-6 py-12 sm:px-10 sm:py-16 md:px-16 lg:px-[146px] lg:py-[80px]">
-      <div className="flex flex-col gap-8">
+    <section className="w-full bg-white py-12 sm:py-16 lg:py-[80px]">
+      <div className="mx-auto w-full max-w-7xl px-6 flex flex-col gap-8">
         {/* Heading row */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-12">
           <h2 className="text-content max-w-[18ch] font-serif text-2xl leading-snug sm:text-3xl md:text-4xl">

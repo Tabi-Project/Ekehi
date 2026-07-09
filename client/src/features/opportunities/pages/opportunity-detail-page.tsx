@@ -433,7 +433,7 @@ export function OpportunityDetailPage({ id }: { id: string }) {
   return (
     <Modal>
       <div className="bg-surface-subtle">
-        <div className="container mx-auto max-w-6xl px-6 py-10">
+        <div className="mx-auto w-full max-w-7xl px-6 py-10">
           {/* Breadcrumb */}
           <nav className="text-content-muted mb-6 flex items-center gap-2 text-sm">
             <a href="/opportunities/" className="text-primary hover:underline">
