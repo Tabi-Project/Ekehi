@@ -24,3 +24,8 @@ export const updateGuideSchema = createGuideSchema.partial();
 export type ListGuidesQuery = z.infer<typeof listGuidesQuery>;
 export type CreateGuideInput = z.infer<typeof createGuideSchema>;
 export type UpdateGuideInput = z.infer<typeof updateGuideSchema>;
+
+export const guideIdOrSlugParamsSchema = z.object({
+  id: z.string().trim().min(1),
+});
+export type GuideIdOrSlugParams = z.infer<typeof guideIdOrSlugParamsSchema>;

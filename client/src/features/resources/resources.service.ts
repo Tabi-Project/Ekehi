@@ -8,6 +8,7 @@ import type {
 } from './resources.types'
 
 export const GuidesService = {
+  list: makeRequest<GuideResponse[], void>(ENDPOINTS.guides.list, 'GET'),
   byId: (id: string) => {
     const guideRequest = makeRequest<GuideResponse, void>(
       ENDPOINTS.guides.byId(id),

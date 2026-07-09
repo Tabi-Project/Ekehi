@@ -29,7 +29,7 @@ import { Route as layoutResourcesTemplatesIndexRouteImport } from './routes/(lay
 import { Route as layoutResourcesGuidesIndexRouteImport } from './routes/(layout)/resources/guides/index'
 import { Route as layoutResourcesTrainingIdRouteImport } from './routes/(layout)/resources/training/$id'
 import { Route as layoutResourcesTemplatesIdRouteImport } from './routes/(layout)/resources/templates/$id'
-import { Route as layoutResourcesGuidesIdRouteImport } from './routes/(layout)/resources/guides/$id'
+import { Route as layoutResourcesGuidesSlugRouteImport } from './routes/(layout)/resources/guides/$slug'
 
 const layoutRouteRoute = layoutRouteRouteImport.update({
   id: '/(layout)',
@@ -137,11 +137,12 @@ const layoutResourcesTemplatesIdRoute =
     path: '/resources/templates/$id',
     getParentRoute: () => layoutRouteRoute,
   } as any)
-const layoutResourcesGuidesIdRoute = layoutResourcesGuidesIdRouteImport.update({
-  id: '/resources/guides/$id',
-  path: '/resources/guides/$id',
-  getParentRoute: () => layoutRouteRoute,
-} as any)
+const layoutResourcesGuidesSlugRoute =
+  layoutResourcesGuidesSlugRouteImport.update({
+    id: '/resources/guides/$slug',
+    path: '/resources/guides/$slug',
+    getParentRoute: () => layoutRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/login': typeof authLoginRoute
@@ -157,7 +158,7 @@ export interface FileRoutesByFullPath {
   '/opportunities/$id': typeof layoutOpportunitiesIdRoute
   '/opportunities/': typeof layoutOpportunitiesIndexRoute
   '/resources/': typeof layoutResourcesIndexRoute
-  '/resources/guides/$id': typeof layoutResourcesGuidesIdRoute
+  '/resources/guides/$slug': typeof layoutResourcesGuidesSlugRoute
   '/resources/templates/$id': typeof layoutResourcesTemplatesIdRoute
   '/resources/training/$id': typeof layoutResourcesTrainingIdRoute
   '/resources/guides/': typeof layoutResourcesGuidesIndexRoute
@@ -178,7 +179,7 @@ export interface FileRoutesByTo {
   '/opportunities/$id': typeof layoutOpportunitiesIdRoute
   '/opportunities': typeof layoutOpportunitiesIndexRoute
   '/resources': typeof layoutResourcesIndexRoute
-  '/resources/guides/$id': typeof layoutResourcesGuidesIdRoute
+  '/resources/guides/$slug': typeof layoutResourcesGuidesSlugRoute
   '/resources/templates/$id': typeof layoutResourcesTemplatesIdRoute
   '/resources/training/$id': typeof layoutResourcesTrainingIdRoute
   '/resources/guides': typeof layoutResourcesGuidesIndexRoute
@@ -202,7 +203,7 @@ export interface FileRoutesById {
   '/(layout)/opportunities/$id': typeof layoutOpportunitiesIdRoute
   '/(layout)/opportunities/': typeof layoutOpportunitiesIndexRoute
   '/(layout)/resources/': typeof layoutResourcesIndexRoute
-  '/(layout)/resources/guides/$id': typeof layoutResourcesGuidesIdRoute
+  '/(layout)/resources/guides/$slug': typeof layoutResourcesGuidesSlugRoute
   '/(layout)/resources/templates/$id': typeof layoutResourcesTemplatesIdRoute
   '/(layout)/resources/training/$id': typeof layoutResourcesTrainingIdRoute
   '/(layout)/resources/guides/': typeof layoutResourcesGuidesIndexRoute
@@ -225,7 +226,7 @@ export interface FileRouteTypes {
     | '/opportunities/$id'
     | '/opportunities/'
     | '/resources/'
-    | '/resources/guides/$id'
+    | '/resources/guides/$slug'
     | '/resources/templates/$id'
     | '/resources/training/$id'
     | '/resources/guides/'
@@ -246,7 +247,7 @@ export interface FileRouteTypes {
     | '/opportunities/$id'
     | '/opportunities'
     | '/resources'
-    | '/resources/guides/$id'
+    | '/resources/guides/$slug'
     | '/resources/templates/$id'
     | '/resources/training/$id'
     | '/resources/guides'
@@ -269,7 +270,7 @@ export interface FileRouteTypes {
     | '/(layout)/opportunities/$id'
     | '/(layout)/opportunities/'
     | '/(layout)/resources/'
-    | '/(layout)/resources/guides/$id'
+    | '/(layout)/resources/guides/$slug'
     | '/(layout)/resources/templates/$id'
     | '/(layout)/resources/training/$id'
     | '/(layout)/resources/guides/'
@@ -428,11 +429,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof layoutResourcesTemplatesIdRouteImport
       parentRoute: typeof layoutRouteRoute
     }
-    '/(layout)/resources/guides/$id': {
-      id: '/(layout)/resources/guides/$id'
-      path: '/resources/guides/$id'
-      fullPath: '/resources/guides/$id'
-      preLoaderRoute: typeof layoutResourcesGuidesIdRouteImport
+    '/(layout)/resources/guides/$slug': {
+      id: '/(layout)/resources/guides/$slug'
+      path: '/resources/guides/$slug'
+      fullPath: '/resources/guides/$slug'
+      preLoaderRoute: typeof layoutResourcesGuidesSlugRouteImport
       parentRoute: typeof layoutRouteRoute
     }
   }
@@ -460,7 +461,7 @@ interface layoutRouteRouteChildren {
   layoutOpportunitiesIdRoute: typeof layoutOpportunitiesIdRoute
   layoutOpportunitiesIndexRoute: typeof layoutOpportunitiesIndexRoute
   layoutResourcesIndexRoute: typeof layoutResourcesIndexRoute
-  layoutResourcesGuidesIdRoute: typeof layoutResourcesGuidesIdRoute
+  layoutResourcesGuidesSlugRoute: typeof layoutResourcesGuidesSlugRoute
   layoutResourcesTemplatesIdRoute: typeof layoutResourcesTemplatesIdRoute
   layoutResourcesTrainingIdRoute: typeof layoutResourcesTrainingIdRoute
   layoutResourcesGuidesIndexRoute: typeof layoutResourcesGuidesIndexRoute
@@ -475,7 +476,7 @@ const layoutRouteRouteChildren: layoutRouteRouteChildren = {
   layoutOpportunitiesIdRoute: layoutOpportunitiesIdRoute,
   layoutOpportunitiesIndexRoute: layoutOpportunitiesIndexRoute,
   layoutResourcesIndexRoute: layoutResourcesIndexRoute,
-  layoutResourcesGuidesIdRoute: layoutResourcesGuidesIdRoute,
+  layoutResourcesGuidesSlugRoute: layoutResourcesGuidesSlugRoute,
   layoutResourcesTemplatesIdRoute: layoutResourcesTemplatesIdRoute,
   layoutResourcesTrainingIdRoute: layoutResourcesTrainingIdRoute,
   layoutResourcesGuidesIndexRoute: layoutResourcesGuidesIndexRoute,
