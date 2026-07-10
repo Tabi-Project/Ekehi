@@ -88,8 +88,8 @@ export const Footer: React.FC = () => {
   const { brand, nav, bottom } = FOOTER_CONFIG
 
   return (
-    <footer className="bg-[#20002B] font-sans text-gray-300">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 pt-16 pb-12 md:grid-cols-12 md:gap-12">
+    <footer className="content-grid bg-[#20002B] font-sans text-gray-300">
+      <div className="grid grid-cols-1 gap-8 pt-16 pb-12 md:grid-cols-12 md:gap-12">
         <div className="space-y-4 md:col-span-5">
           <Link
             to={brand.to}
@@ -130,7 +130,7 @@ export const Footer: React.FC = () => {
 
       <div className="border-t border-[#310a3a]" />
 
-      <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 px-6 py-6 text-xs text-gray-400 sm:flex-row sm:items-center">
+      <div className="flex flex-col items-start justify-between gap-4 py-6 text-xs text-gray-400 sm:flex-row sm:items-center">
         <div>
           {bottom.copyright.text}{' '}
           <Link

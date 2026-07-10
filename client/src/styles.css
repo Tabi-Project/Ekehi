@@ -110,10 +110,10 @@
 
 /* LAYOUT UTILITIES */
 @utility content-grid {
-  --padding-inline: max(1rem, 1vw);
-  --content-max-width: max(80rem, 80vw);
-  --breakout-max-width: max(90rem, 90vw);
-  --layout-max-width: max(90rem, 90vw);
+  --padding-inline: 1rem;
+  --content-max-width: 69rem;
+  --breakout-max-width: 80rem;
+  --layout-max-width: 90rem;
 
   --breakout-size: calc(
     (var(--breakout-max-width) - var(--content-max-width)) / 2
