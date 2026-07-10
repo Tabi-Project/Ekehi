@@ -1,7 +1,8 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { SVGS } from '#/assets/svgs'
+import { Dropdown } from '#/components/ui/dropdown'
 import { useLogoutMutation, useMeQuery } from '#/features/auth/auth.query'
 import { cn } from '#/lib/utils'
 
@@ -39,7 +40,38 @@ const NAV_CONFIG: NavConfig = {
   },
 }
 
-export const Navbar: React.FC = () => {
+function Avatar({
+  imageUrl,
+  initials,
+  className,
+}: {
+  imageUrl: string | null
+  initials: string
+  className?: string
+}) {
+  if (imageUrl) {
+    return (
+      <img
+        className={cn('rounded-full object-cover', className)}
+        src={imageUrl}
+        alt="User avatar"
+      />
+    )
+  }
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        'flex items-center justify-center rounded-full bg-purple-100 text-sm font-semibold text-purple-800',
+        className,
+      )}
+    >
+      {initials}
+    </span>
+  )
+}
+
+export function Navbar() {
   const { logo, links, cta } = NAV_CONFIG
 
   const pathname = useRouterState({
@@ -60,67 +92,51 @@ export const Navbar: React.FC = () => {
 
   const isLoggedIn = !!userProfile
   const profileImage = userProfile?.profile_image_url || null
+  const initials =
+    `${userProfile?.first_name?.[0] ?? ''}${userProfile?.last_name?.[0] ?? ''}`.toUpperCase() ||
+    userProfile?.email.charAt(0).toUpperCase() ||
+    'U'
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-  const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState<boolean>(false)
 
   const innerRef = useRef<HTMLDivElement>(null)
-  const avatarWrapperRef = useRef<HTMLDivElement>(null)
 
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
-        setIsAvatarMenuOpen(false)
         setIsMobileMenuOpen(false)
       },
     })
   }
 
+  // The avatar menu is a Radix dropdown (handles its own dismissal); this
+  // effect only dismisses the hand-rolled mobile menu.
   useEffect(() => {
-    const handleClickOutside = (event_: MouseEvent) => {
-      const target = event_.target as Node
-      if (
-        isMobileMenuOpen &&
-        innerRef.current &&
-        !innerRef.current.contains(target)
-      ) {
-        setIsMobileMenuOpen(false)
-      }
-      if (
-        isAvatarMenuOpen &&
-        avatarWrapperRef.current &&
-        !avatarWrapperRef.current.contains(target)
-      ) {
-        setIsAvatarMenuOpen(false)
-      }
-    }
+    if (!isMobileMenuOpen) return
 
+    const close = () => setIsMobileMenuOpen(false)
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (innerRef.current && !innerRef.current.contains(event.target as Node))
+        close()
+    }
     const handleResize = () => {
-      if (window.innerWidth > 768 && isMobileMenuOpen) {
-        setIsMobileMenuOpen(false)
-      }
+      if (window.innerWidth > 768) close()
     }
-
-    const handleGlobalKeyDown = (event_: KeyboardEvent) => {
-      if (event_.key === 'Escape') {
-        setIsMobileMenuOpen(false)
-        setIsAvatarMenuOpen(false)
-      }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') close()
     }
 
     document.addEventListener('click', handleClickOutside)
     window.addEventListener('resize', handleResize)
-    document.addEventListener('keydown', handleGlobalKeyDown)
+    document.addEventListener('keydown', handleKeyDown)
 
     return () => {
       document.removeEventListener('click', handleClickOutside)
       window.removeEventListener('resize', handleResize)
-      document.removeEventListener('keydown', handleGlobalKeyDown)
+      document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isMobileMenuOpen, isAvatarMenuOpen])
-
-  const fallbackAvatar =
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120'
+  }, [isMobileMenuOpen])
 
   return (
     <div
@@ -196,47 +212,36 @@ export const Navbar: React.FC = () => {
                 </Link>
               </>
             ) : (
-              <div className="relative" ref={avatarWrapperRef}>
-                <button
-                  type="button"
-                  aria-label="Account menu"
-                  aria-expanded={isAvatarMenuOpen}
-                  aria-haspopup="menu"
-                  onClick={(event_) => {
-                    event_.stopPropagation()
-                    setIsAvatarMenuOpen((previous) => !previous)
-                  }}
-                  className="group relative flex items-center focus:outline-none"
-                >
-                  <img
-                    className="h-11 w-11 rounded-full object-cover ring-2 ring-transparent transition-all group-hover:ring-purple-200"
-                    src={profileImage || fallbackAvatar}
-                    alt="User Avatar"
-                  />
-                </button>
-
-                {isAvatarMenuOpen && (
-                  <div
-                    className="animate-in fade-in slide-in-from-top-2 absolute right-0 z-50 mt-2 w-48 rounded-xl border border-gray-100 bg-white py-1 shadow-lg duration-150"
-                    role="menu"
+              <Dropdown>
+                <Dropdown.Trigger asChild>
+                  <button
+                    type="button"
+                    aria-label="Account menu"
+                    className="group focus-visible:ring-primary flex items-center rounded-full focus-visible:ring-2 focus-visible:outline-none"
                   >
-                    <button
-                      type="button"
-                      className="block w-full px-4 py-2 text-left text-sm text-red-600 transition-colors hover:bg-red-50"
-                      role="menuitem"
-                      onClick={handleLogout}
-                      disabled={logoutMutation.isPending}
-                    >
-                      {logoutMutation.isPending ? 'Logging out...' : 'Log out'}
-                    </button>
-                  </div>
-                )}
-              </div>
+                    <Avatar
+                      imageUrl={profileImage}
+                      initials={initials}
+                      className="h-11 w-11 ring-2 ring-transparent transition-all group-hover:ring-purple-200"
+                    />
+                  </button>
+                </Dropdown.Trigger>
+                <Dropdown.Content align="end" className="w-48">
+                  <Dropdown.Item
+                    disabled={logoutMutation.isPending}
+                    onSelect={handleLogout}
+                    className="text-red-600 focus:bg-red-50"
+                  >
+                    {logoutMutation.isPending ? 'Logging out...' : 'Log out'}
+                  </Dropdown.Item>
+                </Dropdown.Content>
+              </Dropdown>
             )}
           </div>
 
           <div className="flex items-center md:hidden">
             <button
+              type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-expanded={isMobileMenuOpen}
               aria-label={
@@ -309,21 +314,21 @@ export const Navbar: React.FC = () => {
                   </Link>
                 </>
               ) : (
-                <div className="space-y-2">
-                  <div
-                    className={`flex items-center space-x-3 pt-2 text-red-600 ${logoutMutation.isPending ? 'pointer-events-none opacity-50' : 'cursor-pointer'}`}
-                    onClick={handleLogout}
-                  >
-                    <img
-                      className="h-10 w-10 rounded-full object-cover"
-                      src={profileImage || fallbackAvatar}
-                      alt="User Avatar"
-                    />
-                    <span className="text-sm font-medium">
-                      {logoutMutation.isPending ? 'Logging Out...' : 'Log Out'}
-                    </span>
-                  </div>
-                </div>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  disabled={logoutMutation.isPending}
+                  className="flex cursor-pointer items-center space-x-3 pt-2 text-red-600 disabled:pointer-events-none disabled:opacity-50"
+                >
+                  <Avatar
+                    imageUrl={profileImage}
+                    initials={initials}
+                    className="h-10 w-10"
+                  />
+                  <span className="text-sm font-medium">
+                    {logoutMutation.isPending ? 'Logging Out...' : 'Log Out'}
+                  </span>
+                </button>
               )}
             </div>
           </div>
@@ -332,5 +337,3 @@ export const Navbar: React.FC = () => {
     </div>
   )
 }
-
-export default Navbar

@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router'
+
 import { IMAGES } from '#/assets/images'
 import { Button } from '#/components/ui/button'
 
@@ -19,7 +21,7 @@ export function HeroSection() {
       />
 
       {/* Content */}
-      <div className="mx-auto w-full max-w-7xl px-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-16 lg:gap-[64px]">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 sm:flex-row sm:items-end sm:gap-16 lg:gap-[64px]">
         <h1 className="text-content-inverse max-w-[20ch] font-serif text-3xl leading-tight sm:text-4xl md:text-5xl">
           Find Funding and Resources Built for You
         </h1>
@@ -37,7 +39,7 @@ export function HeroSection() {
               size="md"
               className="rounded-full"
             >
-              <a href="/signup">Join the network</a>
+              <Link to="/signup">Join the network</Link>
             </Button>
             <Button
               asChild

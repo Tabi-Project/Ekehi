@@ -24,8 +24,17 @@ function DropdownTrigger({
   className,
   children,
   showChevron = true,
+  asChild = false,
   ...props
 }: DropdownTriggerProps) {
+  if (asChild) {
+    return (
+      <DropdownPrimitive.Trigger asChild className={className} {...props}>
+        {children}
+      </DropdownPrimitive.Trigger>
+    )
+  }
+
   return (
     <DropdownPrimitive.Trigger
       className={cn(

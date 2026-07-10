@@ -1,9 +1,9 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useLogoutMutation, useMeQuery } from '#/features/auth/auth.query'
 
-import Navbar from './navbar'
+import { Navbar } from './navbar'
 
 const mockMutate = vi.fn()
 let mockCurrentPath = '/'
@@ -75,6 +75,9 @@ describe('Navbar', () => {
     vi.mocked(useMeQuery).mockReturnValue({
       data: {
         profile_image_url: 'avatar.jpg',
+        first_name: 'Ada',
+        last_name: 'Lovelace',
+        email: 'ada@example.com',
       },
     } as any)
 
@@ -82,6 +85,17 @@ describe('Navbar', () => {
       mutate: mockMutate,
       isPending: false,
     } as any)
+  }
+
+  // Radix DropdownMenu opens on pointerdown, not click, and attaches its
+  // outside-press listener on a timeout — hence the pointer events and
+  // waits in the avatar-menu tests.
+  const openAvatarMenu = async () => {
+    fireEvent.pointerDown(
+      screen.getByRole('button', { name: /account menu/i }),
+      { button: 0, ctrlKey: false },
+    )
+    await screen.findByText('Log out')
   }
 
   it('renders logo', () => {
@@ -124,30 +138,22 @@ describe('Navbar', () => {
     expect(avatarButton).toBeTruthy()
   })
 
-  it('opens avatar dropdown', () => {
+  it('opens avatar dropdown', async () => {
     mockLoggedIn()
 
     render(<Navbar />)
 
-    const avatarButton = screen.getByRole('button', {
-      name: /account menu/i,
-    })
-
-    fireEvent.click(avatarButton)
+    await openAvatarMenu()
 
     expect(screen.getByText('Log out')).toBeTruthy()
   })
 
-  it('calls logout when logout clicked', () => {
+  it('calls logout when logout clicked', async () => {
     mockLoggedIn()
 
     render(<Navbar />)
 
-    const avatarButton = screen.getByRole('button', {
-      name: /account menu/i,
-    })
-
-    fireEvent.click(avatarButton)
+    await openAvatarMenu()
 
     fireEvent.click(screen.getByText('Log out'))
 
@@ -184,25 +190,21 @@ describe('Navbar', () => {
     expect(screen.getAllByText('Contributors').length).toBe(1)
   })
 
-  it('closes avatar menu on escape', () => {
+  it('closes avatar menu on escape', async () => {
     mockLoggedIn()
 
     render(<Navbar />)
 
-    const avatarButton = screen.getByRole('button', {
-      name: /account menu/i,
-    })
-
-    fireEvent.click(avatarButton)
-
-    expect(screen.getByText('Log out')).toBeTruthy()
+    await openAvatarMenu()
 
     fireEvent.keyDown(document, { key: 'Escape' })
 
-    expect(screen.queryByText('Log out')).toBeNull()
+    await waitFor(() => {
+      expect(screen.queryByText('Log out')).toBeNull()
+    })
   })
 
-  it('closes avatar menu on outside click', () => {
+  it('closes avatar menu on outside click', async () => {
     mockLoggedIn()
 
     render(
@@ -212,17 +214,16 @@ describe('Navbar', () => {
       </>,
     )
 
-    const avatarButton = screen.getByRole('button', {
-      name: /account menu/i,
+    await openAvatarMenu()
+
+    // Radix attaches its outside-press listener on a 0ms timeout after open.
+    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    fireEvent.pointerDown(screen.getByTestId('outside'), { button: 0 })
+
+    await waitFor(() => {
+      expect(screen.queryByText('Log out')).toBeNull()
     })
-
-    fireEvent.click(avatarButton)
-
-    expect(screen.getByText('Log out')).toBeTruthy()
-
-    fireEvent.click(screen.getByTestId('outside'))
-
-    expect(screen.queryByText('Log out')).toBeNull()
   })
 
   it('marks active route correctly', () => {

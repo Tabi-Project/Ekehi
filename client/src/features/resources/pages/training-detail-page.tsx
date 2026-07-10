@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import {
   ChevronRight,
   Languages,
@@ -101,9 +102,9 @@ export function TrainingDetailPage({ id }: { id: string }) {
       <div className="text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
         <p>
           {error.message || 'Something went wrong, please try again.'}{' '}
-          <a href="/resources" className="text-primary">
+          <Link to="/resources" className="text-primary">
             Go Back
-          </a>
+          </Link>
         </p>
       </div>
     )
@@ -131,9 +132,9 @@ export function TrainingDetailPage({ id }: { id: string }) {
     <div className="mx-auto w-full max-w-7xl px-6 py-10">
       {/* Breadcrumb */}
       <nav className="flex items-center text-sm font-normal">
-        <a href="/resources" className="text-primary">
+        <Link to="/resources" className="text-primary">
           Resources
-        </a>
+        </Link>
         <ChevronRight className="size-4" />
         <span className="text-content-secondary max-md:line-clamp-1">
           {training.programme_name}

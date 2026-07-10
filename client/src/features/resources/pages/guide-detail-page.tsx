@@ -1,27 +1,43 @@
 import { Link } from '@tanstack/react-router'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { Skeleton } from '#/components/ui/skeleton'
 
 import { useGuideQuery } from '../resources.query'
+import type { GuideResponse } from '../resources.types'
 
 interface ContentSection {
   heading: string
   body: string
 }
 
-interface GuideData {
-  title: string
-  content: string
+/**
+ * `content` is a JSON-encoded string: either an array of sections or an
+ * object with a `content` array. Anything else renders as one plain section.
+ */
+function parseSections(guide: GuideResponse | undefined): ContentSection[] {
+  if (!guide?.content) return []
+
+  try {
+    const parsed: unknown = JSON.parse(guide.content)
+    if (Array.isArray(parsed)) return parsed as ContentSection[]
+    if (parsed && typeof parsed === 'object' && 'content' in parsed) {
+      const inner = parsed.content
+      if (Array.isArray(inner)) return inner as ContentSection[]
+    }
+  } catch {
+    // Not JSON — fall through to the plain-text section.
+  }
+
+  return [{ heading: guide.title, body: guide.content }]
 }
 
-export const GuideDetailPage: React.FC<{ idOrSlug: string }> = ({
-  idOrSlug,
-}) => {
-  const [sections, setSections] = useState<ContentSection[]>([])
+export function GuideDetailPage({ idOrSlug }: { idOrSlug: string }) {
   const [activeSectionIndex, setActiveSectionIndex] = useState<number>(0)
 
   const { data: guide, isLoading, isError, error } = useGuideQuery(idOrSlug)
+
+  const sections = useMemo(() => parseSections(guide), [guide])
 
   const errorMessage = isError
     ? error.message || 'An error occurred while loading this guide.'
@@ -29,45 +45,6 @@ export const GuideDetailPage: React.FC<{ idOrSlug: string }> = ({
 
   const sectionReferences = useRef<(HTMLDivElement | null)[]>([])
   const isScrollingRef = useRef(false)
-
-  useEffect(() => {
-    if (!guide) {
-      setSections([])
-      return
-    }
-
-    const guideData = guide as GuideData
-    if (!guideData.content) {
-      setSections([])
-      return
-    }
-
-    try {
-      const parsed =
-        typeof guideData.content === 'string'
-          ? JSON.parse(guideData.content)
-          : guideData.content
-
-      if (Array.isArray(parsed)) {
-        setSections(parsed as ContentSection[])
-      } else if (
-        parsed &&
-        typeof parsed === 'object' &&
-        Array.isArray(parsed.content)
-      ) {
-        setSections(parsed.content)
-      } else {
-        setSections([
-          { heading: guideData.title, body: String(guideData.content) },
-        ])
-      }
-    } catch (parseError) {
-      console.error(parseError)
-      setSections([
-        { heading: guideData.title, body: String(guideData.content) },
-      ])
-    }
-  }, [guide])
 
   useEffect(() => {
     if (sections.length === 0 || typeof IntersectionObserver === 'undefined')
@@ -262,5 +239,3 @@ export const GuideDetailPage: React.FC<{ idOrSlug: string }> = ({
     </div>
   )
 }
-
-export default GuideDetailPage

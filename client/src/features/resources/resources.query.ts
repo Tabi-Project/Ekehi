@@ -19,6 +19,16 @@ export const guidesKeys = {
   detail: (id: string) => [...guidesKeys.all, 'detail', id] as const,
 }
 
+export const trainingKeys = {
+  all: ['training'] as const,
+  detail: (id: string) => [...trainingKeys.all, 'detail', id] as const,
+}
+
+export const templateKeys = {
+  all: ['templates'] as const,
+  detail: (id: string) => [...templateKeys.all, 'detail', id] as const,
+}
+
 export function useGuidesQuery() {
   return useQuery<GuideResponse[], ApiError>({
     queryKey: guidesKeys.list(),
@@ -39,7 +49,7 @@ export function useGuideQuery(id: string) {
 
 export function useTrainingQuery(id: string) {
   return useQuery<Training, ApiError>({
-    queryKey: ['training', id] as const,
+    queryKey: trainingKeys.detail(id),
     queryFn: async () => {
       const response = await ResourcesService.byId(id)
       return response.data
@@ -50,7 +60,7 @@ export function useTrainingQuery(id: string) {
 
 export function useTemplateQuery(id: string) {
   return useQuery<TemplateResponse, ApiError>({
-    queryKey: ['template', id] as const,
+    queryKey: templateKeys.detail(id),
     queryFn: async () => {
       const response = await TemplatesService.byId(id)
       return response.data

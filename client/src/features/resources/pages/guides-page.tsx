@@ -7,7 +7,7 @@ import { isApiError } from '#/lib/api'
 import { useGuidesQuery } from '../resources.query'
 
 export function GuidesPage() {
-  const { data: guides, isLoading, isError, error } = useGuidesQuery()
+  const { data: guides, isLoading, isError, error, refetch } = useGuidesQuery()
 
   return (
     <div className="mx-auto w-full max-w-7xl px-6 py-10 md:py-16">
@@ -44,10 +44,10 @@ export function GuidesPage() {
               : 'Please refresh the page and try again.'}
           </p>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => refetch()}
             className="text-primary hover:text-primary-hover cursor-pointer text-sm font-medium underline"
           >
-            Reload page
+            Try again
           </button>
         </div>
       ) : !guides || guides.length === 0 ? (

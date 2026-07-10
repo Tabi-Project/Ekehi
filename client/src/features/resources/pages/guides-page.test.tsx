@@ -56,7 +56,7 @@ describe('GuidesPage', () => {
 
     expect(screen.getByText("Couldn't load guides")).toBeTruthy()
     expect(screen.getByText('Database connection failed')).toBeTruthy()
-    expect(screen.getByRole('button', { name: /reload page/i })).toBeTruthy()
+    expect(screen.getByRole('button', { name: /try again/i })).toBeTruthy()
   })
 
   it('renders generic fallback error message for standard exceptions', () => {

@@ -1,10 +1,11 @@
+import { Link } from '@tanstack/react-router'
 import { Bookmark, BookmarkCheck } from 'lucide-react'
 
 import { SVGS } from '#/assets/svgs'
 import { LinkedInIcon, WhatsAppIcon, XIcon } from '#/components/icons/social'
 import { Button } from '#/components/ui/button'
 import { Modal } from '#/components/ui/modal'
-import { getAccessToken } from '#/lib/auth/token-store'
+import { useIsAuthenticated } from '#/lib/auth/use-is-authenticated'
 import { formatAmount, formatShortDate, humanize } from '#/lib/format'
 
 import {
@@ -104,13 +105,13 @@ function SaveModal() {
         </div>
         <div className="w-full space-y-3">
           <Button full asChild>
-            <a href="/signup/">Create account</a>
+            <Link to="/signup">Create account</Link>
           </Button>
           <p className="text-content-secondary text-sm">
             Already have an account?{' '}
-            <a href="/login/" className="text-primary underline">
+            <Link to="/login" className="text-primary underline">
               Login
-            </a>
+            </Link>
           </p>
           <Modal.Close asChild>
             <button className="text-content-secondary hover:text-content w-full text-sm">
@@ -247,7 +248,7 @@ function OpportunityAside({
 
 export function OpportunityDetailPage({ id }: { id: string }) {
   const { data, isLoading, error } = useOpportunityDetailQuery(id)
-  const isLoggedIn = Boolean(getAccessToken())
+  const isLoggedIn = useIsAuthenticated()
 
   if (isLoading) {
     return (
@@ -265,9 +266,9 @@ export function OpportunityDetailPage({ id }: { id: string }) {
           {is404 ? 'Opportunity not found' : 'Something went wrong'}
         </h1>
         <p className="text-content-secondary">{error.message}</p>
-        <a href="/opportunities/" className="text-primary text-sm underline">
+        <Link to="/opportunities" className="text-primary text-sm underline">
           Back to opportunities
-        </a>
+        </Link>
       </div>
     )
   }
@@ -280,9 +281,9 @@ export function OpportunityDetailPage({ id }: { id: string }) {
         <div className="mx-auto w-full max-w-7xl px-6 py-10">
           {/* Breadcrumb */}
           <nav className="text-content-muted mb-6 flex items-center gap-2 text-sm">
-            <a href="/opportunities/" className="text-primary hover:underline">
+            <Link to="/opportunities" className="text-primary hover:underline">
               Funding opportunities
-            </a>
+            </Link>
             <span>›</span>
             <span>{data.opportunity_title}</span>
           </nav>
