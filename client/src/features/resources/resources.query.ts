@@ -4,8 +4,8 @@ import type { ApiError } from '#/lib/api'
 
 import {
   GuidesService,
-  ResourcesService,
   TemplatesService,
+  TrainingService,
 } from './resources.service'
 import type {
   GuideResponse,
@@ -51,7 +51,7 @@ export function useTrainingQuery(id: string) {
   return useQuery<Training, ApiError>({
     queryKey: trainingKeys.detail(id),
     queryFn: async () => {
-      const response = await ResourcesService.byId(id)
+      const response = await TrainingService.byId(id)
       return response.data
     },
     enabled: !!id,

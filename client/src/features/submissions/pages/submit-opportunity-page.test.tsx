@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { ApiError } from '#/lib/api'
 
-import { SubmissionsPage } from './submissions-page'
+import { SubmitOpportunityPage } from './submit-opportunity-page'
 
 const mockMutateAsync = vi.fn()
 let metaState: Record<string, unknown>
@@ -56,7 +56,7 @@ afterEach(() => {
   vi.clearAllMocks()
 })
 
-describe('SubmissionsPage', () => {
+describe('SubmitOpportunityPage', () => {
   it('renders the loading state while meta is loading', () => {
     metaState = {
       data: undefined,
@@ -64,7 +64,7 @@ describe('SubmissionsPage', () => {
       isError: false,
       error: null,
     }
-    render(<SubmissionsPage />)
+    render(<SubmitOpportunityPage />)
     expect(screen.getByRole('status', { name: /loading form/i })).toBeTruthy()
   })
 
@@ -75,12 +75,12 @@ describe('SubmissionsPage', () => {
       isError: true,
       error: new ApiError('Meta service is down', 500),
     }
-    render(<SubmissionsPage />)
+    render(<SubmitOpportunityPage />)
     expect(screen.getByText('Meta service is down')).toBeTruthy()
   })
 
   it('renders the form with meta-driven options once loaded', () => {
-    render(<SubmissionsPage />)
+    render(<SubmitOpportunityPage />)
     expect(screen.getByLabelText(/opportunity name/i)).toBeTruthy()
     expect(screen.getByRole('option', { name: 'Grant (NGO)' })).toBeTruthy()
     expect(screen.getByText('Agritech')).toBeTruthy()
@@ -88,7 +88,7 @@ describe('SubmissionsPage', () => {
   })
 
   it('blocks submission and shows field errors when required fields are empty', async () => {
-    render(<SubmissionsPage />)
+    render(<SubmitOpportunityPage />)
     submitForm()
 
     await waitFor(() => {
@@ -101,7 +101,7 @@ describe('SubmissionsPage', () => {
 
   it('submits the built payload and shows the success message', async () => {
     mockMutateAsync.mockResolvedValueOnce({ id: 'opp-1' })
-    render(<SubmissionsPage />)
+    render(<SubmitOpportunityPage />)
     fillRequiredFields()
     submitForm()
 
@@ -122,7 +122,7 @@ describe('SubmissionsPage', () => {
 
   it('surfaces the server error message when the mutation rejects', async () => {
     mockMutateAsync.mockRejectedValueOnce(new ApiError('Server boom', 500))
-    render(<SubmissionsPage />)
+    render(<SubmitOpportunityPage />)
     fillRequiredFields()
     submitForm()
 

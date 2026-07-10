@@ -38,7 +38,7 @@ const SUCCESS_MESSAGE =
 /** Shared field styling so inputs, selects and textareas match. */
 const FIELD_CLASS = 'h-12 rounded-lg bg-surface-subtle/50'
 
-export function SubmissionsPage() {
+export function SubmitOpportunityPage() {
   const { data: meta, isLoading, isError, error } = useMetaQuery()
 
   return (

@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { SubmissionsPage } from '#/features/submissions/pages/submissions-page'
+import { SubmitOpportunityPage } from '#/features/submissions/pages/submit-opportunity-page'
 import { pageMeta } from '#/lib/page-meta'
 
 export const Route = createFileRoute('/(layout)/(protected)/submissions')({
-  component: SubmissionsPage,
+  component: SubmitOpportunityPage,
   head: () =>
     pageMeta({
       title: 'Submit an opportunity',

@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as layoutRouteRouteImport } from './routes/(layout)/route'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as layoutIndexRouteImport } from './routes/(layout)/index'
@@ -21,7 +22,6 @@ import { Route as layoutprotectedRouteRouteImport } from './routes/(layout)/(pro
 import { Route as layoutResourcesIndexRouteImport } from './routes/(layout)/resources/index'
 import { Route as layoutOpportunitiesIndexRouteImport } from './routes/(layout)/opportunities/index'
 import { Route as layoutOpportunitiesIdRouteImport } from './routes/(layout)/opportunities/$id'
-import { Route as layoutprotectedSubmitRouteImport } from './routes/(layout)/(protected)/submit'
 import { Route as layoutprotectedSubmissionsRouteImport } from './routes/(layout)/(protected)/submissions'
 import { Route as layoutprotectedMySubmissionsRouteImport } from './routes/(layout)/(protected)/my-submissions'
 import { Route as layoutResourcesTrainingIndexRouteImport } from './routes/(layout)/resources/training/index'
@@ -31,14 +31,19 @@ import { Route as layoutResourcesTrainingIdRouteImport } from './routes/(layout)
 import { Route as layoutResourcesTemplatesIdRouteImport } from './routes/(layout)/resources/templates/$id'
 import { Route as layoutResourcesGuidesSlugRouteImport } from './routes/(layout)/resources/guides/$slug'
 
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const layoutRouteRoute = layoutRouteRouteImport.update({
   id: '/(layout)',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const layoutIndexRoute = layoutIndexRouteImport.update({
   id: '/',
@@ -46,14 +51,14 @@ const layoutIndexRoute = layoutIndexRouteImport.update({
   getParentRoute: () => layoutRouteRoute,
 } as any)
 const AdminReviewRoute = AdminReviewRouteImport.update({
-  id: '/admin/review',
-  path: '/admin/review',
-  getParentRoute: () => rootRouteImport,
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminQueueRoute = AdminQueueRouteImport.update({
-  id: '/admin/queue',
-  path: '/admin/queue',
-  getParentRoute: () => rootRouteImport,
+  id: '/queue',
+  path: '/queue',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const layoutContributorsRoute = layoutContributorsRouteImport.update({
   id: '/contributors',
@@ -89,11 +94,6 @@ const layoutOpportunitiesIdRoute = layoutOpportunitiesIdRouteImport.update({
   id: '/opportunities/$id',
   path: '/opportunities/$id',
   getParentRoute: () => layoutRouteRoute,
-} as any)
-const layoutprotectedSubmitRoute = layoutprotectedSubmitRouteImport.update({
-  id: '/submit',
-  path: '/submit',
-  getParentRoute: () => layoutprotectedRouteRoute,
 } as any)
 const layoutprotectedSubmissionsRoute =
   layoutprotectedSubmissionsRouteImport.update({
@@ -145,6 +145,7 @@ const layoutResourcesGuidesSlugRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
   '/contributors': typeof layoutContributorsRoute
@@ -154,7 +155,6 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/my-submissions': typeof layoutprotectedMySubmissionsRoute
   '/submissions': typeof layoutprotectedSubmissionsRoute
-  '/submit': typeof layoutprotectedSubmitRoute
   '/opportunities/$id': typeof layoutOpportunitiesIdRoute
   '/opportunities/': typeof layoutOpportunitiesIndexRoute
   '/resources/': typeof layoutResourcesIndexRoute
@@ -175,7 +175,6 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/my-submissions': typeof layoutprotectedMySubmissionsRoute
   '/submissions': typeof layoutprotectedSubmissionsRoute
-  '/submit': typeof layoutprotectedSubmitRoute
   '/opportunities/$id': typeof layoutOpportunitiesIdRoute
   '/opportunities': typeof layoutOpportunitiesIndexRoute
   '/resources': typeof layoutResourcesIndexRoute
@@ -189,6 +188,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(layout)': typeof layoutRouteRouteWithChildren
+  '/admin': typeof AdminRouteRouteWithChildren
   '/(layout)/(protected)': typeof layoutprotectedRouteRouteWithChildren
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/signup': typeof authSignupRoute
@@ -199,7 +199,6 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/(layout)/(protected)/my-submissions': typeof layoutprotectedMySubmissionsRoute
   '/(layout)/(protected)/submissions': typeof layoutprotectedSubmissionsRoute
-  '/(layout)/(protected)/submit': typeof layoutprotectedSubmitRoute
   '/(layout)/opportunities/$id': typeof layoutOpportunitiesIdRoute
   '/(layout)/opportunities/': typeof layoutOpportunitiesIndexRoute
   '/(layout)/resources/': typeof layoutResourcesIndexRoute
@@ -213,6 +212,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/admin'
     | '/login'
     | '/signup'
     | '/contributors'
@@ -222,7 +222,6 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/my-submissions'
     | '/submissions'
-    | '/submit'
     | '/opportunities/$id'
     | '/opportunities/'
     | '/resources/'
@@ -243,7 +242,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/my-submissions'
     | '/submissions'
-    | '/submit'
     | '/opportunities/$id'
     | '/opportunities'
     | '/resources'
@@ -256,6 +254,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/(layout)'
+    | '/admin'
     | '/(layout)/(protected)'
     | '/(auth)/login'
     | '/(auth)/signup'
@@ -266,7 +265,6 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/(layout)/(protected)/my-submissions'
     | '/(layout)/(protected)/submissions'
-    | '/(layout)/(protected)/submit'
     | '/(layout)/opportunities/$id'
     | '/(layout)/opportunities/'
     | '/(layout)/resources/'
@@ -280,15 +278,20 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   layoutRouteRoute: typeof layoutRouteRouteWithChildren
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   authLoginRoute: typeof authLoginRoute
   authSignupRoute: typeof authSignupRoute
-  AdminQueueRoute: typeof AdminQueueRoute
-  AdminReviewRoute: typeof AdminReviewRoute
-  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(layout)': {
       id: '/(layout)'
       path: ''
@@ -298,10 +301,10 @@ declare module '@tanstack/react-router' {
     }
     '/admin/': {
       id: '/admin/'
-      path: '/admin'
+      path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/(layout)/': {
       id: '/(layout)/'
@@ -312,17 +315,17 @@ declare module '@tanstack/react-router' {
     }
     '/admin/review': {
       id: '/admin/review'
-      path: '/admin/review'
+      path: '/review'
       fullPath: '/admin/review'
       preLoaderRoute: typeof AdminReviewRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/admin/queue': {
       id: '/admin/queue'
-      path: '/admin/queue'
+      path: '/queue'
       fullPath: '/admin/queue'
       preLoaderRoute: typeof AdminQueueRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/(layout)/contributors': {
       id: '/(layout)/contributors'
@@ -372,13 +375,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/opportunities/$id'
       preLoaderRoute: typeof layoutOpportunitiesIdRouteImport
       parentRoute: typeof layoutRouteRoute
-    }
-    '/(layout)/(protected)/submit': {
-      id: '/(layout)/(protected)/submit'
-      path: '/submit'
-      fullPath: '/submit'
-      preLoaderRoute: typeof layoutprotectedSubmitRouteImport
-      parentRoute: typeof layoutprotectedRouteRoute
     }
     '/(layout)/(protected)/submissions': {
       id: '/(layout)/(protected)/submissions'
@@ -442,13 +438,11 @@ declare module '@tanstack/react-router' {
 interface layoutprotectedRouteRouteChildren {
   layoutprotectedMySubmissionsRoute: typeof layoutprotectedMySubmissionsRoute
   layoutprotectedSubmissionsRoute: typeof layoutprotectedSubmissionsRoute
-  layoutprotectedSubmitRoute: typeof layoutprotectedSubmitRoute
 }
 
 const layoutprotectedRouteRouteChildren: layoutprotectedRouteRouteChildren = {
   layoutprotectedMySubmissionsRoute: layoutprotectedMySubmissionsRoute,
   layoutprotectedSubmissionsRoute: layoutprotectedSubmissionsRoute,
-  layoutprotectedSubmitRoute: layoutprotectedSubmitRoute,
 }
 
 const layoutprotectedRouteRouteWithChildren =
@@ -488,13 +482,27 @@ const layoutRouteRouteWithChildren = layoutRouteRoute._addFileChildren(
   layoutRouteRouteChildren,
 )
 
-const rootRouteChildren: RootRouteChildren = {
-  layoutRouteRoute: layoutRouteRouteWithChildren,
-  authLoginRoute: authLoginRoute,
-  authSignupRoute: authSignupRoute,
+interface AdminRouteRouteChildren {
+  AdminQueueRoute: typeof AdminQueueRoute
+  AdminReviewRoute: typeof AdminReviewRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminQueueRoute: AdminQueueRoute,
   AdminReviewRoute: AdminReviewRoute,
   AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  layoutRouteRoute: layoutRouteRouteWithChildren,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
+  authLoginRoute: authLoginRoute,
+  authSignupRoute: authSignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

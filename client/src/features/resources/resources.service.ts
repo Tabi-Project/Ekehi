@@ -18,7 +18,7 @@ export const GuidesService = {
   },
 }
 
-export const ResourcesService = {
+export const TrainingService = {
   byId: (id: string) => {
     const trainingRequest = makeRequest<Training, void>(
       ENDPOINTS.training.byId(id),
