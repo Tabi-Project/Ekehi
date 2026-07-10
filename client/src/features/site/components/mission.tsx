@@ -3,7 +3,7 @@ import { SVGS } from '#/assets/svgs'
 export function MissionSection() {
   return (
     <section className="w-full bg-white py-16">
-      <div className="mx-auto w-full max-w-7xl px-6 flex min-h-[320px] flex-col items-center justify-center gap-6 text-center lg:min-h-[500px]">
+      <div className="mx-auto flex min-h-[320px] w-full max-w-7xl flex-col items-center justify-center gap-6 px-6 text-center lg:min-h-[500px]">
         {/* "Our mission" label with flourishes */}
         <div className="flex items-center gap-3">
           <img

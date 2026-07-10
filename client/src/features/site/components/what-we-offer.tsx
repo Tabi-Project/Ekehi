@@ -58,7 +58,7 @@ export function WhatWeOfferSection() {
       id="what-we-offer"
       className="w-full bg-white py-12 sm:py-16 lg:py-[100px]"
     >
-      <div className="mx-auto w-full max-w-7xl px-6 flex flex-col gap-8 lg:gap-10">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 lg:gap-10">
         {/* Heading row */}
         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-12">
           <h2 className="text-content font-serif text-2xl sm:text-3xl md:text-4xl">

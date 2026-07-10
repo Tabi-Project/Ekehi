@@ -103,7 +103,7 @@ const imageArray: Contributor[] = [
 ]
 export function ContributorsPage() {
   return (
-    <div className="mx-auto w-full max-w-7xl px-6 py-10 md:py-20 flex flex-col items-center">
+    <div className="mx-auto flex w-full max-w-7xl flex-col items-center px-6 py-10 md:py-20">
       <div className="w-full pb-5 text-left md:pb-10">
         <p className="text-content-secondary mb-4 text-base leading-relaxed">
           Hi, we are the small team contributing to Ekehi, an open-source
