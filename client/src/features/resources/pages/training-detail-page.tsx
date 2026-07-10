@@ -1,5 +1,3 @@
-'use client'
-
 import {
   ChevronRight,
   Languages,
@@ -11,7 +9,8 @@ import {
 import { IMAGES } from '#/assets/images'
 import { Button } from '#/components/ui/button'
 import { TrainingSkeleton } from '#/components/ui/skeleton'
-import { daysUntil, formatDate, formatLabel, humanize } from '#/shared/utils'
+import { daysUntil, formatDate, formatLabel, humanize } from '#/lib/format'
+import { cn } from '#/lib/utils'
 
 import { useTrainingQuery } from '../resources.query'
 
@@ -34,13 +33,54 @@ const PROGRAMME_TYPES: Record<string, string> = {
   mentorship_programme: 'Mentorship Programme',
 }
 
+type CardColors = { bg: string; text: string; panel: string }
+
+function CoverCard({
+  colors,
+  typeLabel,
+  provider,
+  className,
+}: {
+  colors: CardColors
+  typeLabel: string
+  provider: string
+  className?: string
+}) {
+  return (
+    <aside
+      className={cn('flex justify-between gap-4 rounded-xl p-4', className)}
+      style={{ backgroundColor: colors.bg, color: colors.text }}
+    >
+      <div
+        style={{ backgroundColor: colors.panel }}
+        className="flex w-1/2 flex-col justify-between rounded-xl p-3"
+      >
+        <p className="text-2xl leading-snug font-semibold text-pretty max-sm:text-xl">
+          {typeLabel}
+        </p>
+        <p>
+          with{' '}
+          <span className="text-lg font-medium capitalize">{provider}</span>
+        </p>
+      </div>
+      <div className="w-1/2">
+        <img
+          className="aspect-square size-72 overflow-hidden rounded-xl object-cover"
+          src={IMAGES.blackWomanWearingGlasses}
+          alt={typeLabel}
+        />
+      </div>
+    </aside>
+  )
+}
+
 // ── Component ──────────────────────────────────────────
 export function TrainingDetailPage({ id }: { id: string }) {
   const { data: training, error, isError, isLoading } = useTrainingQuery(id)
 
   if (!id) {
     return (
-      <div className="detail-page__state text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
+      <div className="text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
         <h2>No training specified</h2>
         <p>The training programme you are looking for was not specified.</p>
       </div>
@@ -49,7 +89,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
 
   if (isLoading) {
     return (
-      <div className="loading-container text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
+      <div className="text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
         <p>Loading training programme...</p>
         <TrainingSkeleton />
       </div>
@@ -58,11 +98,8 @@ export function TrainingDetailPage({ id }: { id: string }) {
 
   if (isError) {
     return (
-      <div
-        id="detail-error"
-        className="detail-page__state text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base"
-      >
-        <p id="detail-error-message">
+      <div className="text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
+        <p>
           {error.message || 'Something went wrong, please try again.'}{' '}
           <a href="/resources" className="text-primary">
             Go Back
@@ -74,7 +111,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
 
   if (!training) {
     return (
-      <div className="detail-page__state text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
+      <div className="text-content-muted min-h-screen pt-5 pb-5 text-center font-sans text-base">
         <h2>Training Not Found</h2>
         <p>
           The training programme you are looking for does not exist or the link
@@ -93,15 +130,12 @@ export function TrainingDetailPage({ id }: { id: string }) {
   return (
     <div className="mx-auto w-full max-w-7xl px-6 py-10">
       {/* Breadcrumb */}
-      <nav className="breadcrumb flex items-center text-sm font-normal">
+      <nav className="flex items-center text-sm font-normal">
         <a href="/resources" className="text-primary">
           Resources
         </a>
         <ChevronRight className="size-4" />
-        <span
-          id="detail-breadcrumb-title"
-          className="text-content-secondary max-md:line-clamp-1"
-        >
+        <span className="text-content-secondary max-md:line-clamp-1">
           {training.programme_name}
         </span>
       </nav>
@@ -110,46 +144,26 @@ export function TrainingDetailPage({ id }: { id: string }) {
       <article className="flex justify-between py-8 max-md:flex-col">
         <div className="flex flex-col items-start justify-between md:min-w-1/2">
           <div className="space-y-4">
-            <h1 className="date_time mb-4 text-sm font-medium text-gray-600 md:mb-8">
+            <p className="mb-4 text-sm font-medium text-gray-600 md:mb-8">
               {training.application_deadline
                 ? formatDate(training.application_deadline)
                 : 'Date TBC'}
-            </h1>
+            </p>
 
-            <h2 className="font-serif text-4xl font-medium text-wrap">
+            <h1 className="font-serif text-4xl font-medium text-wrap">
               {training.programme_name || 'Untitled programme'}
-            </h2>
+            </h1>
           </div>
 
-          <aside
-            className="mt-4 flex justify-between gap-4 rounded-xl p-4 md:hidden"
-            style={{ backgroundColor: colors.bg, color: colors.text }}
-          >
-            <div
-              style={{ backgroundColor: colors.panel }}
-              className="flex w-1/2 flex-col justify-between rounded-xl p-3"
-            >
-              <p className="text-4xl leading-snug font-medium text-pretty max-sm:text-xl">
-                {typeLabel}
-              </p>
-              <p>
-                with{' '}
-                <span className="text-lg font-medium capitalize">
-                  {training.provider || ''}
-                </span>
-              </p>
-            </div>
-            <div className="image-info w-1/2">
-              <img
-                className="aspect-square size-72 overflow-hidden rounded-xl object-cover"
-                src={IMAGES.blackWomanWearingGlasses}
-                alt={typeLabel}
-              />
-            </div>
-          </aside>
+          <CoverCard
+            colors={colors}
+            typeLabel={typeLabel}
+            provider={training.provider || ''}
+            className="mt-4 md:hidden"
+          />
 
           {training.apply_url && (
-            <Button id="detail-cta" asChild className="cta-button max-md:mt-10">
+            <Button asChild className="max-md:mt-10">
               <a
                 href={training.apply_url}
                 target="_blank"
@@ -162,32 +176,12 @@ export function TrainingDetailPage({ id }: { id: string }) {
           )}
         </div>
 
-        <aside
-          className="flex justify-between gap-4 rounded-xl p-4 max-md:hidden"
-          style={{ backgroundColor: colors.bg, color: colors.text }}
-        >
-          <div
-            style={{ backgroundColor: colors.panel }}
-            className="flex w-1/2 flex-col justify-between rounded-xl p-3"
-          >
-            <p className="text-2xl leading-snug font-semibold text-pretty max-sm:text-xl">
-              {typeLabel}
-            </p>
-            <p>
-              with{' '}
-              <span className="text-lg font-medium capitalize">
-                {training.provider || ''}
-              </span>
-            </p>
-          </div>
-          <div className="image-info w-1/2">
-            <img
-              className="aspect-square size-72 overflow-hidden rounded-xl object-cover"
-              src={IMAGES.blackWomanWearingGlasses}
-              alt={typeLabel}
-            />
-          </div>
-        </aside>
+        <CoverCard
+          colors={colors}
+          typeLabel={typeLabel}
+          provider={training.provider || ''}
+          className="max-md:hidden"
+        />
       </article>
 
       {/* Main Content */}
@@ -196,7 +190,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
           <h2 className="text-xl font-medium text-gray-900 capitalize">
             About this event
           </h2>
-          <p className="description text-left font-normal text-gray-700">
+          <p className="text-left font-normal text-gray-700">
             {training.description || 'No description available.'}
           </p>
         </article>
@@ -212,7 +206,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
             >
               <VideoIcon className="text-content-secondary size-6" />
             </div>
-            <p id="sidebar-format-value">{formatLabel(training.format)}</p>
+            <p>{formatLabel(training.format)}</p>
           </div>
 
           <div className="flex items-center gap-2 text-sm capitalize">
@@ -222,7 +216,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
             >
               <LucideCalendarClock className="text-content-secondary size-6" />
             </div>
-            <p id="sidebar-deadline-value">
+            <p>
               {training.application_deadline
                 ? daysUntil(training.application_deadline) === 'Expired'
                   ? 'Event has expired'
@@ -238,7 +232,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
             >
               <Languages className="text-content-secondary size-6" />
             </div>
-            <p id="sidebar-language-value">English</p>
+            <p>English</p>
           </div>
 
           <div className="flex items-center gap-2 text-sm capitalize">
@@ -248,7 +242,7 @@ export function TrainingDetailPage({ id }: { id: string }) {
             >
               <Speech className="text-content-secondary size-6" />
             </div>
-            <p id="sidebar-provider-value">{training.provider || '—'}</p>
+            <p>{training.provider || '—'}</p>
           </div>
         </aside>
       </div>

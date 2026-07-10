@@ -4,6 +4,7 @@ import { IMAGES } from '#/assets/images'
 import { Button } from '#/components/ui/button'
 import { TemplateSkeleton } from '#/components/ui/skeleton'
 import { isApiError } from '#/lib/api'
+import { formatShortDate } from '#/lib/format'
 
 import { useTemplateQuery } from '../resources.query'
 
@@ -35,14 +36,6 @@ function parseTemplateContent(
     // If content isn't valid JSON, fall back to treating it as one plain section.
     return { sections: [{ heading: null, body: raw }] }
   }
-}
-
-function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
 }
 
 const CATEGORY_COLORS: Record<string, { bg: string; text: string }> = {
@@ -124,7 +117,7 @@ export function TemplateDetailPage({ id }: { id: string }) {
           )}
 
           <p className="text-content-muted text-xs">
-            Added {formatDate(template.created_at)}
+            Added {formatShortDate(template.created_at)}
           </p>
 
           {/* Parsed, formatted sections — not the raw JSON string */}

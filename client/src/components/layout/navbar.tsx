@@ -177,7 +177,7 @@ export const Navbar: React.FC = () => {
                   className={cn(
                     'rounded-full px-6 py-2.5 text-center text-sm font-medium shadow-sm transition-colors',
                     isHome
-                      ? 'bg-white text-[#4a0066] hover:bg-white/90'
+                      ? 'bg-white text-purple-800 hover:bg-white/90'
                       : 'bg-primary text-on-primary hover:bg-primary-hover',
                   )}
                 >
@@ -284,7 +284,7 @@ export const Navbar: React.FC = () => {
                 key={item.label}
                 to={item.to}
                 onClick={() => setIsMobileMenuOpen(false)}
-                activeProps={{ className: 'text-[#730099]' }}
+                activeProps={{ className: 'text-primary' }}
                 inactiveProps={{ className: 'text-gray-600' }}
                 className="block py-2 text-base font-medium"
               >
@@ -297,13 +297,13 @@ export const Navbar: React.FC = () => {
                 <>
                   <Link
                     to={cta.signup.to}
-                    className="w-full rounded-full bg-[#4C0066] py-2.5 text-center font-medium text-white shadow-sm"
+                    className="w-full rounded-full bg-purple-800 py-2.5 text-center font-medium text-white shadow-sm"
                   >
                     {cta.signup.label}
                   </Link>
                   <Link
                     to={cta.login.to}
-                    className="w-full rounded-full border border-[#4d0066] py-2.5 text-center font-medium text-[#550073] hover:bg-purple-50"
+                    className="w-full rounded-full border border-purple-800 py-2.5 text-center font-medium text-purple-800 hover:bg-purple-50"
                   >
                     {cta.login.label}
                   </Link>

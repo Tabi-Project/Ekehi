@@ -48,13 +48,6 @@ export const signupResponseSchema = z.object({
 })
 export type SignupResponse = z.infer<typeof signupResponseSchema>
 
-export const refreshResponseSchema = z.object({
-  access_token: z.string(),
-  refresh_token: z.string(),
-  expires_at: z.number().optional(),
-})
-export type RefreshResponse = z.infer<typeof refreshResponseSchema>
-
 export const profileResponseSchema = z.object({
   id: z.string(),
   email: z.email(),

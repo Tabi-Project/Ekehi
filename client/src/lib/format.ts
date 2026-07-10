@@ -15,3 +15,81 @@ export function formatAmount(
   if (max !== null) return format(max)
   return '—'
 }
+
+export function getOrdinal(n: number) {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
+/** Long form with weekday, e.g. "Wednesday, 11th March, 2026." */
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString)
+  if (Number.isNaN(date.getTime())) return 'Date TBC'
+
+  const timeZone = 'Africa/Lagos'
+
+  const weekday = date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    timeZone,
+  })
+
+  const dayDate = Number(
+    date.toLocaleDateString('en-US', { day: 'numeric', timeZone }),
+  )
+  const day = getOrdinal(dayDate)
+
+  const month = date.toLocaleDateString('en-US', {
+    month: 'long',
+    timeZone,
+  })
+
+  const year = date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    timeZone,
+  })
+
+  return `${weekday}, ${day} ${month}, ${year}.`
+}
+
+/** Short form, e.g. "11 March 2026". Missing or invalid dates render as a dash. */
+export function formatShortDate(dateString: string | null): string {
+  if (!dateString) return '—'
+  const date = new Date(dateString)
+  if (Number.isNaN(date.getTime())) return '—'
+  return date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+export function daysUntil(dateString: string): string {
+  const date = new Date(dateString)
+  if (Number.isNaN(date.getTime())) return 'Date TBC'
+
+  const diffTime = date.getTime() - Date.now()
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+  if (diffDays < 0) return 'Expired'
+  if (diffDays === 0) return 'Today'
+  if (diffDays === 1) return 'Tomorrow'
+  return `${diffDays} days`
+}
+
+export function humanize(value: string): string {
+  return value
+    .replace(/_/g, ' ')
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
+export function formatLabel(value: string): string {
+  const map: Record<string, string> = {
+    online: 'Virtual event',
+    in_person: 'In-person event',
+    hybrid: 'Hybrid event',
+  }
+  return map[value] ?? humanize(value)
+}

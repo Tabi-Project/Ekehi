@@ -5,8 +5,8 @@ import { z } from 'zod'
 
 import { Button } from '#/components/ui/button'
 import { Checkbox } from '#/components/ui/checkbox'
+import { FormField } from '#/components/ui/form-field'
 import { Input } from '#/components/ui/input'
-import { Label } from '#/components/ui/label'
 import { Select } from '#/components/ui/select'
 import { Skeleton } from '#/components/ui/skeleton'
 import { Textarea } from '#/components/ui/textarea'
@@ -131,69 +131,69 @@ function SubmissionForm({ meta }: { meta: MetaResponse }) {
       className="border-line bg-surface rounded-2xl border px-6 md:px-8"
     >
       <Section index={1} title="About the opportunity">
-        <Field
-          id="opportunity_title"
-          label="Opportunity name"
+        <FormField
+          name="opportunity_title"
           required
           error={fieldErrors.opportunity_title}
         >
-          <Input
-            id="opportunity_title"
-            name="opportunity_title"
-            className={FIELD_CLASS}
-            placeholder="e.g. Fisayo Rotibi Grant"
-          />
-        </Field>
+          <FormField.Label>Opportunity name</FormField.Label>
+          <FormField.Control>
+            <Input
+              name="opportunity_title"
+              className={FIELD_CLASS}
+              placeholder="e.g. Fisayo Rotibi Grant"
+            />
+          </FormField.Control>
+        </FormField>
 
-        <Field
-          id="opportunity_type"
-          label="Opportunity type"
+        <FormField
+          name="opportunity_type"
           required
           error={fieldErrors.opportunity_type}
         >
-          <Select
-            id="opportunity_type"
-            name="opportunity_type"
-            defaultValue=""
-            className={FIELD_CLASS}
-            placeholder="-- Select a type --"
-          >
-            {meta.opportunity_types.map((slug) => (
-              <option key={slug} value={slug}>
-                {labelFor(OPPORTUNITY_TYPE_LABELS, slug)}
-              </option>
-            ))}
-          </Select>
-        </Field>
+          <FormField.Label>Opportunity type</FormField.Label>
+          <FormField.Control>
+            <Select
+              name="opportunity_type"
+              defaultValue=""
+              className={FIELD_CLASS}
+              placeholder="-- Select a type --"
+            >
+              {meta.opportunity_types.map((slug) => (
+                <option key={slug} value={slug}>
+                  {labelFor(OPPORTUNITY_TYPE_LABELS, slug)}
+                </option>
+              ))}
+            </Select>
+          </FormField.Control>
+        </FormField>
 
-        <Field
-          id="description"
-          label="Opportunity description"
-          required
-          error={fieldErrors.description}
-        >
-          <Textarea
-            id="description"
-            name="description"
-            rows={6}
-            className="bg-surface-subtle/50 rounded-lg"
-            placeholder="Briefly describe the opportunity, eligibility requirements, and what applicants can expect…"
-          />
-        </Field>
+        <FormField name="description" required error={fieldErrors.description}>
+          <FormField.Label>Opportunity description</FormField.Label>
+          <FormField.Control>
+            <Textarea
+              name="description"
+              rows={6}
+              className="bg-surface-subtle/50 rounded-lg"
+              placeholder="Briefly describe the opportunity, eligibility requirements, and what applicants can expect…"
+            />
+          </FormField.Control>
+        </FormField>
 
-        <Field
-          id="eligibility_criteria"
-          label="Eligibility criteria"
+        <FormField
+          name="eligibility_criteria"
           error={fieldErrors.eligibility_criteria}
         >
-          <Textarea
-            id="eligibility_criteria"
-            name="eligibility_criteria"
-            rows={3}
-            className="bg-surface-subtle/50 rounded-lg"
-            placeholder="Who can apply? e.g. Women-owned businesses in Nigeria with 2+ years of operation…"
-          />
-        </Field>
+          <FormField.Label>Eligibility criteria</FormField.Label>
+          <FormField.Control>
+            <Textarea
+              name="eligibility_criteria"
+              rows={3}
+              className="bg-surface-subtle/50 rounded-lg"
+              placeholder="Who can apply? e.g. Women-owned businesses in Nigeria with 2+ years of operation…"
+            />
+          </FormField.Control>
+        </FormField>
 
         <div className="flex flex-col gap-2.5">
           <label className="text-content flex items-center gap-2 text-sm">
@@ -209,62 +209,62 @@ function SubmissionForm({ meta }: { meta: MetaResponse }) {
 
       <Section index={2} title="Programme details">
         <div className="grid gap-4 sm:grid-cols-3">
-          <Field
-            id="amount_min"
-            label="Min amount"
-            error={fieldErrors.amount_min}
-          >
-            <Input
-              id="amount_min"
-              name="amount_min"
-              type="number"
-              min={0}
-              className={FIELD_CLASS}
-              placeholder="e.g. 500000"
-            />
-          </Field>
-          <Field
-            id="amount_max"
-            label="Max amount"
-            error={fieldErrors.amount_max}
-          >
-            <Input
-              id="amount_max"
-              name="amount_max"
-              type="number"
-              min={0}
-              className={FIELD_CLASS}
-              placeholder="e.g. 5000000"
-            />
-          </Field>
-          <Field id="application_deadline" label="Deadline">
-            <Input
-              id="application_deadline"
-              name="application_deadline"
-              type="date"
-              className={FIELD_CLASS}
-            />
-          </Field>
+          <FormField name="amount_min" error={fieldErrors.amount_min}>
+            <FormField.Label>Min amount</FormField.Label>
+            <FormField.Control>
+              <Input
+                name="amount_min"
+                type="number"
+                min={0}
+                className={FIELD_CLASS}
+                placeholder="e.g. 500000"
+              />
+            </FormField.Control>
+          </FormField>
+          <FormField name="amount_max" error={fieldErrors.amount_max}>
+            <FormField.Label>Max amount</FormField.Label>
+            <FormField.Control>
+              <Input
+                name="amount_max"
+                type="number"
+                min={0}
+                className={FIELD_CLASS}
+                placeholder="e.g. 5000000"
+              />
+            </FormField.Control>
+          </FormField>
+          <FormField name="application_deadline">
+            <FormField.Label>Deadline</FormField.Label>
+            <FormField.Control>
+              <Input
+                name="application_deadline"
+                type="date"
+                className={FIELD_CLASS}
+              />
+            </FormField.Control>
+          </FormField>
         </div>
         <p className="text-content-muted text-xs">
           Amounts are recorded in {DEFAULT_CURRENCY}.
         </p>
 
-        <Field id="status" label="Application status">
-          <Select
-            id="status"
-            name="status"
-            defaultValue=""
-            className={FIELD_CLASS}
-            placeholder="-- Select status --"
-          >
-            {meta.listing_statuses.map((slug) => (
-              <option key={slug} value={slug}>
-                {labelFor(LISTING_STATUS_LABELS, slug)}
-              </option>
-            ))}
-          </Select>
-        </Field>
+        <FormField name="status">
+          <FormField.Label>Application status</FormField.Label>
+          <FormField.Control>
+            <Select
+              name="status"
+              defaultValue=""
+              className={FIELD_CLASS}
+              placeholder="-- Select status --"
+            >
+              {meta.listing_statuses.map((slug) => (
+                <option key={slug} value={slug}>
+                  {labelFor(LISTING_STATUS_LABELS, slug)}
+                </option>
+              ))}
+            </Select>
+          </FormField.Control>
+        </FormField>
 
         <CheckboxGroup
           legend="Sectors"
@@ -281,64 +281,59 @@ function SubmissionForm({ meta }: { meta: MetaResponse }) {
       </Section>
 
       <Section index={3} title="About the organizer">
-        <Field
-          id="funder_name"
-          label="Organizer name"
-          required
-          error={fieldErrors.funder_name}
-        >
-          <Input
-            id="funder_name"
-            name="funder_name"
-            className={FIELD_CLASS}
-            placeholder="e.g. Fisayo Rotibi Foundation"
-          />
-        </Field>
+        <FormField name="funder_name" required error={fieldErrors.funder_name}>
+          <FormField.Label>Organizer name</FormField.Label>
+          <FormField.Control>
+            <Input
+              name="funder_name"
+              className={FIELD_CLASS}
+              placeholder="e.g. Fisayo Rotibi Foundation"
+            />
+          </FormField.Control>
+        </FormField>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field
-            id="contact_email"
-            label="Contact email"
-            error={fieldErrors.contact_email}
-          >
-            <Input
-              id="contact_email"
-              name="contact_email"
-              type="email"
-              className={FIELD_CLASS}
-              placeholder="hello@email.com"
-            />
-          </Field>
-          <Field
-            id="apply_url"
-            label="Website (optional)"
-            error={fieldErrors.apply_url}
-          >
-            <Input
-              id="apply_url"
-              name="apply_url"
-              type="url"
-              className={FIELD_CLASS}
-              placeholder="https://www.abc.xyz"
-            />
-          </Field>
+          <FormField name="contact_email" error={fieldErrors.contact_email}>
+            <FormField.Label>Contact email</FormField.Label>
+            <FormField.Control>
+              <Input
+                name="contact_email"
+                type="email"
+                className={FIELD_CLASS}
+                placeholder="hello@email.com"
+              />
+            </FormField.Control>
+          </FormField>
+          <FormField name="apply_url" error={fieldErrors.apply_url}>
+            <FormField.Label>Website (optional)</FormField.Label>
+            <FormField.Control>
+              <Input
+                name="apply_url"
+                type="url"
+                className={FIELD_CLASS}
+                placeholder="https://www.abc.xyz"
+              />
+            </FormField.Control>
+          </FormField>
         </div>
 
-        <Field id="country" label="Location / Country">
-          <Select
-            id="country"
-            name="country"
-            defaultValue=""
-            className={FIELD_CLASS}
-            placeholder="-- Select country --"
-          >
-            {COUNTRIES.map((country) => (
-              <option key={country} value={country}>
-                {country}
-              </option>
-            ))}
-          </Select>
-        </Field>
+        <FormField name="country">
+          <FormField.Label>Location / Country</FormField.Label>
+          <FormField.Control>
+            <Select
+              name="country"
+              defaultValue=""
+              className={FIELD_CLASS}
+              placeholder="-- Select country --"
+            >
+              {COUNTRIES.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
+            </Select>
+          </FormField.Control>
+        </FormField>
       </Section>
 
       <div className="border-line flex flex-col gap-3 border-t py-6">
@@ -394,35 +389,6 @@ function Section({
       </button>
       {open ? <div className="flex flex-col gap-5 pt-5">{children}</div> : null}
     </section>
-  )
-}
-
-function Field({
-  id,
-  label,
-  required = false,
-  error,
-  children,
-}: {
-  id: string
-  label: string
-  required?: boolean
-  error?: string
-  children: ReactNode
-}) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <Label htmlFor={id}>
-        {label}
-        {required ? <span className="text-error ml-0.5">*</span> : null}
-      </Label>
-      {children}
-      {error ? (
-        <p role="alert" className="text-error text-sm">
-          {error}
-        </p>
-      ) : null}
-    </div>
   )
 }
 

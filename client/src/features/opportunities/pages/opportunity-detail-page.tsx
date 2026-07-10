@@ -1,10 +1,11 @@
 import { Bookmark, BookmarkCheck } from 'lucide-react'
 
 import { SVGS } from '#/assets/svgs'
+import { LinkedInIcon, WhatsAppIcon, XIcon } from '#/components/icons/social'
 import { Button } from '#/components/ui/button'
 import { Modal } from '#/components/ui/modal'
 import { getAccessToken } from '#/lib/auth/token-store'
-import { formatAmount } from '#/lib/format'
+import { formatAmount, formatShortDate, humanize } from '#/lib/format'
 
 import {
   useOpportunityDetailQuery,
@@ -13,20 +14,6 @@ import {
 import type { OpportunityDetail } from '../opportunities.types'
 
 // --- Helpers ---
-
-function formatDate(dateString: string | null) {
-  if (!dateString) return '—'
-  return new Date(dateString).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  })
-}
-
-function humanize(string_: string | null) {
-  if (!string_) return '—'
-  return string_.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
-}
 
 function eligibilityList(string_: string | null) {
   if (!string_)
@@ -45,62 +32,6 @@ function eligibilityList(string_: string | null) {
         <li key={index}>{item}</li>
       ))}
     </ul>
-  )
-}
-
-// --- Inline SVG share icons (avoids img src path issues) ---
-
-function LinkedInIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="24" height="24" rx="4" fill="#0A66C2" />
-      <path
-        d="M7.5 9.5H5V19H7.5V9.5ZM6.25 8.5C7.08 8.5 7.75 7.83 7.75 7C7.75 6.17 7.08 5.5 6.25 5.5C5.42 5.5 4.75 6.17 4.75 7C4.75 7.83 5.42 8.5 6.25 8.5ZM19 19H16.5V14.25C16.5 13.01 16.48 11.41 14.77 11.41C13.04 11.41 12.77 12.77 12.77 14.16V19H10.27V9.5H12.67V10.94H12.7C13.04 10.29 13.88 9.6 15.14 9.6C17.67 9.6 19 11.22 19 13.58V19Z"
-        fill="white"
-      />
-    </svg>
-  )
-}
-
-function XIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="24" height="24" rx="4" fill="#000000" />
-      <path
-        d="M17.75 5H15.08L12 8.77L9.33 5H5.25L9.92 11.07L5 19H7.67L11 14.9L14.08 19H18.17L13.25 12.6L17.75 5ZM14.75 17.5L7.5 6.5H9.25L16.5 17.5H14.75Z"
-        fill="white"
-      />
-    </svg>
-  )
-}
-
-function WhatsAppIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="24" height="24" rx="4" fill="#25D366" />
-      <path
-        d="M12 4C7.58 4 4 7.58 4 12C4 13.49 4.41 14.88 5.12 16.07L4 20L8.05 18.91C9.2 19.55 10.56 19.92 12 19.92C16.42 19.92 20 16.34 20 11.92C20 7.5 16.42 4 12 4ZM16.22 15.33C16.03 15.84 15.14 16.31 14.73 16.35C14.32 16.39 13.93 16.53 12.06 15.79C9.82 14.9 8.4 12.61 8.29 12.47C8.18 12.33 7.39 11.28 7.39 10.19C7.39 9.1 7.95 8.57 8.16 8.34C8.37 8.11 8.62 8.06 8.78 8.06H9.25C9.41 8.06 9.62 8 9.82 8.49L10.57 10.31C10.67 10.54 10.63 10.8 10.5 10.98L10.14 11.45C10.01 11.63 9.87 11.82 10.03 12.09C10.19 12.36 10.74 13.23 11.53 13.93C12.54 14.83 13.38 15.11 13.65 15.24C13.92 15.37 14.08 15.35 14.24 15.17L14.83 14.49C14.99 14.29 15.19 14.33 15.42 14.42L17.04 15.19C17.27 15.28 17.43 15.33 17.47 15.43C17.51 15.56 17.41 16.01 17.22 16.52L16.22 15.33Z"
-        fill="white"
-      />
-    </svg>
   )
 }
 
@@ -127,7 +58,6 @@ function Badge({
   )
 }
 
-// Inter 500 16px 150% — Gray-900
 function DetailSection({
   title,
   children,
@@ -137,7 +67,7 @@ function DetailSection({
 }) {
   return (
     <div className="space-y-2">
-      <h2 className="text-base leading-[150%] font-medium text-[#18181B]">
+      <h2 className="text-base leading-[150%] font-medium text-neutral-900">
         {title}
       </h2>
       {children}
@@ -145,14 +75,13 @@ function DetailSection({
   )
 }
 
-// Aside meta: label = Inter 400 16px 100% Gray-500 | value = Inter 400 16px 100% Gray-900
 function MetaItem({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="space-y-0.5">
-      <p className="text-base leading-[100%] font-normal text-[#72717B]">
+      <p className="text-base leading-[100%] font-normal text-neutral-500">
         {label}
       </p>
-      <div className="text-base leading-[100%] font-normal text-[#18181B]">
+      <div className="text-base leading-[100%] font-normal text-neutral-900">
         {value}
       </div>
     </div>
@@ -259,7 +188,7 @@ function OpportunityAside({
         />
         <MetaItem
           label="Deadline"
-          value={formatDate(opp.application_deadline)}
+          value={formatShortDate(opp.application_deadline)}
         />
         <MetaItem label="Country/Region" value={opp.country || '—'} />
         {opp.contact_email && (
@@ -364,8 +293,7 @@ export function OpportunityDetailPage({ id }: { id: string }) {
               <div className="rounded-[4px] bg-white p-6">
                 {/* Header */}
                 <header className="border-line mb-[30px] space-y-3 border-b pb-6">
-                  {/* Lora 500 28px 100% line-height Gray-900 */}
-                  <h1 className="font-serif text-[28px] leading-[100%] font-medium text-[#18181B]">
+                  <h1 className="font-serif text-[28px] leading-[100%] font-medium text-neutral-900">
                     {data.opportunity_title}
                   </h1>
                   <div className="flex flex-wrap gap-2">
@@ -380,10 +308,9 @@ export function OpportunityDetailPage({ id }: { id: string }) {
                   </div>
                 </header>
 
-                {/* Body sections — Inter 400 16px 150% Gray-700 */}
                 <div className="space-y-[30px]">
                   <DetailSection title="About this opportunity">
-                    <p className="text-base leading-[150%] font-normal text-[#403F46]">
+                    <p className="text-content-secondary text-base leading-[150%] font-normal">
                       {data.description || '—'}
                     </p>
                   </DetailSection>

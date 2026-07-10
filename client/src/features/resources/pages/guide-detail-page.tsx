@@ -129,7 +129,7 @@ export const GuideDetailPage: React.FC<{ idOrSlug: string }> = ({
           <aside className="static top-24 md:sticky md:top-24">
             <Link
               to="/resources/guides"
-              className="mb-6 inline-block text-sm text-neutral-500 transition-colors hover:text-[#09090b]"
+              className="hover:text-content mb-6 inline-block text-sm text-neutral-500 transition-colors"
             >
               &larr; Go back
             </Link>
@@ -160,8 +160,8 @@ export const GuideDetailPage: React.FC<{ idOrSlug: string }> = ({
                       onClick={() => handleTocClick(index)}
                       className={`block pl-2 text-left text-sm transition-colors duration-150 ${
                         isActive
-                          ? 'font-semibold text-[#09090b]'
-                          : 'font-normal text-neutral-500 hover:text-[#09090b]'
+                          ? 'text-content font-semibold'
+                          : 'hover:text-content font-normal text-neutral-500'
                       }`}
                     >
                       {isActive && <span className="text-primary mr-1">-</span>}
@@ -217,7 +217,7 @@ export const GuideDetailPage: React.FC<{ idOrSlug: string }> = ({
               </div>
             ) : errorMessage ? (
               <div>
-                <h1 className="mb-10 font-serif text-3xl leading-tight font-normal text-[#09090b] md:text-4xl">
+                <h1 className="text-content mb-10 font-serif text-3xl leading-tight font-normal md:text-4xl">
                   Guide not found
                 </h1>
                 <div className="text-base text-neutral-500">
@@ -226,7 +226,7 @@ export const GuideDetailPage: React.FC<{ idOrSlug: string }> = ({
               </div>
             ) : (
               <>
-                <h1 className="mb-10 font-serif text-3xl leading-tight font-normal text-[#09090b] md:text-4xl">
+                <h1 className="text-content mb-10 font-serif text-3xl leading-tight font-normal md:text-4xl">
                   {guide?.title}
                 </h1>
 
@@ -244,10 +244,10 @@ export const GuideDetailPage: React.FC<{ idOrSlug: string }> = ({
                         }}
                         className="mb-8 scroll-mt-8"
                       >
-                        <h2 className="mb-3 text-base font-semibold text-[#09090b]">
+                        <h2 className="text-content mb-3 text-base font-semibold">
                           {section.heading}
                         </h2>
-                        <p className="text-base leading-relaxed text-[#403f46]">
+                        <p className="text-content-secondary text-base leading-relaxed">
                           {section.body}
                         </p>
                       </div>

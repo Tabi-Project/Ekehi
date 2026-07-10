@@ -6,7 +6,6 @@ import type {
   LoginRequest,
   LoginResponse,
   ProfileResponse,
-  RefreshResponse,
   SignupRequest,
   SignupResponse,
 } from './auth.types'
@@ -30,9 +29,5 @@ export const AuthService = {
     return signupRequest({ data: form })
   },
   logout: makeRequest<null>(ENDPOINTS.auth.logout, 'POST'),
-  refresh: makeRequest<RefreshResponse, { refresh_token: string }>(
-    ENDPOINTS.auth.refresh,
-    'POST',
-  ),
   me: makeRequest<ProfileResponse>(ENDPOINTS.me.profile, 'GET'),
 }
