@@ -1,4 +1,4 @@
-import { SVGS } from '#/assets/svgs'
+import { Flower } from '#/assets/svgs'
 import { Button } from '#/components/ui/button'
 
 export function AboutSection() {
@@ -9,12 +9,7 @@ export function AboutSection() {
         <h2 className="text-content-inverse flex items-center gap-3 font-serif text-3xl sm:text-4xl">
           <span>About</span>
           <span className="italic">Ekehi</span>
-          <img
-            src={SVGS.flower}
-            alt=""
-            aria-hidden="true"
-            className="size-7 sm:size-8"
-          />
+          <Flower aria-hidden="true" className="size-7 sm:size-8" />
         </h2>
 
         {/* Description + CTA */}

@@ -1,7 +1,7 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 
-import { SVGS } from '#/assets/svgs'
+import { IMAGES } from '#/assets/images'
 import { Dropdown } from '#/components/ui/dropdown'
 import { useLogoutMutation, useMeQuery } from '#/features/auth/auth.query'
 import { cn } from '#/lib/utils'
@@ -156,7 +156,7 @@ export function Navbar() {
             aria-label="Ekehi homepage"
           >
             <img
-              src={isHome ? SVGS.ekehiLogo2 : SVGS.ekehiLogo}
+              src={isHome ? IMAGES.ekehiLogo2 : IMAGES.ekehiLogo}
               alt={logo.wordmark}
               width={43}
               height={48}

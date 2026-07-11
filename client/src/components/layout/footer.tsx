@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import React from 'react'
 
-import { SVGS } from '#/assets/svgs'
+import { IMAGES } from '#/assets/images'
 
 interface LinkItem {
   label: string
@@ -35,7 +35,7 @@ interface FooterConfig {
 const FOOTER_CONFIG: FooterConfig = {
   brand: {
     to: '/',
-    logo: SVGS.ekehiLogo2,
+    logo: IMAGES.ekehiLogo2,
     wordmark: 'Ekehi',
     tagline:
       'A searchable, continuously updated business resource centre built for women entrepreneurs across Africa.',

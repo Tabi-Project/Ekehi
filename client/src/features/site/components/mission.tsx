@@ -1,4 +1,4 @@
-import { SVGS } from '#/assets/svgs'
+import { BottomLeftDeco, BottomRightDeco } from '#/assets/svgs'
 
 export function MissionSection() {
   return (
@@ -6,21 +6,11 @@ export function MissionSection() {
       <div className="mx-auto flex min-h-[320px] w-full max-w-7xl flex-col items-center justify-center gap-6 px-6 text-center lg:min-h-[500px]">
         {/* "Our mission" label with flourishes */}
         <div className="flex items-center gap-3">
-          <img
-            src={SVGS.bottomLeftDeco}
-            alt=""
-            aria-hidden="true"
-            className="h-4 w-8 opacity-60"
-          />
+          <BottomLeftDeco aria-hidden="true" className="h-4 w-8 opacity-60" />
           <span className="text-content-muted text-xs font-medium tracking-wide uppercase">
             Our mission
           </span>
-          <img
-            src={SVGS.bottomRightDeco}
-            alt=""
-            aria-hidden="true"
-            className="h-4 w-8 opacity-60"
-          />
+          <BottomRightDeco aria-hidden="true" className="h-4 w-8 opacity-60" />
         </div>
 
         {/* Headline */}
