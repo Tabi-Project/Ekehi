@@ -6,6 +6,7 @@ export type {
   ErrorEnvelope,
   FetchInit,
   HttpMethod,
+  PaginationMeta,
   RequestProps,
   SuccessEnvelope,
 } from './types'

@@ -8,33 +8,39 @@ import {
   formatShortDate,
   getOrdinal,
   humanize,
+  isClosingSoon,
 } from './format'
 
 const HOUR = 60 * 60 * 1000
 const DAY = 24 * HOUR
 
 describe('formatAmount', () => {
-  it('formats a min–max range with currency prefix', () => {
-    expect(formatAmount(500_000, 5_000_000, 'NGN')).toBe('NGN500K - NGN5M')
+  it('formats a min–max range with the currency symbol', () => {
+    expect(formatAmount(500_000, 5_000_000, 'NGN')).toBe('₦500K - ₦5M')
+    expect(formatAmount(50_000, 2_000_000, 'USD')).toBe('$50K - $2M')
   })
 
   it('does not round sub-million amounts up to millions', () => {
-    expect(formatAmount(500_000, null, 'NGN')).toBe('NGN500K')
-    expect(formatAmount(100_000, null, 'NGN')).toBe('NGN100K')
+    expect(formatAmount(500_000, null, 'NGN')).toBe('₦500K')
+    expect(formatAmount(100_000, null, 'NGN')).toBe('₦100K')
   })
 
   it('keeps one decimal for non-round millions', () => {
-    expect(formatAmount(1_500_000, null, 'NGN')).toBe('NGN1.5M')
+    expect(formatAmount(1_500_000, null, 'NGN')).toBe('₦1.5M')
   })
 
   it('treats 0 as a real amount, not a missing one', () => {
-    expect(formatAmount(0, 5_000_000, 'NGN')).toBe('NGN0 - NGN5M')
-    expect(formatAmount(0, null, 'NGN')).toBe('NGN0')
+    expect(formatAmount(0, 5_000_000, 'NGN')).toBe('₦0 - ₦5M')
+    expect(formatAmount(0, null, 'NGN')).toBe('₦0')
   })
 
   it('falls back to a single value when only one bound exists', () => {
-    expect(formatAmount(null, 2_000_000, 'NGN')).toBe('NGN2M')
-    expect(formatAmount(15_000_000, null, 'NGN')).toBe('NGN15M')
+    expect(formatAmount(null, 2_000_000, 'NGN')).toBe('₦2M')
+    expect(formatAmount(15_000_000, null, 'NGN')).toBe('₦15M')
+  })
+
+  it('prefixes the raw code when it is not a valid ISO 4217 code', () => {
+    expect(formatAmount(1_000_000, null, 'NAIRA')).toBe('NAIRA1M')
   })
 
   it('omits the prefix when currency is null', () => {
@@ -111,6 +117,38 @@ describe('daysUntil', () => {
     expect(daysUntil(new Date(Date.now() + 5 * DAY).toISOString())).toBe(
       '5 days',
     )
+  })
+})
+
+describe('isClosingSoon', () => {
+  it('is true for deadlines within the threshold', () => {
+    expect(isClosingSoon(new Date(Date.now() + 5 * DAY).toISOString())).toBe(
+      true,
+    )
+    expect(isClosingSoon(new Date(Date.now() + HOUR).toISOString())).toBe(true)
+  })
+
+  it('is false for deadlines beyond the threshold', () => {
+    expect(isClosingSoon(new Date(Date.now() + 8 * DAY).toISOString())).toBe(
+      false,
+    )
+  })
+
+  it('respects a custom threshold', () => {
+    expect(
+      isClosingSoon(new Date(Date.now() + 8 * DAY).toISOString(), 14),
+    ).toBe(true)
+  })
+
+  it('is false for past deadlines', () => {
+    expect(isClosingSoon(new Date(Date.now() - 2 * DAY).toISOString())).toBe(
+      false,
+    )
+  })
+
+  it('is false for null or unparseable input', () => {
+    expect(isClosingSoon(null)).toBe(false)
+    expect(isClosingSoon('not-a-date')).toBe(false)
   })
 })
 

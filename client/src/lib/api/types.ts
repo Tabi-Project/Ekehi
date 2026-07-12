@@ -12,6 +12,15 @@ export type ApiResponse<TData, TMeta = unknown> = {
   meta?: TMeta
 }
 
+export type PaginationMeta = {
+  page: number
+  limit: number
+  total: number
+  totalPages: number
+  hasNextPage: boolean
+  hasPrevPage: boolean
+}
+
 export type SuccessEnvelope<TData, TMeta = unknown> = {
   success: true
   message: string
