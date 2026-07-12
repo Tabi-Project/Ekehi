@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { TrainingDetailPage } from '#/features/resources/pages/training-detail-page'
 import { pageMeta } from '#/lib/page-meta'
 
-export const Route = createFileRoute('/(layout)/resources/training/$id')({
+export const Route = createFileRoute('/(layout)/resources/trainings/$id')({
   component: RouteComponent,
   head: ({ params }) =>
     pageMeta({
