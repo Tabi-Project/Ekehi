@@ -40,6 +40,7 @@ import mentorshipNetwork from './mentorship-network.png'
 import offeringsDisplay from './offerings-display.jpg'
 import timeVector from './time-vector.png'
 import valuePropositionDisplay from './value-proposition-display.png'
+import guideCardDisplay from './guide-card-display.png'
 
 export const IMAGES = {
   arrowLeftLine,
@@ -51,6 +52,7 @@ export const IMAGES = {
   fundingDatabase,
   headerImg,
   heroDisplay,
+  guideCardDisplay,
   logo2,
   mentorshipNetwork,
   offeringsDisplay,

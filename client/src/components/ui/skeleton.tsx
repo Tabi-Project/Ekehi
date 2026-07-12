@@ -33,14 +33,16 @@ export function OpportunitySkeleton() {
 
 export function TrainingSkeleton() {
   return (
-    <div className="border-line bg-surface flex flex-col gap-3 overflow-hidden rounded-lg border">
-      <Skeleton className="h-40 w-full rounded-none" />
-      <div className="flex flex-col gap-2 p-4">
-        <div className="flex gap-2">
+    <div>
+      <div className="mb-4 grid aspect-352/226 grid-cols-2 gap-2.5 overflow-hidden rounded-2xl bg-neutral-50/80 p-3">
+        <Skeleton className="rounded-sm" />
+      </div>
+      <div className="flex flex-col gap-2">
+        <div className="mb-1 flex gap-2">
           <Skeleton className="h-4 w-16" />
           <Skeleton className="h-4 w-16" />
         </div>
-        <Skeleton className="h-5 w-full" />
+        <Skeleton className="h-4 w-full" />
         <Skeleton className="h-4 w-full" />
         <Skeleton className="h-4 w-2/3" />
       </div>
@@ -51,7 +53,7 @@ export function TrainingSkeleton() {
 export function GuideSkeleton() {
   return (
     <div className="flex flex-col gap-3">
-      <Skeleton className="h-56 w-full" />
+      <Skeleton className="aspect-352/195 rounded-lg" />
       <div className="flex flex-col gap-2">
         <Skeleton className="h-5 w-full" />
         <Skeleton className="h-3.5 w-3/4" />
@@ -63,9 +65,9 @@ export function GuideSkeleton() {
 
 export function TemplateSkeleton() {
   return (
-    <div className="flex flex-col shadow-sm">
-      <Skeleton className="h-32 w-full" />
-      <div className="flex flex-col gap-2 p-3">
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-[#DFDFDF]">
+      <Skeleton className="aspect-352/208 rounded-none border-b border-[#DFDFDF]" />
+      <div className="flex flex-col gap-2 px-4 py-5">
         <Skeleton className="h-5 w-full" />
         <Skeleton className="h-3.5 w-3/4" />
         <Skeleton className="h-3.5 w-1/2" />
