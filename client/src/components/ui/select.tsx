@@ -22,7 +22,12 @@ export function Select({
         )}
         {...props}
       >
-        <option value="" disabled hidden>
+        <option
+          value=""
+          disabled
+          hidden
+          className="font-medium text-neutral-500"
+        >
           {placeholder}
         </option>
         {children}

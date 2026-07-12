@@ -38,7 +38,7 @@ function DropdownTrigger({
   return (
     <DropdownPrimitive.Trigger
       className={cn(
-        'border-line bg-surface text-content hover:border-line-strong focus-visible:ring-primary data-[state=open]:border-primary inline-flex h-10 items-center justify-between gap-2 rounded-md border px-3 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none',
+        'group border-line bg-surface text-content hover:border-line-strong focus-visible:ring-primary data-[state=open]:border-primary inline-flex h-10 items-center justify-between gap-2 rounded-md border px-3 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none',
         className,
       )}
       {...props}
@@ -48,7 +48,7 @@ function DropdownTrigger({
         <ChevronDown
           size={14}
           aria-hidden
-          className="text-content-muted transition-transform data-[state=open]:rotate-180"
+          className="text-content-muted transition-transform group-data-[state=open]:rotate-180"
         />
       ) : null}
     </DropdownPrimitive.Trigger>

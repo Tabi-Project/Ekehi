@@ -42,8 +42,8 @@ vi.mock('@tanstack/react-router', () => ({
     select({ location: { pathname: mockCurrentPath } }),
 }))
 
-vi.mock('#/assets/svgs', () => ({
-  SVGS: {
+vi.mock('#/assets/images', () => ({
+  IMAGES: {
     ekehiLogo: 'logo.svg',
     ekehiLogo2: 'logo2.svg',
   },

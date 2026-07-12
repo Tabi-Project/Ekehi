@@ -1,7 +1,7 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 
-import { SVGS } from '#/assets/svgs'
+import { IMAGES } from '#/assets/images'
 import { Dropdown } from '#/components/ui/dropdown'
 import { useLogoutMutation, useMeQuery } from '#/features/auth/auth.query'
 import { cn } from '#/lib/utils'
@@ -148,15 +148,15 @@ export function Navbar() {
       )}
       ref={innerRef}
     >
-      <nav className="relative">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+      <nav className="content-grid w-full">
+        <div className="mx-auto flex h-20 w-full items-center justify-between">
           <Link
             to={logo.to}
             className="flex cursor-pointer items-center space-x-3"
             aria-label="Ekehi homepage"
           >
             <img
-              src={isHome ? SVGS.ekehiLogo2 : SVGS.ekehiLogo}
+              src={isHome ? IMAGES.ekehiLogo2 : IMAGES.ekehiLogo}
               alt={logo.wordmark}
               width={43}
               height={48}
@@ -283,7 +283,7 @@ export function Navbar() {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="absolute top-full right-0 left-0 z-50 space-y-3 border-b border-gray-100 bg-white px-6 py-4 shadow-lg md:hidden">
+          <div className="absolute top-full right-0 left-0 z-50 space-y-3 border-b border-gray-100 bg-white px-4 py-4 shadow-lg md:hidden">
             {links.map((item) => (
               <Link
                 key={item.label}

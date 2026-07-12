@@ -28,3 +28,24 @@ export const opportunityDetailSchema = z.object({
 })
 
 export type OpportunityDetail = z.infer<typeof opportunityDetailSchema>
+
+export const opportunityListItemSchema = opportunityDetailSchema.omit({
+  updated_at: true,
+  is_saved: true,
+  sector: true,
+  stage: true,
+})
+
+export type OpportunityListItem = z.infer<typeof opportunityListItemSchema>
+
+export type OpportunityListFilters = {
+  search?: string
+  opportunity_type?: string
+  sector?: string
+  stage?: string
+  country?: string
+  status?: string
+  is_women_only?: boolean
+  page?: number
+  limit?: number
+}
