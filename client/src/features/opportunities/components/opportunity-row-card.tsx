@@ -27,16 +27,16 @@ export function OpportunityRowCard({
       params={{ id: opportunity.id }}
       className="block"
     >
-      <article className="grid grid-cols-[17.5rem_1fr_7.5rem] py-8">
+      <article className="grid py-8 max-lg:gap-4 lg:grid-cols-[17.5rem_1fr_7.5rem]">
         <div>
-          <p>
+          <p className="mb-1 font-medium text-neutral-900">
             {formatAmount(
               opportunity.amount_min,
               opportunity.amount_max,
               opportunity.currency,
             )}
           </p>
-          <p>
+          <p className="text-neutral-700">
             {enumLabel(
               EKEHI_ENUMS.opportunityType,
               opportunity.opportunity_type,
@@ -45,15 +45,17 @@ export function OpportunityRowCard({
         </div>
 
         <div>
-          <div className="flex items-center gap-2">
-            <h3>{opportunity.opportunity_title}</h3>
+          <div className="mb-1 flex items-center gap-2">
+            <h3 className="text-neutral-900">
+              {opportunity.opportunity_title}
+            </h3>
             {closingSoon && <span>Closing Soon</span>}
           </div>
-          <p>{opportunity.funder_name}</p>
+          <p className="text-neutral-700">{opportunity.funder_name}</p>
         </div>
 
         <div className="flex items-center gap-1">
-          <ClockCountdown />
+          <ClockCountdown className="text-neutral-700" />
           <span className="font-medium text-neutral-900">
             {deadlineLabel(opportunity.application_deadline)}
           </span>

@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Bookmark, BookmarkCheck } from 'lucide-react'
 
-import { SVGS } from '#/assets/svgs'
+import { IMAGES } from '#/assets/images'
 import { LinkedInIcon, WhatsAppIcon, XIcon } from '#/components/icons/social'
 import { Button } from '#/components/ui/button'
 import { Modal } from '#/components/ui/modal'
@@ -94,7 +94,7 @@ function SaveModal() {
     <Modal.Content className="max-w-sm text-center">
       <div className="flex flex-col items-center gap-4">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100">
-          <img src={SVGS.logo2} alt="Ekehi" className="h-12 w-12" />
+          <img src={IMAGES.logo2} alt="Ekehi" className="h-12 w-12" />
         </div>
         <div className="space-y-2">
           <Modal.Title>Save this opportunity</Modal.Title>

@@ -107,7 +107,7 @@ export function OpportunitiesPage() {
       </section>
 
       <section>
-        <h2 className="mb-6 font-medium text-neutral-900 lg:text-xl">
+        <h2 className="mb-4 font-medium text-neutral-900 lg:text-xl">
           All opportunities{meta ? ` (${meta.total})` : ''}
         </h2>
 
