@@ -15,6 +15,7 @@ function getCurrencyFormatter(currency: string): Intl.NumberFormat | null {
         currency,
         currencyDisplay: 'narrowSymbol',
         notation: 'compact',
+        minimumFractionDigits: 0,
         maximumFractionDigits: 1,
       })
     } catch {

@@ -1,0 +1,93 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main, development]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  client-ci:
+    name: Client (Frontend) CI
+    runs-on: ubuntu-latest
+    env:
+      VITE_API_BASE_URL: http://localhost:3001/api/v1
+      VITE_SITE_URL: http://localhost:3000
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Typecheck client
+        run: pnpm --filter client typecheck
+
+      - name: Lint client
+        run: pnpm --filter client lint
+
+      - name: Format check client
+        run: pnpm --filter client format:check
+
+      - name: Run client tests
+        run: pnpm --filter client test
+
+      - name: Build client
+        run: pnpm --filter client build
+
+  server-ci:
+    name: Server (Backend) CI
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+      PORT: 3000
+      SUPABASE_URL: https://dummy.supabase.co
+      SUPABASE_ANON_KEY: dummy-anon-key
+      SUPABASE_SERVICE_ROLE_KEY: dummy-service-role-key
+      JWT_SECRET: dummy-jwt-secret-for-ci-testing-purposes-12345
+      ALLOWED_ORIGINS: http://localhost:3000
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Typecheck server
+        run: pnpm --filter ekehi-server typecheck
+
+      - name: Lint server
+        run: pnpm --filter ekehi-server lint
+
+      - name: Format check server
+        run: pnpm --filter ekehi-server format:check
+
+      - name: Run server tests
+        run: pnpm --filter ekehi-server test
+
+      - name: Build server
+        run: pnpm --filter ekehi-server build
