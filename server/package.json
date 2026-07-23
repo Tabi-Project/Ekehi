@@ -15,7 +15,7 @@
     "format:check": "prettier . --check",
     "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm format:check && pnpm build",
     "db:types": "supabase gen types typescript --project-id nubswkwmoxlxbbvscxye --schema public > src/types/database.ts",
-    "test": "node --import tsx --test \"test/*.test.ts\" \"test/**/*.test.ts\""
+    "test": "node --import tsx --test test/*.test.ts test/**/*.test.ts"
   },
   "engines": {
     "node": ">=20.0.0"
